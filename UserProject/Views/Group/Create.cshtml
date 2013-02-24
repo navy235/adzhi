@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+@if (ViewBag.Message != null)
+{
+    <p>@ViewBag.Message</p>
+}
+@using (Html.BeginForm())
+{
+    @Html.EditorFor(m => Model)
+
+    <button type="submit">submit</button>
+}

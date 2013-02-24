@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Map";
+}
+
+<h2>Map</h2>
+
+@ViewBag.updateError
+
+@using (Html.BeginForm())
+{
+
+    @Html.EditorFor(m => Model)
+
+    <input type="submit" value="submit" title="submit" />
+
+}

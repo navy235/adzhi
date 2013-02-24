@@ -1,0 +1,206 @@
+@model string
+
+@{
+    var name = ViewData.TemplateInfo.GetFullHtmlFieldName("");
+    var orgUrl = Url.Content("~/Content/noimages.gif");
+  
+    var targetWidth = ViewData.ModelMetadata.AdditionalValues["UploadImgEdit"].ToString();
+}
+
+<div class="img-box">
+    <img src="@orgUrl" id="@(name + "_img")" />
+</div>
+
+@(Html.Kendo().Upload()
+    .Name("editattachments")
+    .Multiple(false)
+    .Async(a => a
+            .Save("EditSave", "AjaxService")
+            .Remove("UpLoadRemove", "AjaxService")
+            .AutoUpload(true)
+        )
+            .Events(events => events
+                .Error(name + ".onError")
+                .Remove(name + ".onRemove")
+                .Success(name + ".onSuccess")
+                .Upload(name + ".onUpload")
+            )
+
+    )
+
+@Html.Kendo().Window().Name(name + "_window").Title("±à¼­Í¼Æ¬").Draggable(true).Modal(true).Visible(false)
+
+
+
+@Html.TextBoxFor(m => m, new { tabindex = -1, @class = "k-valid-text", value = orgUrl })
+
+<link type="text/css" href="~/Content/jcrop/jquery.Jcrop.min.css" rel="stylesheet" />
+
+
+
+<script type="text/x-kendo-template" id="@Html.Raw(name + "_template")">
+ <table>
+    <tr>
+        <td>
+            <img src="#= imgurl #" id="#= name #_crop" class="#= name #_crop"  />
+        </td>
+        <td style="vertical-align: top">
+            <div style="width: 100px; height: 100px; overflow: hidden;">
+                <img src="#= imgurl #" id="#= name #_preview" alt="Preview" class="jcrop-preview" />
+            </div>
+            <input type="hidden" id="#= name #_url" name="#= name #_url" value="#= imgurl #" />
+            <input type="hidden" id="#= name #_x" name="#= name #_x" />
+            <input type="hidden" id="#= name #_y" name="#= name #_y" />
+            <input type="hidden" id="#= name #_w" name="#= name #_w" />
+            <input type="hidden" id="#= name #_h" name="#= name #_h" />
+        </td>
+    </tr>
+    <tr>
+        <td><button type="button" id="#= name #_save" class="k-button" ><span class="k-icon k-i-tick"></span>±£´æÍ¼Æ¬</button></td>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+</script>
+
+<script type="text/javascript" src="~/Scripts/jquery.Jcrop.min.js"></script>
+<script type="text/javascript">
+
+    var @name={
+        binding:function(imgurl){
+            var _imgurl='@(String.IsNullOrEmpty(Model) ? orgUrl : Model)';
+            if(imgurl){
+                _imgurl=imgurl;
+            }
+            var imgId='@Html.Raw(name + "_img")';
+            var id='@name';
+            $("#"+imgId).attr("src", _imgurl);
+            $("#"+id).val(_imgurl);
+        },
+        onError:function(e){
+        
+        },
+        onRemove:function(e){
+            var self=@name;
+            var orgUrl='@orgUrl';
+            self.binding(orgUrl);
+            return false;
+        },
+        onSuccess:function(e){
+            var self=@name;
+            var resData = eval("(" + e.response + ")");
+            if (resData.err === ''&&resData.status==='upload') {
+                self.buildEditor(resData.imgname,resData.imgurl);
+            }
+            else {
+                if(resData.err===''&&resData.status==='remove'){
+                    return ;
+                }else{
+                    alert(resData.err);
+                }
+            }
+        },
+        onUpload:function(e){
+            var files = e.files;
+            $.each(files, function () {
+                if (".gif.jpg.jpeg.bmp.png".indexOf(this.extension.toLowerCase()) == -1) {
+                    alert("ÇëÉÏ´«.gif.jpg.jpeg.bmp.pngµÄÍ¼Æ¬ÎÄ¼þ£¡")
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        },
+        getFileInfo:function (e) {
+            return $.map(e.files, function (file) {
+                var info = file.name;
+                return info;
+            }).join(", ");
+        },
+        buildEditor:function(imaname,imgurl){
+            var self=@name;
+            var imgEditId='@name';
+            var windowId=imgEditId+ '_window';
+            var templateId=imgEditId+ '_template';
+            var cropId=imgEditId+ '_crop';
+            var template=kendo.template($("#"+templateId).html());
+            $("#"+windowId)
+                .data("kendoWindow")
+                .content(template({name:imgEditId,imgurl:imgurl}))
+                .center()
+                .open();
+            $('#'+cropId).Jcrop({
+                bgFade:true,
+                bgOpacity: .3,
+                aspectRatio: 1,
+                boxWidth: 450,
+                boxHeight: 400,
+                minSize:[200,200],
+                setSelect: [ 0, 0, @targetWidth, @targetWidth ],
+                onChange: self.onCropChange,
+                onSelect: self.onCropChange
+            },function() {
+                // Use the API to get the real image size
+                var bounds = this.getBounds();
+                self.boundx = bounds[0];
+                self.boundy = bounds[1];
+                // Store the API in the jcrop_api variable
+                self.jcrop_api = this;
+            });
+            $('#'+imgEditId+'_save').on('click',self.saveCrop)
+        },
+        onCropChange:function(c){
+            var self=@name;
+            var imgEditId='@name';
+            $('#'+imgEditId+"_x").val(c.x);
+            $('#'+imgEditId+"_y").val(c.y);
+            $('#'+imgEditId+"_w").val(c.w);
+            $('#'+imgEditId+"_h").val(c.h);
+            if (parseInt(c.w) > 0) {
+                var rx = 100 / c.w;
+                var ry = 100 / c.h;
+                $('#'+imgEditId+"_preview").css({
+                    width: Math.round(rx * self.boundx) + 'px',
+                    height: Math.round(ry * self.boundy) + 'px',
+                    marginLeft: '-' + Math.round(rx * c.x) + 'px',
+                    marginTop: '-' + Math.round(ry * c.y) + 'px'
+                });
+            }
+        },
+        saveCrop:function(){
+            var imgEditId='@name';
+            var x= parseInt($('#'+imgEditId+"_x").val());
+            var y= parseInt($('#'+imgEditId+"_y").val());
+            var w= parseInt($('#'+imgEditId+"_w").val());
+            var h= parseInt($('#'+imgEditId+"_h").val());
+            var targetwidth=parseInt('@targetWidth');
+            var imgurl=$('#'+imgEditId+"_url").val();
+            $.ajax({
+                type:'GET',
+                url:'@Url.Action("CropImg", "AjaxService")',
+                data:{
+                    imgurl:imgurl,
+                    width:w,
+                    height:h,
+                    x:x,
+                    y:y,
+                    targetwidth:targetwidth
+                },
+                success:function(res){
+                    var resData = eval("(" + res + ")");
+                    if(resData.err===''){
+                        $('#'+imgEditId+"_window")
+                        .data("kendoWindow")
+                        .close();
+                        $('#'+imgEditId+"_img").attr("src", resData.imgurl);
+                        $("#"+imgEditId).val(resData.imgurl);
+                    }else{
+                        alert(resData.err);
+                    }
+                }
+            })
+
+        }
+    }
+    $(function(){
+        @Html.Raw(name + ".binding();")
+    })
+</script>

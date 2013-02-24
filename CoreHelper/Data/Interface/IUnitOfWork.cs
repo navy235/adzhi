@@ -1,0 +1,14 @@
+﻿using System;
+using System.Linq;
+namespace CoreHelper.Data.Interface
+{
+    public interface IUnitOfWork : IDisposable
+    {
+        TEntity Add<TEntity>(TEntity entity) where TEntity : class;
+        TEntity Attach<TEntity>(TEntity entity) where TEntity : class;
+        void SetProxyCreationEnabledFlase();
+        void Commit();
+        TEntity Remove<TEntity>(TEntity entity) where TEntity : class;
+        IQueryable<TEntity> Set<TEntity>() where TEntity : class;
+    }
+}

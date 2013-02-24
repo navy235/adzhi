@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CoreUser" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="Entities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Area" EntityType="CoreUser.Area" />
+    <EntitySet Name="Department" EntityType="CoreUser.Department" />
+    <EntitySet Name="Group" EntityType="CoreUser.Group" />
+    <EntitySet Name="Member" EntityType="CoreUser.Member" />
+    <EntitySet Name="Member_Action" EntityType="CoreUser.Member_Action" />
+    <EntitySet Name="Member_Profile" EntityType="CoreUser.Member_Profile" />
+    <EntitySet Name="Permissions" EntityType="CoreUser.Permissions" />
+    <EntitySet Name="Roles" EntityType="CoreUser.Roles" />
+    <AssociationSet Name="FK_Member_Profile_Area" Association="CoreUser.FK_Member_Profile_Area">
+      <End Role="Area" EntitySet="Area" />
+      <End Role="Member_Profile" EntitySet="Member_Profile" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Permissions_Department" Association="CoreUser.FK_Permissions_Department">
+      <End Role="Department" EntitySet="Department" />
+      <End Role="Permissions" EntitySet="Permissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Member_Group" Association="CoreUser.FK_Member_Group">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="Member" EntitySet="Member" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Member_Action_Member" Association="CoreUser.FK_Member_Action_Member">
+      <End Role="Member" EntitySet="Member" />
+      <End Role="Member_Action" EntitySet="Member_Action" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Member_Profile_Member" Association="CoreUser.FK_Member_Profile_Member">
+      <End Role="Member" EntitySet="Member" />
+      <End Role="Member_Profile" EntitySet="Member_Profile" />
+    </AssociationSet>
+    <AssociationSet Name="Group_Roles" Association="CoreUser.Group_Roles">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="Roles" EntitySet="Roles" />
+    </AssociationSet>
+    <AssociationSet Name="Role_Permissions" Association="CoreUser.Role_Permissions">
+      <End Role="Permissions" EntitySet="Permissions" />
+      <End Role="Roles" EntitySet="Roles" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Area">
+    <Key>
+      <PropertyRef Name="CityCode" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="CityCode" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="CityName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Length" Type="Int32" />
+    <Property Name="OrderIndex" Type="Int32" />
+    <Property Name="PCityCode" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Member_Profile" Relationship="CoreUser.FK_Member_Profile_Area" FromRole="Area" ToRole="Member_Profile" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DepartmentID" />
+    </Key>
+    <Property Name="DepartmentID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="Leader" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Permissions" Relationship="CoreUser.FK_Permissions_Department" FromRole="Department" ToRole="Permissions" />
+  </EntityType>
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="GroupID" />
+    </Key>
+    <Property Name="GroupID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Member" Relationship="CoreUser.FK_Member_Group" FromRole="Group" ToRole="Member" />
+    <NavigationProperty Name="Roles" Relationship="CoreUser.Group_Roles" FromRole="Group" ToRole="Roles" />
+  </EntityType>
+  <EntityType Name="Member">
+    <Key>
+      <PropertyRef Name="MemberID" />
+    </Key>
+    <Property Name="MemberID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="NickName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Password" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="GroupID" Type="Int32" Nullable="false" />
+    <Property Name="LastTime" Type="DateTime" Precision="7" />
+    <Property Name="LastIP" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="AddTime" Type="DateTime" Precision="7" />
+    <Property Name="AddIP" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="LoginCount" Type="Int32" />
+    <Property Name="Status" Type="Int32" />
+    <NavigationProperty Name="Group" Relationship="CoreUser.FK_Member_Group" FromRole="Member" ToRole="Group" />
+    <NavigationProperty Name="Member_Action" Relationship="CoreUser.FK_Member_Action_Member" FromRole="Member" ToRole="Member_Action" />
+    <NavigationProperty Name="Member_Profile" Relationship="CoreUser.FK_Member_Profile_Member" FromRole="Member" ToRole="Member_Profile" />
+  </EntityType>
+  <EntityType Name="Member_Action">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ActionType" Type="Int32" />
+    <Property Name="MemberID" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="AddTime" Type="DateTime" Precision="7" />
+    <NavigationProperty Name="Member" Relationship="CoreUser.FK_Member_Action_Member" FromRole="Member_Action" ToRole="Member" />
+  </EntityType>
+  <EntityType Name="Member_Profile">
+    <Key>
+      <PropertyRef Name="MemberID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberID" Type="Int32" Nullable="false" />
+    <Property Name="AvtarUrl" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="Sex" Type="Int32" />
+    <Property Name="Borthday" Type="DateTime" Precision="7" />
+    <Property Name="CityCode" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Area" Relationship="CoreUser.FK_Member_Profile_Area" FromRole="Member_Profile" ToRole="Area" />
+    <NavigationProperty Name="Member" Relationship="CoreUser.FK_Member_Profile_Member" FromRole="Member_Profile" ToRole="Member" />
+  </EntityType>
+  <EntityType Name="Permissions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="Controller" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="Action" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Namespace" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Department" Relationship="CoreUser.FK_Permissions_Department" FromRole="Permissions" ToRole="Department" />
+    <NavigationProperty Name="Roles" Relationship="CoreUser.Role_Permissions" FromRole="Permissions" ToRole="Roles" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Group" Relationship="CoreUser.Group_Roles" FromRole="Roles" ToRole="Group" />
+    <NavigationProperty Name="Permissions" Relationship="CoreUser.Role_Permissions" FromRole="Roles" ToRole="Permissions" />
+  </EntityType>
+  <Association Name="FK_Member_Profile_Area">
+    <End Role="Area" Type="CoreUser.Area" Multiplicity="1" />
+    <End Role="Member_Profile" Type="CoreUser.Member_Profile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="CityCode" />
+      </Principal>
+      <Dependent Role="Member_Profile">
+        <PropertyRef Name="CityCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Permissions_Department">
+    <End Role="Department" Type="CoreUser.Department" Multiplicity="1" />
+    <End Role="Permissions" Type="CoreUser.Permissions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="DepartmentID" />
+      </Principal>
+      <Dependent Role="Permissions">
+        <PropertyRef Name="DepartmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Member_Group">
+    <End Role="Group" Type="CoreUser.Group" Multiplicity="1" />
+    <End Role="Member" Type="CoreUser.Member" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="GroupID" />
+      </Principal>
+      <Dependent Role="Member">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Member_Action_Member">
+    <End Role="Member" Type="CoreUser.Member" Multiplicity="1" />
+    <End Role="Member_Action" Type="CoreUser.Member_Action" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="MemberID" />
+      </Principal>
+      <Dependent Role="Member_Action">
+        <PropertyRef Name="MemberID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Member_Profile_Member">
+    <End Role="Member" Type="CoreUser.Member" Multiplicity="1" />
+    <End Role="Member_Profile" Type="CoreUser.Member_Profile" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="MemberID" />
+      </Principal>
+      <Dependent Role="Member_Profile">
+        <PropertyRef Name="MemberID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Group_Roles">
+    <End Role="Group" Type="CoreUser.Group" Multiplicity="*" />
+    <End Role="Roles" Type="CoreUser.Roles" Multiplicity="*" />
+  </Association>
+  <Association Name="Role_Permissions">
+    <End Role="Permissions" Type="CoreUser.Permissions" Multiplicity="*" />
+    <End Role="Roles" Type="CoreUser.Roles" Multiplicity="*" />
+  </Association>
+</Schema>

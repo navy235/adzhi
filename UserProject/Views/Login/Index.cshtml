@@ -1,0 +1,19 @@
+﻿@model UserProject.Models.LogOnModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Login</h2>
+@if (ViewBag.Message != null)
+{
+    <p class="form_tips">@ViewBag.Message</p>
+}
+@using (Html.BeginForm())
+{
+    
+    @Html.EditorFor(m => Model)
+
+    <button type="submit" class="k-button">Login</button>
+}
+

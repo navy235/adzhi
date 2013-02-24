@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CodeFirstEF.Models.Area" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Models\Area.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.AreaAtt" Collapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAggAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Models\AreaAtt.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.Category" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAQADAAgAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Models\Category.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.CredentialsImg" Collapsed="true">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CredentialsImg.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.Department" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAggAAAAAAAAEQAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Models\Department.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.FormatCate" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\FormatCate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.Group" Collapsed="true">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAgAAAAAAAAAAQAAgAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Group.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.GroupModel" Collapsed="true">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAggAAAAAAAAAQAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\GroupModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.ImgBase" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAACAAAAAAQAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Models\ImgBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.MapImg" Collapsed="true">
+    <Position X="5.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\MapImg.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.MediaBase" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAgAAACEAAAgAAAAAAIAAAQAQEIIAAAAAACBIQAAAEA=</HashCode>
+      <FileName>Models\MediaBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.MediaImg" Collapsed="true">
+    <Position X="0.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\MediaImg.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.Member" Collapsed="true">
+    <Position X="12.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQAAEAEASAAAAAAAAABAAAAAEIAAAECAAAAABABAEA=</HashCode>
+      <FileName>Models\Member.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.Member_Action" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAggAAAAAAAAAAAAAAIEAAAAAAAAAABAAA=</HashCode>
+      <FileName>Models\Member_Action.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.Member_Profile" Collapsed="true">
+    <Position X="15.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAghAAAAAAAAAAAAAAIAAgAAAAAAwABAAE=</HashCode>
+      <FileName>Models\Member_Profile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.OutDoor" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAIABaABSwgAAgAAQIAHACAAAABAEgAAEAABQQACAA=</HashCode>
+      <FileName>Models\OutDoor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.OutDoorMediaCate" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\OutDoorMediaCate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.Owner" Collapsed="true">
+    <Position X="17.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAACgBAAAAAAAAAQAAAAAAAAAEQAAAAAAA=</HashCode>
+      <FileName>Models\Owner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.OwnerCate" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\OwnerCate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.PeriodCate" Collapsed="true">
+    <Position X="9.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PeriodCate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.Permissions" Collapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAggAAAAAAAAAQAEgAAIAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Models\Permissions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.RoleModel" Collapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAggAAAAAAAAAQAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Models\RoleModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.Roles" Collapsed="true">
+    <Position X="15.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAggAAAAAAAAAQAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Models\Roles.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.SaleBase" Collapsed="true">
+    <Position X="17.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAQggAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\SaleBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeFirstEF.Models.TopBase" Collapsed="true">
+    <Position X="12.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAggAAAAAAAAAAQAAAAAAAAAEAQAAAAAA=</HashCode>
+      <FileName>Models\TopBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="微软雅黑" Size="9" />
+</ClassDiagram>

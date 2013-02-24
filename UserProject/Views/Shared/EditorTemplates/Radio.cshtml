@@ -1,0 +1,21 @@
+@model int?
+
+@{
+    string name = ViewData.TemplateInfo.GetFullHtmlFieldId("");
+    List<SelectListItem> renderRadioList = new List<SelectListItem>();
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("Radio"))
+    {
+        renderRadioList = UserProject.Helpers.Helper.getDictionary(ViewData.ModelMetadata.AdditionalValues["Radio"].ToString(), Model.ToString());
+    }
+}
+
+
+
+@for (int i = 0; i < renderRadioList.Count; i++)
+{ 
+    @Html.RadioButton("", renderRadioList[i].Value, renderRadioList[i].Selected, new { name = name, id = name + i.ToString() })
+    @Html.Label("", renderRadioList[i].Text, new { @for = name + i.ToString() })
+}
+
+
+

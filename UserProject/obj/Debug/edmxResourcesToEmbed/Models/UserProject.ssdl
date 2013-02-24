@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="UserProjectModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="UserProjectModelStoreContainer">
+    <EntitySet Name="Department_Roles" EntityType="UserProjectModel.Store.Department_Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Departments" EntityType="UserProjectModel.Store.Departments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Member_Actions" EntityType="UserProjectModel.Store.Member_Actions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Member_Profiles" EntityType="UserProjectModel.Store.Member_Profiles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Members" EntityType="UserProjectModel.Store.Members" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Permissions" EntityType="UserProjectModel.Store.Permissions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Role_Permissions" EntityType="UserProjectModel.Store.Role_Permissions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Roles" EntityType="UserProjectModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="Department_Roles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="DepartmentID" Type="int" />
+    <Property Name="RoleID" Type="int" />
+  </EntityType>
+  <EntityType Name="Departments">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="Leader" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Member_Actions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ActionType" Type="int" />
+    <Property Name="MemberID" Type="int" />
+    <Property Name="Description" Type="varchar" MaxLength="50" />
+    <Property Name="AddTime" Type="datetime2" />
+  </EntityType>
+  <EntityType Name="Member_Profiles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="MemberID" Type="int" />
+    <Property Name="AvtarUrl" Type="varchar" MaxLength="200" />
+    <Property Name="Sex" Type="bit" />
+    <Property Name="Borthday" Type="datetime2" />
+    <Property Name="CityCode" Type="varchar" MaxLength="20" />
+    <Property Name="Description" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Members">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="NickName" Type="varchar" MaxLength="20" />
+    <Property Name="Password" Type="varchar" MaxLength="20" />
+    <Property Name="DepartmentID" Type="int" />
+    <Property Name="LastTime" Type="datetime2" />
+    <Property Name="LastIP" Type="varchar" MaxLength="50" />
+    <Property Name="AddTime" Type="datetime2" />
+    <Property Name="AddIP" Type="varchar" MaxLength="50" />
+    <Property Name="LoginCount" Type="int" />
+    <Property Name="Status" Type="int" />
+  </EntityType>
+  <EntityType Name="Permissions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="20" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="Controller" Type="varchar" MaxLength="30" />
+    <Property Name="Action" Type="varchar" MaxLength="20" />
+    <Property Name="Namespace" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Role_Permissions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="RoleID" Type="int" />
+    <Property Name="PermissionID" Type="int" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="DepartmentID" Type="int" />
+  </EntityType>
+</Schema>

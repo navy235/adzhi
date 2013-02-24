@@ -1,0 +1,13 @@
+@model int?
+
+@{
+    List<SelectListItem> renderRadioList = new List<SelectListItem>();
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("DropdownList"))
+    {
+        renderRadioList = UserProject.Helpers.Helper.getDictionary(ViewData.ModelMetadata.AdditionalValues["DropdownList"].ToString(), Model.ToString());
+    }
+}
+
+@Html.Kendo().DropDownList().BindTo(renderRadioList).Name(ViewData.TemplateInfo.GetFullHtmlFieldName(""))
+
+

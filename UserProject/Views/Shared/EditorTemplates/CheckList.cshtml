@@ -1,0 +1,44 @@
+@model string
+
+@{
+    string name = ViewData.TemplateInfo.GetFullHtmlFieldId(null);
+    List<SelectListItem> renderList = new List<SelectListItem>();
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("CheckList"))
+    {
+        renderList = UserProject.Helpers.Helper.getDictionary(ViewData.ModelMetadata.AdditionalValues["CheckList"].ToString(), Model);
+    }
+    
+}
+
+@for (int i = 0; i < renderList.Count; i++)
+{ 
+    <input type="checkbox" id="@(name + i.ToString())" name="@(name + "_check")" value="@renderList[i].Value" checked="@renderList[i].Selected" />
+    <label for="@(name + i.ToString())" >@renderList[i].Text</label>
+}
+
+@Html.TextBoxFor(m => m, new { tabindex = -1, @class = "k-valid-text" })
+
+<script type="text/javascript">
+    var @name={
+        id:'@name',
+        checkid:'@(name + "_check")',
+        inited:false,
+        binding:function(){
+            var self=@name;
+            self.setValue();
+            $('[name="'+self.checkid+'"]').on('click',self.setValue);
+            self.inited=true;
+        },
+        setValue:function(){
+            var self=@name;
+            var selectValus=$('[name="'+self.checkid+'"]:checked').val();
+            $('#'+self.id).val(selectValus);
+            if(self.inited){
+                $('#'+self.id).parents('form').validate().element('#'+self.id);
+            }
+        }
+    }
+    $(function(){
+        @Html.Raw(name + ".binding();")
+    })
+</script>

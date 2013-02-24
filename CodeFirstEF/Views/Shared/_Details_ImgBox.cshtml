@@ -1,0 +1,31 @@
+﻿@using CoreHelper.Http
+@model  IEnumerable<CodeFirstEF.ViewModels.ImageBox>
+
+<div class="details-box">
+    <a href="javascript:;" id="litimgUp" class="details-scroll-btn details-scroll-up details-scroll-btn-disabled"><b class="up"></b></a>
+    <a href="javascript:;" id="litimgDown" class="details-scroll-btn   details-scroll-down details-scroll-btn-disabled"><b class="down"></b></a>
+    <div class="details-info-box">
+        <ul class="details-info-list">
+            @{
+                int i = 0;
+            }
+
+            @foreach (var img in Model)
+            {
+                <li @if (i == 0) { Html.Raw("class=\"active\""); } >
+                    <a href="javascript:;" style="background-image: none; background-color: rgb(255, 255, 255); background-position: initial initial; background-repeat: initial initial;">
+                        <img src="@Html.GetImgBoxUrl(img.MinImgSize, img.ImgUrl)"></a>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="details-info-show" style="background-image: none; background-color: rgb(255, 255, 255); background-position: initial initial; background-repeat: initial initial;">
+        <b style="top: 129px; left: 0px; display: none;"></b>
+        <img src="@Html.GetImgBoxUrl(Model.First().MidImgSize, Model.First().ImgUrl)" id="showImg">
+    </div>
+    <a href="http://img4.126.net/health/product/20130121/hc6yq7kc10013.jpg" class="details-show-large" target="_blank">查看大图</a>
+    <div class="details-show-details" style="background-image: none; background-color: rgb(255, 255, 255); display: none; background-position: initial initial; background-repeat: initial initial;">
+        <img src="@Html.GetImgBoxUrl(Model.First().MaxImgSize, Model.First().ImgUrl)" id="showImgBig" style="left: 0px; top: -239.94000000000003px;">
+    </div>
+    <input type="hidden" id="goodsId" value="2167">
+</div>

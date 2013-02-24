@@ -1,0 +1,617 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CoreUser.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="CoreUserStoreContainer">
+          <EntitySet Name="Area" EntityType="CoreUser.Store.Area" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Department" EntityType="CoreUser.Store.Department" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Group" EntityType="CoreUser.Store.Group" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Group_Roles" EntityType="CoreUser.Store.Group_Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Member" EntityType="CoreUser.Store.Member" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Member_Action" EntityType="CoreUser.Store.Member_Action" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Member_Profile" EntityType="CoreUser.Store.Member_Profile" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Permissions" EntityType="CoreUser.Store.Permissions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Role_Permissions" EntityType="CoreUser.Store.Role_Permissions" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Roles" EntityType="CoreUser.Store.Roles" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Group_Roles_Group" Association="CoreUser.Store.FK_Group_Roles_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="Group_Roles" EntitySet="Group_Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Group_Roles_Roles" Association="CoreUser.Store.FK_Group_Roles_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Group_Roles" EntitySet="Group_Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_Action_Member" Association="CoreUser.Store.FK_Member_Action_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Member_Action" EntitySet="Member_Action" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_Group" Association="CoreUser.Store.FK_Member_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_Profile_Area" Association="CoreUser.Store.FK_Member_Profile_Area">
+            <End Role="Area" EntitySet="Area" />
+            <End Role="Member_Profile" EntitySet="Member_Profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_Profile_Member" Association="CoreUser.Store.FK_Member_Profile_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Member_Profile" EntitySet="Member_Profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Permissions_Department" Association="CoreUser.Store.FK_Permissions_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Permissions" EntitySet="Permissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Role_Permissions_Permissions" Association="CoreUser.Store.FK_Role_Permissions_Permissions">
+            <End Role="Permissions" EntitySet="Permissions" />
+            <End Role="Role_Permissions" EntitySet="Role_Permissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Role_Permissions_Roles" Association="CoreUser.Store.FK_Role_Permissions_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Role_Permissions" EntitySet="Role_Permissions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="CityCode" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CityCode" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="CityName" Type="varchar" MaxLength="20" />
+          <Property Name="Length" Type="int" />
+          <Property Name="OrderIndex" Type="int" />
+          <Property Name="PCityCode" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="30" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="Leader" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="30" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Group_Roles">
+          <Key>
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="GroupID" Type="int" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="NickName" Type="varchar" MaxLength="20" />
+          <Property Name="Password" Type="varchar" MaxLength="20" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
+          <Property Name="LastTime" Type="datetime2" />
+          <Property Name="LastIP" Type="varchar" MaxLength="50" />
+          <Property Name="AddTime" Type="datetime2" />
+          <Property Name="AddIP" Type="varchar" MaxLength="50" />
+          <Property Name="LoginCount" Type="int" />
+          <Property Name="Status" Type="int" />
+        </EntityType>
+        <EntityType Name="Member_Action">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ActionType" Type="int" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="AddTime" Type="datetime2" />
+        </EntityType>
+        <EntityType Name="Member_Profile">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="AvtarUrl" Type="varchar" MaxLength="200" />
+          <Property Name="Sex" Type="int" />
+          <Property Name="Borthday" Type="datetime2" />
+          <Property Name="CityCode" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Permissions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="20" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="Controller" Type="varchar" MaxLength="30" />
+          <Property Name="Action" Type="varchar" MaxLength="20" />
+          <Property Name="Namespace" Type="varchar" MaxLength="50" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role_Permissions">
+          <Key>
+            <PropertyRef Name="RoleID" />
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="PermissionID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="varchar" MaxLength="30" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_Group_Roles_Group">
+          <End Role="Group" Type="CoreUser.Store.Group" Multiplicity="1" />
+          <End Role="Group_Roles" Type="CoreUser.Store.Group_Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="Group_Roles">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Group_Roles_Roles">
+          <End Role="Roles" Type="CoreUser.Store.Roles" Multiplicity="1" />
+          <End Role="Group_Roles" Type="CoreUser.Store.Group_Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Group_Roles">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_Action_Member">
+          <End Role="Member" Type="CoreUser.Store.Member" Multiplicity="1" />
+          <End Role="Member_Action" Type="CoreUser.Store.Member_Action" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Member_Action">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_Group">
+          <End Role="Group" Type="CoreUser.Store.Group" Multiplicity="1" />
+          <End Role="Member" Type="CoreUser.Store.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_Profile_Area">
+          <End Role="Area" Type="CoreUser.Store.Area" Multiplicity="1" />
+          <End Role="Member_Profile" Type="CoreUser.Store.Member_Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="CityCode" />
+            </Principal>
+            <Dependent Role="Member_Profile">
+              <PropertyRef Name="CityCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_Profile_Member">
+          <End Role="Member" Type="CoreUser.Store.Member" Multiplicity="1" />
+          <End Role="Member_Profile" Type="CoreUser.Store.Member_Profile" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Member_Profile">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Permissions_Department">
+          <End Role="Department" Type="CoreUser.Store.Department" Multiplicity="1" />
+          <End Role="Permissions" Type="CoreUser.Store.Permissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Permissions">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Role_Permissions_Permissions">
+          <End Role="Permissions" Type="CoreUser.Store.Permissions" Multiplicity="1" />
+          <End Role="Role_Permissions" Type="CoreUser.Store.Role_Permissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permissions">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Role_Permissions">
+              <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Role_Permissions_Roles">
+          <End Role="Roles" Type="CoreUser.Store.Roles" Multiplicity="1" />
+          <End Role="Role_Permissions" Type="CoreUser.Store.Role_Permissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Role_Permissions">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CoreUser" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Area" EntityType="CoreUser.Area" />
+          <EntitySet Name="Department" EntityType="CoreUser.Department" />
+          <EntitySet Name="Group" EntityType="CoreUser.Group" />
+          <EntitySet Name="Member" EntityType="CoreUser.Member" />
+          <EntitySet Name="Member_Action" EntityType="CoreUser.Member_Action" />
+          <EntitySet Name="Member_Profile" EntityType="CoreUser.Member_Profile" />
+          <EntitySet Name="Permissions" EntityType="CoreUser.Permissions" />
+          <EntitySet Name="Roles" EntityType="CoreUser.Roles" />
+          <AssociationSet Name="FK_Member_Profile_Area" Association="CoreUser.FK_Member_Profile_Area">
+            <End Role="Area" EntitySet="Area" />
+            <End Role="Member_Profile" EntitySet="Member_Profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Permissions_Department" Association="CoreUser.FK_Permissions_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Permissions" EntitySet="Permissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_Group" Association="CoreUser.FK_Member_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_Action_Member" Association="CoreUser.FK_Member_Action_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Member_Action" EntitySet="Member_Action" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_Profile_Member" Association="CoreUser.FK_Member_Profile_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Member_Profile" EntitySet="Member_Profile" />
+          </AssociationSet>
+          <AssociationSet Name="Group_Roles" Association="CoreUser.Group_Roles">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="Role_Permissions" Association="CoreUser.Role_Permissions">
+            <End Role="Permissions" EntitySet="Permissions" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="CityCode" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="CityCode" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="CityName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="Length" Type="Int32" />
+          <Property Name="OrderIndex" Type="Int32" />
+          <Property Name="PCityCode" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Member_Profile" Relationship="CoreUser.FK_Member_Profile_Area" FromRole="Area" ToRole="Member_Profile" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Leader" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Permissions" Relationship="CoreUser.FK_Permissions_Department" FromRole="Department" ToRole="Permissions" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Member" Relationship="CoreUser.FK_Member_Group" FromRole="Group" ToRole="Member" />
+          <NavigationProperty Name="Roles" Relationship="CoreUser.Group_Roles" FromRole="Group" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="NickName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="Password" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <Property Name="LastTime" Type="DateTime" Precision="7" />
+          <Property Name="LastIP" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="AddTime" Type="DateTime" Precision="7" />
+          <Property Name="AddIP" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="LoginCount" Type="Int32" />
+          <Property Name="Status" Type="Int32" />
+          <NavigationProperty Name="Group" Relationship="CoreUser.FK_Member_Group" FromRole="Member" ToRole="Group" />
+          <NavigationProperty Name="Member_Action" Relationship="CoreUser.FK_Member_Action_Member" FromRole="Member" ToRole="Member_Action" />
+          <NavigationProperty Name="Member_Profile" Relationship="CoreUser.FK_Member_Profile_Member" FromRole="Member" ToRole="Member_Profile" />
+        </EntityType>
+        <EntityType Name="Member_Action">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="ActionType" Type="Int32" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="AddTime" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="Member" Relationship="CoreUser.FK_Member_Action_Member" FromRole="Member_Action" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Member_Profile">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="AvtarUrl" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="Sex" Type="Int32" />
+          <Property Name="Borthday" Type="DateTime" Precision="7" />
+          <Property Name="CityCode" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Area" Relationship="CoreUser.FK_Member_Profile_Area" FromRole="Member_Profile" ToRole="Area" />
+          <NavigationProperty Name="Member" Relationship="CoreUser.FK_Member_Profile_Member" FromRole="Member_Profile" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="Permissions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Controller" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="Action" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="Namespace" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Department" Relationship="CoreUser.FK_Permissions_Department" FromRole="Permissions" ToRole="Department" />
+          <NavigationProperty Name="Roles" Relationship="CoreUser.Role_Permissions" FromRole="Permissions" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Group" Relationship="CoreUser.Group_Roles" FromRole="Roles" ToRole="Group" />
+          <NavigationProperty Name="Permissions" Relationship="CoreUser.Role_Permissions" FromRole="Roles" ToRole="Permissions" />
+        </EntityType>
+        <Association Name="FK_Member_Profile_Area">
+          <End Role="Area" Type="CoreUser.Area" Multiplicity="1" />
+          <End Role="Member_Profile" Type="CoreUser.Member_Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="CityCode" />
+            </Principal>
+            <Dependent Role="Member_Profile">
+              <PropertyRef Name="CityCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Permissions_Department">
+          <End Role="Department" Type="CoreUser.Department" Multiplicity="1" />
+          <End Role="Permissions" Type="CoreUser.Permissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Permissions">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_Group">
+          <End Role="Group" Type="CoreUser.Group" Multiplicity="1" />
+          <End Role="Member" Type="CoreUser.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_Action_Member">
+          <End Role="Member" Type="CoreUser.Member" Multiplicity="1" />
+          <End Role="Member_Action" Type="CoreUser.Member_Action" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Member_Action">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_Profile_Member">
+          <End Role="Member" Type="CoreUser.Member" Multiplicity="1" />
+          <End Role="Member_Profile" Type="CoreUser.Member_Profile" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="MemberID" />
+            </Principal>
+            <Dependent Role="Member_Profile">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Group_Roles">
+          <End Role="Group" Type="CoreUser.Group" Multiplicity="*" />
+          <End Role="Roles" Type="CoreUser.Roles" Multiplicity="*" />
+        </Association>
+        <Association Name="Role_Permissions">
+          <End Role="Permissions" Type="CoreUser.Permissions" Multiplicity="*" >
+          </End>
+          <End Role="Roles" Type="CoreUser.Roles" Multiplicity="*" >
+          </End>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CoreUserStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Area">
+            <EntityTypeMapping TypeName="CoreUser.Area">
+              <MappingFragment StoreEntitySet="Area">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CityCode" ColumnName="CityCode" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="OrderIndex" ColumnName="OrderIndex" />
+                <ScalarProperty Name="PCityCode" ColumnName="PCityCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Department">
+            <EntityTypeMapping TypeName="CoreUser.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Leader" ColumnName="Leader" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Group">
+            <EntityTypeMapping TypeName="CoreUser.Group">
+              <MappingFragment StoreEntitySet="Group">
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Member">
+            <EntityTypeMapping TypeName="CoreUser.Member">
+              <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="LastTime" ColumnName="LastTime" />
+                <ScalarProperty Name="LastIP" ColumnName="LastIP" />
+                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+                <ScalarProperty Name="AddIP" ColumnName="AddIP" />
+                <ScalarProperty Name="LoginCount" ColumnName="LoginCount" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Member_Action">
+            <EntityTypeMapping TypeName="CoreUser.Member_Action">
+              <MappingFragment StoreEntitySet="Member_Action">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ActionType" ColumnName="ActionType" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Member_Profile">
+            <EntityTypeMapping TypeName="CoreUser.Member_Profile">
+              <MappingFragment StoreEntitySet="Member_Profile">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="AvtarUrl" ColumnName="AvtarUrl" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Borthday" ColumnName="Borthday" />
+                <ScalarProperty Name="CityCode" ColumnName="CityCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permissions">
+            <EntityTypeMapping TypeName="CoreUser.Permissions">
+              <MappingFragment StoreEntitySet="Permissions">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Namespace" ColumnName="Namespace" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="CoreUser.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Group_Roles" TypeName="CoreUser.Group_Roles" StoreEntitySet="Group_Roles">
+            <EndProperty Name="Group">
+              <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+            </EndProperty>
+            <EndProperty Name="Roles">
+              <ScalarProperty Name="ID" ColumnName="RoleID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Role_Permissions" TypeName="CoreUser.Role_Permissions" StoreEntitySet="Role_Permissions">
+            <EndProperty Name="Permissions">
+              <ScalarProperty Name="ID" ColumnName="PermissionID" />
+            </EndProperty>
+            <EndProperty Name="Roles">
+              <ScalarProperty Name="ID" ColumnName="RoleID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

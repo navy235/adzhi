@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>编辑户外信息</h2>
+@ViewBag.updateError
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.EditorForModel()
+    <button type="submit" class="btn btn-success">
+        <i class="icon-ok icon-white"></i>&nbsp;提交表单</button>
+
+}

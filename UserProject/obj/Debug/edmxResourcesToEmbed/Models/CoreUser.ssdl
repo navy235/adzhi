@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CoreUser.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="CoreUserStoreContainer">
+    <EntitySet Name="Area" EntityType="CoreUser.Store.Area" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Department" EntityType="CoreUser.Store.Department" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Group" EntityType="CoreUser.Store.Group" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Group_Roles" EntityType="CoreUser.Store.Group_Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Member" EntityType="CoreUser.Store.Member" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Member_Action" EntityType="CoreUser.Store.Member_Action" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Member_Profile" EntityType="CoreUser.Store.Member_Profile" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Permissions" EntityType="CoreUser.Store.Permissions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Role_Permissions" EntityType="CoreUser.Store.Role_Permissions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Roles" EntityType="CoreUser.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Group_Roles_Group" Association="CoreUser.Store.FK_Group_Roles_Group">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="Group_Roles" EntitySet="Group_Roles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Group_Roles_Roles" Association="CoreUser.Store.FK_Group_Roles_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Group_Roles" EntitySet="Group_Roles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Member_Action_Member" Association="CoreUser.Store.FK_Member_Action_Member">
+      <End Role="Member" EntitySet="Member" />
+      <End Role="Member_Action" EntitySet="Member_Action" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Member_Group" Association="CoreUser.Store.FK_Member_Group">
+      <End Role="Group" EntitySet="Group" />
+      <End Role="Member" EntitySet="Member" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Member_Profile_Area" Association="CoreUser.Store.FK_Member_Profile_Area">
+      <End Role="Area" EntitySet="Area" />
+      <End Role="Member_Profile" EntitySet="Member_Profile" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Member_Profile_Member" Association="CoreUser.Store.FK_Member_Profile_Member">
+      <End Role="Member" EntitySet="Member" />
+      <End Role="Member_Profile" EntitySet="Member_Profile" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Permissions_Department" Association="CoreUser.Store.FK_Permissions_Department">
+      <End Role="Department" EntitySet="Department" />
+      <End Role="Permissions" EntitySet="Permissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Role_Permissions_Permissions" Association="CoreUser.Store.FK_Role_Permissions_Permissions">
+      <End Role="Permissions" EntitySet="Permissions" />
+      <End Role="Role_Permissions" EntitySet="Role_Permissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Role_Permissions_Roles" Association="CoreUser.Store.FK_Role_Permissions_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Role_Permissions" EntitySet="Role_Permissions" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Area">
+    <Key>
+      <PropertyRef Name="CityCode" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CityCode" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="CityName" Type="varchar" MaxLength="20" />
+    <Property Name="Length" Type="int" />
+    <Property Name="OrderIndex" Type="int" />
+    <Property Name="PCityCode" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DepartmentID" />
+    </Key>
+    <Property Name="DepartmentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="Leader" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Group">
+    <Key>
+      <PropertyRef Name="GroupID" />
+    </Key>
+    <Property Name="GroupID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Group_Roles">
+    <Key>
+      <PropertyRef Name="GroupID" />
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="GroupID" Type="int" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Member">
+    <Key>
+      <PropertyRef Name="MemberID" />
+    </Key>
+    <Property Name="MemberID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="NickName" Type="varchar" MaxLength="20" />
+    <Property Name="Password" Type="varchar" MaxLength="20" />
+    <Property Name="GroupID" Type="int" Nullable="false" />
+    <Property Name="LastTime" Type="datetime2" />
+    <Property Name="LastIP" Type="varchar" MaxLength="50" />
+    <Property Name="AddTime" Type="datetime2" />
+    <Property Name="AddIP" Type="varchar" MaxLength="50" />
+    <Property Name="LoginCount" Type="int" />
+    <Property Name="Status" Type="int" />
+  </EntityType>
+  <EntityType Name="Member_Action">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ActionType" Type="int" />
+    <Property Name="MemberID" Type="int" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="50" />
+    <Property Name="AddTime" Type="datetime2" />
+  </EntityType>
+  <EntityType Name="Member_Profile">
+    <Key>
+      <PropertyRef Name="MemberID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="MemberID" Type="int" Nullable="false" />
+    <Property Name="AvtarUrl" Type="varchar" MaxLength="200" />
+    <Property Name="Sex" Type="int" />
+    <Property Name="Borthday" Type="datetime2" />
+    <Property Name="CityCode" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="Description" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Permissions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="20" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="Controller" Type="varchar" MaxLength="30" />
+    <Property Name="Action" Type="varchar" MaxLength="20" />
+    <Property Name="Namespace" Type="varchar" MaxLength="50" />
+    <Property Name="DepartmentID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Role_Permissions">
+    <Key>
+      <PropertyRef Name="RoleID" />
+      <PropertyRef Name="PermissionID" />
+    </Key>
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="PermissionID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="30" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <Association Name="FK_Group_Roles_Group">
+    <End Role="Group" Type="CoreUser.Store.Group" Multiplicity="1" />
+    <End Role="Group_Roles" Type="CoreUser.Store.Group_Roles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="GroupID" />
+      </Principal>
+      <Dependent Role="Group_Roles">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Group_Roles_Roles">
+    <End Role="Roles" Type="CoreUser.Store.Roles" Multiplicity="1" />
+    <End Role="Group_Roles" Type="CoreUser.Store.Group_Roles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Group_Roles">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Member_Action_Member">
+    <End Role="Member" Type="CoreUser.Store.Member" Multiplicity="1" />
+    <End Role="Member_Action" Type="CoreUser.Store.Member_Action" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="MemberID" />
+      </Principal>
+      <Dependent Role="Member_Action">
+        <PropertyRef Name="MemberID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Member_Group">
+    <End Role="Group" Type="CoreUser.Store.Group" Multiplicity="1" />
+    <End Role="Member" Type="CoreUser.Store.Member" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="GroupID" />
+      </Principal>
+      <Dependent Role="Member">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Member_Profile_Area">
+    <End Role="Area" Type="CoreUser.Store.Area" Multiplicity="1" />
+    <End Role="Member_Profile" Type="CoreUser.Store.Member_Profile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="CityCode" />
+      </Principal>
+      <Dependent Role="Member_Profile">
+        <PropertyRef Name="CityCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Member_Profile_Member">
+    <End Role="Member" Type="CoreUser.Store.Member" Multiplicity="1" />
+    <End Role="Member_Profile" Type="CoreUser.Store.Member_Profile" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="MemberID" />
+      </Principal>
+      <Dependent Role="Member_Profile">
+        <PropertyRef Name="MemberID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Permissions_Department">
+    <End Role="Department" Type="CoreUser.Store.Department" Multiplicity="1" />
+    <End Role="Permissions" Type="CoreUser.Store.Permissions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="DepartmentID" />
+      </Principal>
+      <Dependent Role="Permissions">
+        <PropertyRef Name="DepartmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Role_Permissions_Permissions">
+    <End Role="Permissions" Type="CoreUser.Store.Permissions" Multiplicity="1" />
+    <End Role="Role_Permissions" Type="CoreUser.Store.Role_Permissions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Permissions">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Role_Permissions">
+        <PropertyRef Name="PermissionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Role_Permissions_Roles">
+    <End Role="Roles" Type="CoreUser.Store.Roles" Multiplicity="1" />
+    <End Role="Role_Permissions" Type="CoreUser.Store.Role_Permissions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Role_Permissions">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

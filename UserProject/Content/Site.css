@@ -1,0 +1,242 @@
+﻿body {
+  font-size: 12px;
+  font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+  color: #232323;
+  background-color: #fff;
+  min-height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+header, footer, nav, section {
+  display: block;
+}
+
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+fieldset {
+  border: 1px solid #ddd;
+  padding: 0 1.4em 1.4em 1.4em;
+  margin: 0 0 1.5em 0;
+}
+
+legend {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+textarea {
+  min-height: 75px;
+}
+
+.editor-label {
+  margin: 1em 0 0 0;
+}
+
+.editor-field {
+  margin: 0.5em 0 0 0;
+}
+
+
+.container {
+  height: 100%;
+  min-height: 100%;
+}
+
+
+
+
+#unlist-form {
+  border: solid 1px #ccc;
+  margin: 20px;
+  padding: 10px;
+}
+
+fieldset.form {
+  border: none;
+  clear: both;
+  padding: 0;
+}
+
+  fieldset.form legend {
+    display: none;
+  }
+
+.form-field {
+  margin-bottom: 10px;
+  position: relative;
+}
+
+  .form-field label {
+    color: #52a4ca;
+    display: block;
+    font-size: 1.25em;
+    margin-bottom: 5px;
+  }
+
+    .form-field label.checkbox {
+      display: inline;
+    }
+
+  .form-field select {
+    color: #7f8c7d;
+    font-size: 1.25em;
+    padding: 2px;
+  }
+
+  .form-field textarea,
+  .form-field input[type="text"],
+  .form-field input[type="file"],
+  .form-field input[type="password"] {
+    background: #fff url("../content/images/inputBackground.png") repeat-x;
+    border: solid 1px #ccc;
+    color: #7f8c7d;
+    font-size: 1.25em;
+    padding: 5px 0 5px 10px;
+    vertical-align: middle;
+    width: 300px;
+  }
+
+  .form-field textarea {
+    font-size: 1em;
+    height: 200px;
+    padding-top: 5px;
+  }
+
+
+    .form-field input[data-val-required],
+    .form-field textarea[data-val-required] {
+      border-left: solid 5px #52a4ca;
+    }
+
+  .form-field input[type="checkbox"] {
+    border-left: none;
+  }
+
+  .form-field input.input-validation-error,
+  .form-field textarea.input-validation-error {
+    border-left: solid 5px #ca5252;
+  }
+
+.form-field-validatecode input[type="text"] {
+  width: 120px;
+}
+
+.form-field-validatecode img {
+  height: 29px;
+  vertical-align: middle;
+}
+
+/* flyout Text */
+
+.field-hint-message,
+.field-validation-error {
+  font-size: 1em;
+  left: 330px;
+  line-height: 1.2em;
+  padding: 5px;
+  position: absolute;
+  top: 30px;
+  width: 400px;
+  z-index: 550;
+}
+
+.field-hint-message {
+  background-color: #eff7fa;
+  border: solid 1px #52a4ca;
+  display: none;
+}
+
+.field-validation-error {
+  background-color: #fbe3e4;
+  border: solid 1px #c13a3f;
+  display: block;
+}
+
+.form-field input:focus ~ .field-hint-message {
+  display: block;
+}
+
+input:focus ~ .field-validation-error ~ .field-hint-message {
+  display: none;
+}
+
+.form input[type="submit"] {
+  background-color: #4585aa;
+  background-image: -ms-linear-gradient(top, #4585aa 0%, #376783 100%);
+  background-image: -o-linear-gradient(top, #4585aa 0%, #376783 100%);
+  background-image: -webkit-linear-gradient(top, #4585aa 0%, #376783 100%);
+  background-image: linear-gradient(top, #4585aa 0%, #376783 100%);
+  border: solid 1px #376783;
+  box-shadow: inset 0px 0px 1px rgba(255, 255, 255, 1), 1px 1px 1px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.25em;
+  font-weight: 500;
+  margin: 0 10px 0 0;
+  text-decoration: none;
+  width: 100px;
+}
+
+  .form input[type="submit"]:hover {
+    background-color: #307A25;
+    background-image: -ms-linear-gradient(top, #307A25 0%, #2C9E1B 100%);
+    background-image: -o-linear-gradient(top, #307A25 0%, #2C9E1B 100%);
+    background-image: -webkit-linear-gradient(top, #307A25 0%, #2C9E1B 100%);
+    background-image: linear-gradient(top, #307A25 0%, #2C9E1B 100%);
+    border-color: #307A25;
+  }
+
+.form a.cancel {
+  font-size: 1.25em;
+}
+
+.form input:focus {
+  outline: none;
+}
+
+.form img {
+  display: block;
+  margin: 15px 0;
+}
+
+.validation-summary-errors,
+.field-validation-error {
+  color: #c13a3f;
+}
+
+.validation-summary-errors {
+  font-size: 1.25em;
+  font-weight: 600;
+}
+
+.PoliteCaptcha.editor-field .field-validation-error {
+  position: static;
+  width: 300px;
+}
+
+/* To fix alignment of generated reCAPTCHA table */
+
+.PoliteCaptcha.editor-field table {
+  margin-left: -3px !important;
+}
+
+/* Errors */
+
+.error-content {
+  margin-top: 80px;
+}
+
+.error-show-code {
+  background-image: url("../Content/Images/errorPage.png");
+  background-repeat: no-repeat;
+  height: 125px;
+  left: 0;
+  position: fixed;
+  text-indent: -9999px;
+  top: 0;
+  width: 220px;
+}

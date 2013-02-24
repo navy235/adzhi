@@ -1,0 +1,20 @@
+﻿@using CodeFirstEF.ViewModels;
+@model TestViewModel
+@{
+    ViewBag.Title = "Test";
+}
+
+<h2>添加户外信息</h2>
+
+@ViewBag.updateError
+
+@using (Html.BeginForm())
+{
+    @Html.EditorForModel()
+
+    @Html.EditorFor(m => m.BaseInfo)
+
+    @Html.EditorFor(m => m.PositionInfo)
+
+    <input type="submit" value="submit" title="submit" />
+}

@@ -1,0 +1,23 @@
+﻿div.k-window {
+    position: fixed;
+    top: 20% !important;
+}
+
+.k-window-footer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    text-align: right;
+}
+
+.k-valid-text {
+    visibility: hidden;
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.k-valid-dropdownlist {
+    right: 0px;
+    top: 0px;
+}

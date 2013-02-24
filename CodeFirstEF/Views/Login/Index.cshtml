@@ -1,0 +1,20 @@
+﻿@model CodeFirstEF.ViewModels.LogOnModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Login</h2>
+@if (ViewBag.Message != null)
+{
+    <p class="form_tips">@ViewBag.Message</p>
+}
+@using (Html.BeginForm())
+{
+    
+    @Html.AntiForgeryToken()
+    @Html.EditorForModel()
+    <button type="submit" class="btn btn-success">
+        <i class="icon-ok icon-white"></i>&nbsp;登&nbsp;录</button>
+
+}

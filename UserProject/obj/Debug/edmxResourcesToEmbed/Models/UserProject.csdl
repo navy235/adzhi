@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="UserProjectModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="UserProject" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Department_Roles" EntityType="UserProjectModel.Department_Roles" />
+    <EntitySet Name="Departments" EntityType="UserProjectModel.Departments" />
+    <EntitySet Name="Member_Actions" EntityType="UserProjectModel.Member_Actions" />
+    <EntitySet Name="Member_Profiles" EntityType="UserProjectModel.Member_Profiles" />
+    <EntitySet Name="Members" EntityType="UserProjectModel.Members" />
+    <EntitySet Name="Permissions" EntityType="UserProjectModel.Permissions" />
+    <EntitySet Name="Role_Permissions" EntityType="UserProjectModel.Role_Permissions" />
+    <EntitySet Name="Roles" EntityType="UserProjectModel.Roles" />
+  </EntityContainer>
+  <EntityType Name="Department_Roles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="DepartmentID" Type="Int32" />
+    <Property Name="RoleID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Departments">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="Leader" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Member_Actions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ActionType" Type="Int32" />
+    <Property Name="MemberID" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="AddTime" Type="DateTime" Precision="7" />
+  </EntityType>
+  <EntityType Name="Member_Profiles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="MemberID" Type="Int32" />
+    <Property Name="AvtarUrl" Type="String" MaxLength="200" Unicode="false" FixedLength="false" />
+    <Property Name="Sex" Type="Boolean" />
+    <Property Name="Borthday" Type="DateTime" Precision="7" />
+    <Property Name="CityCode" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Members">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="NickName" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Password" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="DepartmentID" Type="Int32" />
+    <Property Name="LastTime" Type="DateTime" Precision="7" />
+    <Property Name="LastIP" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="AddTime" Type="DateTime" Precision="7" />
+    <Property Name="AddIP" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="LoginCount" Type="Int32" />
+    <Property Name="Status" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Permissions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="Controller" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="Action" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="Namespace" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Role_Permissions">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleID" Type="Int32" />
+    <Property Name="PermissionID" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="DepartmentID" Type="Int32" />
+  </EntityType>
+</Schema>

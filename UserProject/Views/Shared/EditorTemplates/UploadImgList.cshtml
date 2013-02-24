@@ -1,0 +1,202 @@
+@model string
+
+@{
+    var name = ViewData.TemplateInfo.GetFullHtmlFieldName("");
+}
+<style type="text/css">
+    .img-box-list {
+        overflow: hidden;
+    }
+
+    .img-list-box {
+        float: left;
+        padding: 5px;
+        position: relative;
+        border: 1px solid #bbb;
+        margin: 10px 10px 0 0;
+    }
+
+        .img-list-box img {
+            width: 120px;
+            height: 100px;
+        }
+
+        .img-list-box .img-list-box-close {
+            position: absolute;
+            right: 2px;
+            top: 2px;
+            height: 16px;
+            width: 16px;
+            background: #fff;
+            display: block;
+            cursor: pointer;
+        }
+
+        .img-list-box .img-list-box-bar {
+            position: absolute;
+            width: 100%;
+            height: 25px;
+            background: #000;
+            opacity: 0.7;
+            bottom: 0;
+            left: 0;
+            text-align: center;
+        }
+
+            .img-list-box .img-list-box-bar .img-list-box-sorter-right {
+                display: block;
+                position: absolute;
+                right: 5px;
+                height: 16px;
+                width: 16px;
+                top: 5px;
+                cursor: pointer;
+            }
+
+
+            .img-list-box .img-list-box-bar .img-list-box-sorter-left {
+                display: block;
+                position: absolute;
+                left: 5px;
+                height: 16px;
+                width: 16px;
+                top: 5px;
+                cursor: pointer;
+            }
+</style>
+
+@(Html.Kendo().Upload()
+    .Name("listattachments")
+    .Multiple(true)
+    .Async(a => a
+            .Save("UploadListSave", "AjaxService")
+            .Remove("UpLoadRemove", "AjaxService")
+            .AutoUpload(true)
+        )
+            .Events(events => events
+                .Error(name + ".onError")
+                .Success(name + ".onSuccess")
+                .Upload(name + ".onUpload")
+            )
+
+    )
+@Html.TextBoxFor(m => m, new { tabindex = -1, @class = "k-valid-text" })
+
+<div class="img-box-list" id="@Html.Raw(name + "_imgbox")">
+</div>
+<script type="text/x-kendo-template" id="@Html.Raw(name + "_template")">
+   <div class="img-list-box">
+       <a class="img-list-box-close" title="É¾³ý"><span class="k-icon k-i-close"></span></a>
+       <img class="#= name #_img" src="#= imgurl #" />
+       <div class="img-list-box-bar">
+        <a  class="img-list-box-sorter img-list-box-sorter-right" title="ÓÒÒÆ" data-direction="right"><span class="k-icon k-i-arrow-e" data-direction="right"></span></a>
+        <a  class="img-list-box-sorter img-list-box-sorter-left" title="×óÒÆ" data-direction="left"><span class="k-icon k-i-arrow-w" data-direction="left"></span></a>
+       </div> 
+        <input type="hidden" name="#= name #_imgurl" value="#=imgurl#"/>
+   </div>
+</div>
+</script>
+
+<script type="text/javascript">
+
+    var @name={
+        id:'@name',
+        binding:function(){
+            var self=@name;
+            var _imgurl='@(String.IsNullOrEmpty(Model) ? "" : Model)';
+            if(_imgurl!==''){
+                for(var i=0;i<_imgurl.split(',').length;i++){
+                    var template=kendo.template($("#"+self.id+"_template").html());
+                    $("#"+self.id+"_imgbox").append(template({
+                        name:self.id,
+                        imgurl:_imgurl.split(',')[i]
+                    }));
+                }
+                $("#"+self.id+"_imgbox").find('.img-list-box-close').on('click',self.deleteImg);
+                $("#"+self.id+"_imgbox").find('.img-list-box-sorter').on('click',self.sorter);
+                $("#"+self.id).val(_imgurl);
+            }
+        },
+        onError:function(e){
+        
+        },
+        onSuccess:function(e){
+            var self=@name;
+            var resData = eval("(" + e.response + ")");
+            var $input=$('#'+self.id);
+            if (resData.err === ''&&resData.status==='upload') {
+                var template=kendo.template($("#"+self.id+"_template").html());
+                $("#"+self.id+"_imgbox").append(template({
+                    name:self.id,
+                    imgurl:resData.imgurl
+                }));
+                $("#"+self.id+"_imgbox").find('.img-list-box-close').off('click');
+                $("#"+self.id+"_imgbox").find('.img-list-box-sorter').off('click');
+                $("#"+self.id+"_imgbox").find('.img-list-box-close').on('click',self.deleteImg);
+                $("#"+self.id+"_imgbox").find('.img-list-box-sorter').on('click',self.sorter);
+                var inputVal=$input.val()===''?'':$input.val()+',';
+                inputVal+=resData.imgurl;
+                $input.val(inputVal);
+            }
+            else {
+                if(resData.err===''&&resData.status==='remove'){
+                    return ;
+                }else{
+                    alert(resData.err);
+                }
+            }
+        },
+        onUpload:function(e){
+            var files = e.files;
+            $.each(files, function () {
+                if (".gif.jpg.jpeg.bmp.png".indexOf(this.extension) == -1) {
+                    alert("ÇëÉÏ´«.gif.jpg.jpeg.bmp.pngµÄÍ¼Æ¬ÎÄ¼þ£¡")
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        },
+        deleteImg:function(e){
+            var self=@name;
+            var $target=$(e.target);
+            var $imgbox=$target.parents('.img-list-box');
+            var index=$imgbox.index();
+            var inputVals=$('#'+self.id).val().split(',');
+            inputVals.splice(index,1);
+            $('#'+self.id).val(inputVals.join(','));
+            $imgbox.remove();
+        },
+        sorter:function(e){
+            var self=@name;
+            var $target=$(e.target);
+            var direction=$target.data('direction');
+            var $imgboxlist=$("#"+self.id+"_imgbox");
+            var $imgbox=$target.parents('.img-list-box');
+            var index=$imgbox.index();
+            var $imgboxs=$("#"+self.id+"_imgbox").find('.img-list-box');
+            var length=$imgboxs.size();
+            if((direction==='right'&&index===length-1)||(direction==='left'&&index===0)){
+                return false;
+            }else{
+                if(direction==='right'){
+                    $imgbox.insertAfter($imgboxs.eq(index+1));
+                }else if(direction==='left'){
+                    $imgbox.insertBefore($imgboxs.eq(index-1));
+                }
+                self.sortValue();
+            }
+        },
+        sortValue:function(){
+            var self=@name;
+            var $imgboxlist=$("#"+self.id+"_imgbox");
+            var $imgInputs=$imgboxlist.find('[name="'+self.id+'_imgurl"]');
+            var inputVals=$.map($imgInputs,function(item){
+                return $(item).val();
+            })
+            $('#'+self.id).val(inputVals.join(','));
+        }
+    }
+    $(function(){
+        @Html.Raw(name + ".binding();")
+    })
+</script>
