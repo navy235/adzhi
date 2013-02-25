@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using CoreHelper.Filters;
 
 namespace CodeFirstEF
 {
@@ -8,6 +9,7 @@ namespace CodeFirstEF
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new GzipCompressJsAndReplaceWhiteSpaceAttribute());
         }
     }
 }

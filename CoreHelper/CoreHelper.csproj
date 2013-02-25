@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\CoreProjec\packages\WebGrease.1.0.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="BundleMinifyInlineJsCss">
+      <HintPath>..\CoreProjec\packages\BundleMinifyInlineJsCss.1.0.1\lib\40\BundleMinifyInlineJsCss.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\CoreProjec\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -63,6 +69,12 @@
     <Reference Include="System.Xml" />
     <Reference Include="WebBackgrounder">
       <HintPath>..\CoreProjec\packages\WebBackgrounder.0.2.0\lib\net40\WebBackgrounder.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <HintPath>..\CoreProjec\packages\WebGrease.1.0.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="WG">
+      <HintPath>..\CoreProjec\packages\WebGrease.1.0.0\lib\WG.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -101,6 +113,7 @@
     <Compile Include="Filters\AjaxOnlyAttribute.cs" />
     <Compile Include="Filters\GenerateStaticAttribute.cs" />
     <Compile Include="Filters\BaseAuthorizeAttribute.cs" />
+    <Compile Include="Filters\GzipCompressJsAndReplaceWhiteSpaceAttribute.cs" />
     <Compile Include="Http\HttpHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\UIHelper.cs" />

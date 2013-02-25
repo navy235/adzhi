@@ -87,7 +87,7 @@ namespace CodeFirstEF.Controllers
                     od.TrafficPerson = um.TrafficPerson;
                     od.Unapprovedlog = string.Empty;
 
-    
+
 
                     MediaImg media = new MediaImg()
                     {
@@ -165,7 +165,7 @@ namespace CodeFirstEF.Controllers
             odv.LightEnd = od.LightEnd;
             odv.LightStrat = od.LightStrat;
             odv.Location = od.Location;
-       
+
             odv.MediaImg = od.MediaImg.ImgUrls;
             odv.MeidaCode = od.MeidaCode;
             odv.Name = od.Name;
@@ -192,6 +192,10 @@ namespace CodeFirstEF.Controllers
         }
 
 
+        public ActionResult Test()
+        {
+            return View();
+        }
 
 
     }

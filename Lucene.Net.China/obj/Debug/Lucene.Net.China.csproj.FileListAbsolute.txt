@@ -24,3 +24,7 @@ F:\GitProject\adzhi\Lucene.Net.China\bin\Debug\Lucene.Net.China.pdb
 F:\GitProject\adzhi\Lucene.Net.China\obj\Debug\Lucene.Net.China.csprojResolveAssemblyReference.cache
 F:\GitProject\adzhi\Lucene.Net.China\obj\Debug\Lucene.Net.China.dll
 F:\GitProject\adzhi\Lucene.Net.China\obj\Debug\Lucene.Net.China.pdb
+D:\GitProject\adzhi\Lucene.Net.China\bin\Debug\Lucene.Net.China.dll
+D:\GitProject\adzhi\Lucene.Net.China\bin\Debug\Lucene.Net.China.pdb
+D:\GitProject\adzhi\Lucene.Net.China\obj\Debug\Lucene.Net.China.dll
+D:\GitProject\adzhi\Lucene.Net.China\obj\Debug\Lucene.Net.China.pdb

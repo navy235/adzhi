@@ -8,16 +8,14 @@ namespace CodeFirstEF
         // 有关 Bundling 的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
+            BundleTable.EnableOptimizations = true;
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*"
-
                         ));
 
             // 使用 Modernizr 的开发版本进行开发和了解信息。然后，当你做好
@@ -29,21 +27,23 @@ namespace CodeFirstEF
                         "~/Content/163.base.css",
                         "~/Content/show.css",
                         "~/Content/site.css",
-                        "~/Content/kendohelper.css"));
+                        "~/Content/kendohelper.css",
+                        "~/Content/bootstrap.css"));
 
-            bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
-                        "~/Content/themes/base/jquery.ui.core.css",
-                        "~/Content/themes/base/jquery.ui.resizable.css",
-                        "~/Content/themes/base/jquery.ui.selectable.css",
-                        "~/Content/themes/base/jquery.ui.accordion.css",
-                        "~/Content/themes/base/jquery.ui.autocomplete.css",
-                        "~/Content/themes/base/jquery.ui.button.css",
-                        "~/Content/themes/base/jquery.ui.dialog.css",
-                        "~/Content/themes/base/jquery.ui.slider.css",
-                        "~/Content/themes/base/jquery.ui.tabs.css",
-                        "~/Content/themes/base/jquery.ui.datepicker.css",
-                        "~/Content/themes/base/jquery.ui.progressbar.css",
-                        "~/Content/themes/base/jquery.ui.theme.css"));
+            bundles.Add(new StyleBundle("~/Content/kendo/2012.3.1114/css").Include(
+                        "~/Content/kendo/2012.3.1114/kendo.common.min.css",
+                        "~/Content/kendo/2012.3.1114/kendo.dataviz.min.css",
+                        "~/Content/kendo/2012.3.1114/kendo.default.min.css"
+                     ));
+
+            bundles.IgnoreList.Clear();
+
+
+            // Add back the default ignore list rules sans the ones which affect minified files and debug mode
+            bundles.IgnoreList.Ignore("*.intellisense.js");
+            bundles.IgnoreList.Ignore("*-vsdoc.js");
+            bundles.IgnoreList.Ignore("*.debug.js", OptimizationMode.WhenEnabled);
+
         }
     }
 }

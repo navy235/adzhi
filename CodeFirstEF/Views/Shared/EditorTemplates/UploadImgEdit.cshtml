@@ -3,7 +3,7 @@
 @{
     var name = ViewData.TemplateInfo.GetFullHtmlFieldName("");
     var orgUrl = Url.Content("~/Content/noimages.gif");
-  
+
     var targetWidth = ViewData.ModelMetadata.AdditionalValues["UploadImgEdit"].ToString();
 }
 
@@ -38,29 +38,30 @@
 
 
 
-<script type="text/x-kendo-template" id="@Html.Raw(name + "_template")">
- <table>
+
+<table id="@Html.Raw(name + "_template")" style="display:none">
     <tr>
         <td>
-            <img src="#= imgurl #" id="#= name #_crop" class="#= name #_crop"  />
+            <img src="#= imgurl #" id="@(name + "_crop")" class="@(name + "_crop")"  />
         </td>
         <td style="vertical-align: top">
             <div style="width: 100px; height: 100px; overflow: hidden;">
-                <img src="#= imgurl #" id="#= name #_preview" alt="Preview" class="jcrop-preview" />
+                <img src="#= imgurl #" id="@(name + "_preview")" alt="Preview" class="jcrop-preview" />
             </div>
-            <input type="hidden" id="#= name #_url" name="#= name #_url" value="#= imgurl #" />
-            <input type="hidden" id="#= name #_x" name="#= name #_x" />
-            <input type="hidden" id="#= name #_y" name="#= name #_y" />
-            <input type="hidden" id="#= name #_w" name="#= name #_w" />
-            <input type="hidden" id="#= name #_h" name="#= name #_h" />
+            <input type="hidden" id="@(name + "_url")" name="@(name + "_url")"  />
+            <input type="hidden" id="@(name + "_x")" name="@(name + "_x")" />
+            <input type="hidden" id="@(name + "_y")" name="@(name + "_y")" />
+            <input type="hidden" id="@(name + "_w")" name="@(name + "_w")" />
+            <input type="hidden" id="@(name + "_h")" name="@(name + "_h")" />
         </td>
     </tr>
     <tr>
-        <td><button type="button" id="#= name #_save" class="k-button" ><span class="k-icon k-i-tick"></span>±£´æÍ¼Æ¬</button></td>
+        <td>
+            <button type="button" id="@(name + "_save")" class="k-button"><span class="k-icon k-i-tick"></span>±£´æÍ¼Æ¬</button></td>
         <td>&nbsp;</td>
     </tr>
 </table>
-</script>
+
 
 <script type="text/javascript" src="~/Scripts/jquery.Jcrop.min.js"></script>
 <script type="text/javascript">
@@ -120,11 +121,12 @@
             var imgEditId='@name';
             var windowId=imgEditId+ '_window';
             var templateId=imgEditId+ '_template';
+            var imgUrlId=imgEditId+ '_url';
             var cropId=imgEditId+ '_crop';
-            var template=kendo.template($("#"+templateId).html());
+            var template=$('#'+templateId);
             $("#"+windowId)
                 .data("kendoWindow")
-                .content(template({name:imgEditId,imgurl:imgurl}))
+                .content(template.find('[name="'+imgUrlId+'"]').val(imgurl).end().show())
                 .center()
                 .open();
             $('#'+cropId).Jcrop({

@@ -501,12 +501,9 @@
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
     <Content Include="Scripts\jquery.Jcrop.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\kendo\2012.3.1114\cultures\kendo.culture.af-ZA.min.js" />
     <Content Include="Scripts\kendo\2012.3.1114\cultures\kendo.culture.af.min.js" />
     <Content Include="Scripts\kendo\2012.3.1114\cultures\kendo.culture.am-ET.min.js" />
@@ -939,7 +936,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Scripts\jqeury.validate.custom.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.zcustom.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Upload\Normal\2013\1\27\0e20a463-2c59-4a93-983c-093dcd23a8ab.jpg" />
     <Content Include="Upload\Normal\2013\1\27\0f1c628a-5080-4b88-8b30-7ff884fa69c3.jpg" />

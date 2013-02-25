@@ -15,6 +15,7 @@
 
     .map-control {
         position: absolute;
+        display: none;
         top: 0px;
         right: 0px;
         z-index: 200;
@@ -51,18 +52,18 @@
 ).Draggable(true).Width(700).Height(500).Modal(true).Visible(false)
 <button type="button" id="@Html.Raw(name + "_select")" class="k-button" ><span class="k-icon k-add"></span>标记位置</button>
 
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
-<script type="text/x-kendo-template" id="@Html.Raw(name + "_template")">
-<div id="#= name #_mapcontrol" class="map-control">
+
+<div id="@(name + "_mapcontrol")" class="map-control">
     <div class="map-control-content">
-    <span class="k-textbox k-space-right map-keywords">
-        <input type="text" id="#=name #_keywords" class="k-textbox ">
-        <a href="javascript:void(0)" id="#=name #_search" class="k-icon k-i-search map-search-btn">&nbsp;</a>
-    </span>
-    <a class="k-button k-button-icontext map-marker-btn" id="#=name #_marker"><span class="k-icon map-marker-icon"></span>标记</a>
-    <div>
+        <span class="k-textbox k-space-right map-keywords">
+            <input type="text" id="@(name + "_keywords")" class="k-textbox ">
+            <a href="javascript:void(0)" id="@(name + "_search")" class="k-icon k-i-search map-search-btn">&nbsp;</a>
+        </span>
+        <a class="k-button k-button-icontext map-marker-btn" id="@(name + "_marker")"><span class="k-icon map-marker-icon"></span>标记</a>
+    </div>
 </div>
-</script>
+
+
 
 <script type="text/javascript">
     var @name={
@@ -77,21 +78,26 @@
         iconUrl:'@iconUrl',
         lng:'@(String.IsNullOrEmpty(Model) ? string.Empty : Model.Split('|')[0])',
         lat:'@(String.IsNullOrEmpty(Model) ? string.Empty : Model.Split('|')[1])',
+        load:function(path,callback){
+            var script = document.createElement("script");
+            script.src = "http://api.map.baidu.com/api?v=1.2&callback=@(name + ".binding")";
+            document.body.appendChild(script);        },
         binding:function(){
             var self=@name;
-            this.map=new BMap.Map("@(name + "_container")");
-            this.map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
-            this.map.addControl(new BMap.NavigationControl());               // 添加平移缩放控件
-            this.map.addControl(new BMap.ScaleControl());                    // 添加比例尺控件
-            this.map.addControl(new BMap.OverviewMapControl());  
-            this.map.enableScrollWheelZoom();//添加缩略地图控件
-            this.local=new BMap.LocalSearch(this.map, this.options);
+            self.map=new BMap.Map("@(name + "_container")");
+            self.map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
+            self.map.addControl(new BMap.NavigationControl());               // 添加平移缩放控件
+            self.map.addControl(new BMap.ScaleControl());                    // 添加比例尺控件
+            self.map.addControl(new BMap.OverviewMapControl());  
+            self.map.enableScrollWheelZoom();//添加缩略地图控件
+            self.local=new BMap.LocalSearch(self.map, self.options);
             self.bindingControl();
-            $("#"+this.selectId).on('click',this.mapShow);
-            $('#'+this.markerId).on('click',this.mapMarker);
-            $('#'+this.keywordsId).on('keydown',this.seachkeydown);
-            $('#'+this.searchId).on('click',this.seach);
-            $('#'+this.keywordsId).val('长沙');
+            $("#"+self.selectId).on('click',self.mapShow);
+            $('#'+self.markerId).on('click',self.mapMarker);
+            $('#'+self.keywordsId).on('keydown',self.seachkeydown);
+            $('#'+self.searchId).on('click',self.seach);
+            $('#'+self.keywordsId).val('长沙');
+
         },
         mapShow:function(){
             var self=@name;
@@ -108,8 +114,8 @@
         },
         bindingControl:function(){
             var self=@name;
-            var template=kendo.template($("#"+self.templateId).html());
-            $("#"+self.conatinerId).append(template({name:self.id}));
+            var controlId='@(name + "_mapcontrol")';
+            $("#"+self.conatinerId).append($('#'+controlId).show());
         },
         options:{
             onSearchComplete: function (results) {
@@ -188,7 +194,7 @@
 
     }
     $(function(){
-        @Html.Raw(name + ".binding();")
+        @Html.Raw(name + ".load();")
     })
 
 
