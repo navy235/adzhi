@@ -1,13 +1,13 @@
 ﻿@model CodeFirstEF.ViewModels.LogOnModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "登录";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 
-<h2>Login</h2>
 @if (ViewBag.Message != null)
 {
-    <p class="form_tips">@ViewBag.Message</p>
+    <p class="form_tips"><em class="s_icon i_point"></em>@ViewBag.Message</p>
 }
 @using (Html.BeginForm())
 {

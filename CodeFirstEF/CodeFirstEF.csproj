@@ -268,6 +268,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\images\activityFlags.png" />
     <Content Include="Content\images\actTags.png" />
+    <Content Include="Content\images\btn.gif" />
     <Content Include="Content\images\consult.gif" />
     <Content Include="Content\images\cusp.png" />
     <Content Include="Content\images\errPro.png" />
@@ -286,7 +287,9 @@
     <Content Include="Content\images\leli3.jpg" />
     <Content Include="Content\images\loading.gif" />
     <Content Include="Content\images\loading_50.gif" />
+    <Content Include="Content\images\login-img.jpg" />
     <Content Include="Content\images\logo.png" />
+    <Content Include="Content\images\mixr.gif" />
     <Content Include="Content\images\productBg.png" />
     <Content Include="Content\images\productSpring.png" />
     <Content Include="Content\images\proIcons.png" />
@@ -296,6 +299,7 @@
     <Content Include="Content\images\serviceImg.png" />
     <Content Include="Content\images\uploadbtn.png" />
     <Content Include="Content\163.index.css" />
+    <Content Include="Content\login.css" />
     <Content Include="Content\mapicon.gif" />
     <Content Include="Content\images\inputBackground.png" />
     <Content Include="Content\jcrop\Jcrop.gif" />
@@ -429,7 +433,7 @@
     <Content Include="Content\kendo\2012.3.1114\Uniform\sprite.png" />
     <Content Include="Content\noimages.gif" />
     <Content Include="Content\show.css" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\site.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -1078,6 +1082,7 @@
     <Content Include="Views\Department\Index.cshtml" />
     <Content Include="Views\Register\RegOk.cshtml" />
     <Content Include="Views\Register\RegCompany.cshtml" />
+    <Content Include="Views\Login\Design.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />
@@ -1104,6 +1109,7 @@
     <Content Include="Views\CompanyScale\Index.cshtml" />
     <Content Include="Views\CompanyFund\Index.cshtml" />
     <Content Include="Views\CompanyBussiness\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Lucene\" />

@@ -98,5 +98,11 @@ namespace CodeFirstEF.Controllers
                 return View(model);
             }
         }
+
+
+        public ActionResult Design()
+        {
+            return View();
+        }
     }
 }

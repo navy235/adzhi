@@ -114,6 +114,7 @@
     <Compile Include="Filters\GenerateStaticAttribute.cs" />
     <Compile Include="Filters\BaseAuthorizeAttribute.cs" />
     <Compile Include="Filters\GzipCompressJsAndReplaceWhiteSpaceAttribute.cs" />
+    <Compile Include="Filters\MvcOutputCacheAttribute.cs" />
     <Compile Include="Http\HttpHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\UIHelper.cs" />

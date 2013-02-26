@@ -40,6 +40,7 @@ namespace CoreHelper.Filters
 
         private bool DetermineNoCache(ActionExecutingContext filterContext)
         {
+            if (filterContext.HttpContext.Request.HttpMethod != "GET") return true;
             if (IsLoginNotCache)
             {
                 return CookieHelper.IsLogin;
@@ -55,16 +56,10 @@ namespace CoreHelper.Filters
             return Duration;
         }
 
-        private bool isOutDuration(ControllerContext filterContext)
+        private bool isOutDuration()
         {
-            if (filterContext.HttpContext.Application[_staticFileName] == null)
-            {
-                return true;
-            }
-            else
-            {
-                return (Convert.ToDateTime(filterContext.HttpContext.Application[_staticFileName])).CompareTo(DateTime.Now) < 0;
-            }
+            var lastTime = File.GetLastWriteTimeUtc(_staticFileName);
+            return DateTime.UtcNow.CompareTo(lastTime.AddSeconds(Duration)) > 0;
         }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -75,7 +70,7 @@ namespace CoreHelper.Filters
 
             _staticFileName = ComputeStaticFileName(filterContext);
             string cachedOutput = string.Empty;
-            if (File.Exists(_staticFileName) && !isOutDuration(filterContext))
+            if (File.Exists(_staticFileName) && !isOutDuration())
             {
                 cachedOutput = File.ReadAllText(_staticFileName, Encoding.UTF8);
                 filterContext.Result = new ContentResult { Content = cachedOutput };
@@ -101,10 +96,9 @@ namespace CoreHelper.Filters
 
                 string textWritten = ((StringWriter)cacheWriter.InnerWriter).ToString();
 
-                if (!File.Exists(_staticFileName) || isOutDuration(filterContext))
+                if (!File.Exists(_staticFileName) || isOutDuration())
                 {
                     File.WriteAllText(_staticFileName, textWritten, Encoding.UTF8);
-                    filterContext.HttpContext.Application[_staticFileName] = DateTime.Now.AddSeconds(GetDuration(filterContext));
                 }
                 filterContext.HttpContext.Response.Write(textWritten);
             }
@@ -136,6 +130,9 @@ namespace CoreHelper.Filters
             else
             {
                 foreach (var pair in filterContext.RouteData.Values.Where(p => p.Value != null).OrderBy(p => p.Key))
+                    keyBuilder.AppendFormat("{0}_{1}_", pair.Key, pair.Value.ToString());
+
+                foreach (var pair in filterContext.ActionParameters.Where(p => p.Value != null).OrderBy(p => p.Key))
                     keyBuilder.AppendFormat("{0}_{1}_", pair.Key, pair.Value.ToString());
             }
             //keyBuilder.AppendFormat("rd{0}_{1}_", pair.Key.GetHashCode(), pair.Value.GetHashCode());

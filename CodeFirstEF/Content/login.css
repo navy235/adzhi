@@ -1,0 +1,116 @@
+﻿a {
+  color: #7E7E7E;
+  text-decoration: none;
+}
+
+.container {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.header {
+  line-height: 18px;
+  margin: 10px 0;
+}
+
+  .header a.leftlogo {
+    display: block;
+    width: 142px;
+    height: 34px;
+    float: left;
+    background: url(images/mixr.gif) 0 -51px;
+  }
+
+    .header a.leftlogo em {
+      display: none;
+    }
+
+
+  .header a.rightlogo {
+    display: block;
+    float: right;
+    height: 18px;
+    background: url(images/mixr.gif) 0px -25px no-repeat;
+    color: #FF6600;
+    margin-left: 10px;
+    padding-left: 30px;
+  }
+
+
+span.cut {
+  background: url(images/mixr.gif) 0px 3px no-repeat;
+  display: block;
+  width: 1px;
+  height: 18px;
+}
+
+.logincontent {
+  line-height: 18px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  background: url(images/login-img.jpg) 10px 15px no-repeat;
+}
+
+.loginpart {
+  width: 360px;
+  float: right;
+  margin-right: 10px;
+  background: #f3f3f3;
+  padding: 5px 0;
+}
+
+.main {
+  margin: 0 5px;
+  background: #fff;
+  border: 1px solid #d4d4d4;
+}
+
+.sub {
+  background: #fff url(images/btn.gif) 0px -191px;
+  height: 49px;
+}
+
+  .sub h6 {
+    background: url(images/btn.gif) 0px -111px no-repeat;
+    margin: 0 0 0 20px;
+    padding: 0 0 0 15px;
+    height: 49px;
+  }
+
+  .sub span {
+    font-size: 18px;
+    font-family: "Microsoft YaHei",verdana;
+    font-weight: normal;
+    line-height: 45px;
+    _line-height: 48px;
+  }
+
+.login_form {
+  margin: 15px 0 20px 5px;
+  _margin-top: 10px;
+  line-height: 25px;
+}
+
+.form_tips {
+  margin-left: 32px;
+  width: 250px;
+  color: #ff6600;
+  margin-bottom: 10px;
+}
+
+
+.s_icon {
+  background: url(images/mixr.gif);
+  background-repeat: no-repeat;
+  width: 18px;
+  height: 14px;
+  line-height: 14px;
+  display: inline-block;
+  display: -moz-inline-block;
+  vertical-align: middle;
+  zoom: 1;
+}
+
+.i_point {
+  background-position: -199px -193px;
+}

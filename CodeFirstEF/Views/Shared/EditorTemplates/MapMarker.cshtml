@@ -81,7 +81,8 @@
         load:function(path,callback){
             var script = document.createElement("script");
             script.src = "http://api.map.baidu.com/api?v=1.2&callback=@(name + ".binding")";
-            document.body.appendChild(script);        },
+            document.body.appendChild(script);
+        },
         binding:function(){
             var self=@name;
             self.map=new BMap.Map("@(name + "_container")");

@@ -1,256 +1,256 @@
-﻿body {
-    font-size: 12px;
-    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
-    color: #232323;
-    background-color: #fff;
+﻿﻿body {
+  font-size: 12px;
+  font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+  color: #232323;
+  background-color: #fff;
 }
 
 
 header, footer, nav, section {
-    display: block;
+  display: block;
 }
 
 .container {
-    width: 1000px;
-    margin: 0 auto;
+  width: 1000px;
+  margin: 0 auto;
 }
 
 /* Styles for basic forms
 -----------------------------------------------------------*/
 fieldset {
-    border: 1px solid #ddd;
-    padding: 0 1.4em 1.4em 1.4em;
-    margin: 0 0 1.5em 0;
+  border: 1px solid #ddd;
+  padding: 0 1.4em 1.4em 1.4em;
+  margin: 0 0 1.5em 0;
 }
 
 legend {
-    font-size: 1.2em;
-    font-weight: bold;
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 textarea {
-    min-height: 125px;
+  min-height: 125px;
 }
 
 .editor-label {
-    margin: 1em 0 0 0;
+  margin: 1em 0 0 0;
 }
 
 .editor-field {
-    margin: 0.5em 0 0 0;
+  margin: 0.5em 0 0 0;
 }
 
 
 
 form input[type="submit"], form button {
-    margin-left: 155px;
+  margin-left: 155px;
 }
 
 .form-title {
-    color: #333;
-    border-bottom: 1px solid #dfdfdf;
-    font-size: 14px;
-    font-weight: bold;
-    padding-bottom: 4px;
-    margin: 15px 0 20px 0;
+  color: #333;
+  border-bottom: 1px solid #dfdfdf;
+  font-size: 14px;
+  font-weight: bold;
+  padding-bottom: 4px;
+  margin: 15px 0 20px 0;
 }
 
-    .form-title span {
-        color: #999;
-        font-weight: normal;
-        font-size: 12px;
-    }
+  .form-title span {
+    color: #999;
+    font-weight: normal;
+    font-size: 12px;
+  }
 
-        .form-title span b {
-            color: #F00;
-            margin: 0px 5px;
-            font-weight: normal;
-        }
+    .form-title span b {
+      color: #F00;
+      margin: 0px 5px;
+      font-weight: normal;
+    }
 
 
 .form-field {
-    margin-bottom: 10px;
-    position: relative;
+  margin-bottom: 10px;
+  position: relative;
 }
 
-    .form-field label {
-        display: inline-block;
-        font-size: 12px;
-        width: 135px;
-        margin-bottom: 5px;
-        text-align: right;
-        padding-right: 15px;
+  .form-field label {
+    display: inline-block;
+    font-size: 12px;
+    width: 135px;
+    margin-bottom: 5px;
+    text-align: right;
+    padding-right: 15px;
+  }
+
+  .form-field .form-field-lable-required:before {
+    content: "*";
+    color: red;
+    margin: 0px 5px;
+    font-weight: bold;
+  }
+
+  .form-field .text-box {
+    width: 250px;
+  }
+
+  .form-field .checklist {
+    display: inline-block;
+    width: 350px;
+    vertical-align: middle;
+  }
+
+  .form-field label.checkbox {
+    display: inline-block;
+    width: 100px;
+    text-align: left;
+    padding-right: 0;
+  }
+
+    .form-field label.checkbox input {
+      width: 13px;
+      height: 13px;
+      padding: 0;
+      margin: 0;
+      vertical-align: bottom;
+      position: relative;
+      top: -1px;
+      *overflow: hidden;
     }
 
-    .form-field .form-field-lable-required:before {
-        content: "*";
-        color: red;
-        margin: 0px 5px;
-        font-weight: bold;
+  .form-field .radiolist {
+    display: inline-block;
+    width: 350px;
+    vertical-align: middle;
+  }
+
+  .form-field label.radio {
+    display: inline-block;
+    width: 60px;
+    text-align: left;
+    padding-right: 0;
+  }
+
+    .form-field label.radio input {
+      width: 13px;
+      height: 13px;
+      padding: 0;
+      margin: 0;
+      vertical-align: bottom;
+      position: relative;
+      top: -3px;
     }
 
-    .form-field .text-box {
-        width: 250px;
-    }
-
-    .form-field .checklist {
-        display: inline-block;
-        width: 350px;
-        vertical-align: middle;
-    }
-
-    .form-field label.checkbox {
-        display: inline-block;
-        width: 100px;
-        text-align: left;
-        padding-right: 0;
-    }
-
-        .form-field label.checkbox input {
-            width: 13px;
-            height: 13px;
-            padding: 0;
-            margin: 0;
-            vertical-align: bottom;
-            position: relative;
-            top: -1px;
-            *overflow: hidden;
-        }
-
-    .form-field .radiolist {
-        display: inline-block;
-        width: 350px;
-        vertical-align: middle;
-    }
-
-    .form-field label.radio {
-        display: inline-block;
-        width: 60px;
-        text-align: left;
-        padding-right: 0;
-    }
-
-        .form-field label.radio input {
-            width: 13px;
-            height: 13px;
-            padding: 0;
-            margin: 0;
-            vertical-align: bottom;
-            position: relative;
-            top: -3px;
-        }
-
-    .form-field textarea {
-        font-size: 1em;
-        height: 125px;
-        padding-top: 5px;
-    }
+  .form-field textarea {
+    font-size: 1em;
+    height: 125px;
+    padding-top: 5px;
+  }
 
 .form-field-city .k-dropdown {
-    width: 125px;
+  width: 125px;
 }
 
 
 .form-field-validatecode input[type="text"] {
-    width: 120px;
+  width: 120px;
 }
 
 .form-field-validatecode img {
-    height: 29px;
-    vertical-align: middle;
+  height: 29px;
+  vertical-align: middle;
 }
 
 /* flyout Text */
 
 .field-hint-message,
 .field-validation-error {
-    font-size: 1em;
-    left: 460px;
-    line-height: 1.2em;
-    padding: 5px;
-    position: absolute;
-    top: 0px;
-    z-index: 550;
-    padding-left: 22px;
+  font-size: 1em;
+  left: 460px;
+  line-height: 1.2em;
+  padding: 5px;
+  position: absolute;
+  top: 0px;
+  z-index: 550;
+  padding-left: 22px;
 }
 
 .field-hint-message {
-    background-color: #eff7fa;
-    border: solid 1px #52a4ca;
-    display: none;
-    background: url(images/hint_16.png) 3px 4px no-repeat;
-    z-index: 551;
+  background-color: #eff7fa;
+  border: solid 1px #52a4ca;
+  display: none;
+  background: url(images/hint_16.png) 3px 4px no-repeat;
+  z-index: 551;
 }
 
 
 .field-validation-error {
-    background-color: #fbe3e4;
-    border: solid 1px #c13a3f;
-    display: block;
-    background: url(images/error_16.png) 3px 4px no-repeat;
+  background-color: #fbe3e4;
+  border: solid 1px #c13a3f;
+  display: block;
+  background: url(images/error_16.png) 3px 4px no-repeat;
 }
 
 .form-field input:focus ~ .field-hint-message {
-    display: block;
+  display: block;
 }
 
 input:focus ~ .field-validation-error ~ .field-hint-message {
-    display: none;
+  display: none;
 }
 
 .field-prompt-message {
-    display: block;
-    margin-left: 155px;
-    color: #999;
+  display: block;
+  margin-left: 155px;
+  color: #999;
 }
 
 .form a.cancel {
-    font-size: 1.25em;
+  font-size: 1.25em;
 }
 
 .form input:focus {
-    outline: none;
+  outline: none;
 }
 
 .form img {
-    display: block;
-    margin: 15px 0;
+  display: block;
+  margin: 15px 0;
 }
 
 .validation-summary-errors,
 .field-validation-error {
-    color: #c13a3f;
+  color: #c13a3f;
 }
 
 .validation-summary-errors {
-    font-size: 1.25em;
-    font-weight: 600;
+  font-size: 1.25em;
+  font-weight: 600;
 }
 
 .PoliteCaptcha.editor-field .field-validation-error {
-    position: static;
-    width: 300px;
+  position: static;
+  width: 300px;
 }
 
 /* To fix alignment of generated reCAPTCHA table */
 
 .PoliteCaptcha.editor-field table {
-    margin-left: -3px !important;
+  margin-left: -3px !important;
 }
 
 /* Errors */
 
 .error-content {
-    margin-top: 80px;
+  margin-top: 80px;
 }
 
 .error-show-code {
-    background-image: url(Images/errorPage.png);
-    background-repeat: no-repeat;
-    height: 125px;
-    left: 0;
-    position: fixed;
-    text-indent: -9999px;
-    top: 0;
-    width: 220px;
+  background-image: url(Images/errorPage.png);
+  background-repeat: no-repeat;
+  height: 125px;
+  left: 0;
+  position: fixed;
+  text-indent: -9999px;
+  top: 0;
+  width: 220px;
 }

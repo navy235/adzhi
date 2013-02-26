@@ -8,7 +8,7 @@ namespace CodeFirstEF
         // 有关 Bundling 的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
-            BundleTable.EnableOptimizations = true;
+            //BundleTable.EnableOptimizations = true;
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -29,6 +29,12 @@ namespace CodeFirstEF
                         "~/Content/site.css",
                         "~/Content/kendohelper.css",
                         "~/Content/bootstrap.css"));
+
+            bundles.Add(new StyleBundle("~/Content/login").Include(
+                       "~/Content/163.base.css",
+                       "~/Content/login.css",
+                       "~/Content/kendohelper.css",
+                       "~/Content/bootstrap.css"));
 
             bundles.Add(new StyleBundle("~/Content/kendo/2012.3.1114/css").Include(
                         "~/Content/kendo/2012.3.1114/kendo.common.min.css",
