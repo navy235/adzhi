@@ -1116,9 +1116,6 @@
     <Folder Include="Upload\Normal\2013\1\28\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CoreHelper\CoreHelper.csproj">
       <Project>{165cef26-c7bf-4f47-ba44-ca698d605eb7}</Project>
       <Name>CoreHelper</Name>

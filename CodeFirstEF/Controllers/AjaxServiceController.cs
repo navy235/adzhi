@@ -100,7 +100,7 @@ namespace CodeFirstEF.Controllers
             return Json(renderRadioList, JsonRequestBehavior.AllowGet);
         }
 
-  
+
         public ActionResult MeidaCode(string key, string pid = null)
         {
             var renderRadioList = DB_Service.Set<OutDoorMediaCate>();
@@ -150,6 +150,7 @@ namespace CodeFirstEF.Controllers
 
         #region Validate
 
+        [SkipGzipCompressJsAndReplaceWhiteSpace]
         public void GetValidateCode()
         {
             ValidateCode VCode = new ValidateCode("VCode", 100, 40);

@@ -16,43 +16,39 @@ namespace CodeFirstEF.ViewModels
 
     public class RegisterModel
     {
-        [Required(ErrorMessage = "请输入Email地址")]
-        [Display(Name = "Email地址")]
-        [Remote("EmailExists", "AjaxService", ErrorMessage = "该Email地址已经注册")]
-        [RegularExpression(@"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "输入的Email地址格式不正确.")]
+        [Required(ErrorMessage = "请输入电子邮箱")]
+        [Display(Name = "电子邮箱：")]
+        [Remote("EmailExists", "AjaxService", ErrorMessage = "该电子邮箱已经注册")]
+        [RegularExpression(@"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "输入的电子邮箱格式不正确.")]
         [Hint("此电子邮箱将作为广知网登陆帐号,并作为密码找回邮箱，请认真填写。")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "请输入昵称")]
-        [Display(Name = "昵称")]
+        [Display(Name = "昵称：")]
         [RegularExpression(@"^[\u0391-\uFFE5\w]+$", ErrorMessage = "昵称含有非法字符.")]
         [Remote("NickNameExists", "AjaxService", ErrorMessage = "该昵称含有非法字符或已经注册")]
         [StringLength(7, ErrorMessage = "请输入{2}-{1}位中文昵称", MinimumLength = 2)]
-        [Hint("请输入昵称2-7位中文.")]
         public string NickName { get; set; }
 
         [Required(ErrorMessage = "请输入密码")]
         [StringLength(15, ErrorMessage = "请输入{2}-{1}位密码", MinimumLength = 6)]
-        [Display(Name = "请输入6-15位密码")]
+        [Display(Name = "设定密码：")]
         [DataType(DataType.Password)]
-        [Hint("请输入6-15位密码")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "请确认密码")]
         [DataType(DataType.Password)]
-        [Display(Name = "确认密码")]
+        [Display(Name = "确认密码：")]
         [System.Web.Mvc.Compare("Password", ErrorMessage = "两次输入的密码不一致")]
-        [Hint("请确认密码")]
         public string ConfirmPassword { get; set; }
 
 
         [Required(ErrorMessage = "请输入验证码")]
-        [Display(Name = "输入验证码")]
+        [Display(Name = "验证码：")]
         [StringLength(4, ErrorMessage = "长度为4位", MinimumLength = 4)]
         [Remote("ValidateVCode", "AjaxService", ErrorMessage = "验证码错误")]
         [UIHint("ValidateVCode")]
         [HintClass("validatecode")]
-        [Hint("请输入验证码以防止恶意注册.")]
         public string Vcode { get; set; }
     }
 
@@ -60,19 +56,19 @@ namespace CodeFirstEF.ViewModels
     {
 
 
-        [Required(ErrorMessage = "请输入Email地址")]
-        [Display(Name = "Email地址")]
-        [RegularExpression(@"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "输入的Email地址格式不正确.")]
+        [Required(ErrorMessage = "请输入电子邮箱")]
+        [Display(Name = "登录名：")]
+        [RegularExpression(@"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "输入的电子邮箱格式不正确.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "请输入密码")]
         [StringLength(15, ErrorMessage = "请输入{2}-{1}位密码", MinimumLength = 6)]
-        [Display(Name = "请输入6-15位密码")]
+        [Display(Name = "密 码：")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "请输入验证码")]
-        [Display(Name = "输入验证码")]
+        [Display(Name = "验证码：")]
         [StringLength(4, ErrorMessage = "长度为4位", MinimumLength = 4)]
         [Remote("ValidateVCode", "AjaxService", ErrorMessage = "验证码错误")]
         [UIHint("ValidateVCode")]

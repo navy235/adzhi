@@ -2,6 +2,7 @@
 using System.IO;
 using System.IO.Compression;
 using System.Web;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
@@ -12,16 +13,20 @@ namespace CoreHelper.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            if (filterContext.ActionDescriptor.GetCustomAttributes(typeof(SkipGzipCompressJsAndReplaceWhiteSpaceAttribute), false).Any())
+            {
+                return;
+            }
+
             HttpRequestBase request = filterContext.HttpContext.Request;
-
+            HttpResponseBase response = filterContext.HttpContext.Response;
+         
             string acceptEncoding = request.Headers["Accept-Encoding"];
-
+            if (acceptEncoding == null)
+                return;
             if (!String.IsNullOrEmpty(acceptEncoding))
             {
                 acceptEncoding = acceptEncoding.ToUpperInvariant();
-
-                HttpResponseBase response = filterContext.HttpContext.Response;
-
                 if (acceptEncoding.Contains("GZIP"))
                 {
                     response.AppendHeader("Content-encoding", "gzip");

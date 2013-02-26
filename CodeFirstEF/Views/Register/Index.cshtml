@@ -1,15 +1,47 @@
 ﻿@model CodeFirstEF.ViewModels.RegisterModel
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "注册";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
-
-<h2>Register</h2>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.EditorForModel()
-
-    <button type="submit" class="btn btn-success">
-        <i class="icon-ok icon-white"></i>&nbsp;注&nbsp;册</button>
-}
-
+<div class="register">
+    <div class="main">
+        <div class="sub">
+            <h6>
+                <span>注册新浪地产网帐号</span></h6>
+        </div>
+        <div class="content">
+            <div class="n_form">
+                <div class="notice_tips mb10 ml130">
+                    <em class="s_icon i_point"></em>
+                    您可以直接注册成为具有 <a href="/RegBiz?tourl=">商务交易</a> 功能的会员
+                </div>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.EditorForModel()
+                    <div class="form-field form-field-submit c_gray">
+                        <button type="submit" class="btn btn-success mr20">
+                            同意服务协议，提交注册</button>已有账号？<a href="/?tourl=">请登录</a>
+                    </div>
+                    <div class="form-field form-field-submit">
+                        <a href="http://dichan.sina.com.cn/help/service.htm" target="_blank">查看《地产网网站服务条款》</a>
+                        <div class="clearfix height20"></div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="content-right">
+            <h4>注册成为新浪地产用户：</h4>
+            <ul class="dot_list">
+                <li>速览每日最新最热房地产行业资讯</li>
+                <li>参与房地产全产业链商务交易</li>
+                <li>畅享<em class="c_red">800000份</em>报告资源下载</li>
+                <li>查询国内最权威市场数据</li>
+                <li>与<em class="c_red">1600000名</em>职业房地产人互动交流</li>
+                <li>被近千名驻站行业猎头关注</li>
+            </ul>
+        </div>
+        <div class="clearfix">
+        </div>
+    </div>
+</div>
