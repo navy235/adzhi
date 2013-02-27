@@ -6,4 +6,3 @@ F:\GitProject\adzhi\Lucene.Net.China\bin\Debug\ICSharpCode.SharpZipLib.dll
 F:\GitProject\adzhi\Lucene.Net.China\bin\Debug\Lucene.Net.dll
 F:\GitProject\adzhi\Lucene.Net.China\bin\Debug\Lucene.Net.pdb
 F:\GitProject\adzhi\Lucene.Net.China\bin\Debug\Lucene.Net.xml
-F:\GitProject\adzhi\Lucene.Net.China\obj\Debug\Lucene.Net.China.csprojResolveAssemblyReference.cache

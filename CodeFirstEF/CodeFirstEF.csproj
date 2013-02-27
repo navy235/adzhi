@@ -210,6 +210,10 @@
     <Compile Include="Migrations\201302060754390_AddCompany_PCategory.Designer.cs">
       <DependentUpon>201302060754390_AddCompany_PCategory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201302271337552_AddMemberOpenAuth2.cs" />
+    <Compile Include="Migrations\201302271337552_AddMemberOpenAuth2.Designer.cs">
+      <DependentUpon>201302271337552_AddMemberOpenAuth2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\SqlResourceMigration.cs" />
     <Compile Include="Models\Area.cs" />
@@ -497,6 +501,10 @@
     <Content Include="Models\ModelDesigner.cd" />
     <EmbeddedResource Include="Migrations\201302060754390_AddCompany_PCategory.resx">
       <DependentUpon>201302060754390_AddCompany_PCategory.cs</DependentUpon>
+    </EmbeddedResource>
+    <Content Include="packages.config" />
+    <EmbeddedResource Include="Migrations\201302271337552_AddMemberOpenAuth2.resx">
+      <DependentUpon>201302271337552_AddMemberOpenAuth2.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -1083,6 +1091,8 @@
     <Content Include="Views\Register\RegOk.cshtml" />
     <Content Include="Views\Register\RegCompany.cshtml" />
     <Content Include="Views\Login\Design.cshtml" />
+    <Content Include="Views\Login\Sina.cshtml" />
+    <Content Include="Views\Register\RegAuto.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />
@@ -1158,13 +1168,12 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>4979</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:5736/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
+          <CustomServerUrl>http://www.dotaeye.com</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

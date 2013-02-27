@@ -18,4 +18,3 @@ F:\GitProject\adzhi\CoreHelper\bin\Debug\Ninject.xml
 F:\GitProject\adzhi\CoreHelper\bin\Debug\zh-Hans\EntityFramework.resources.dll
 F:\GitProject\adzhi\CoreHelper\obj\Debug\CoreHelper.dll
 F:\GitProject\adzhi\CoreHelper\obj\Debug\CoreHelper.pdb
-F:\GitProject\adzhi\CoreHelper\obj\Debug\CoreHelper.csprojResolveAssemblyReference.cache

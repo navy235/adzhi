@@ -66,3 +66,4 @@ F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.ExecuteELMAHSql
 F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.csproj.GenerateResource.Cache
 F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.dll
 F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.pdb
+F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddMemberOpenAuth2.resources

@@ -36,10 +36,16 @@ namespace CodeFirstEF.Models
 
         public System.DateTime AddTime { get; set; }
 
+        public int OpenType { get; set; }
+
+        [MaxLength(50)]
+        public string OpenID { get; set; }
+
         [MaxLength(50)]
         public string AddIP { get; set; }
 
         public int LoginCount { get; set; }
+
         public int Status { get; set; }
 
         public virtual Group Group { get; set; }

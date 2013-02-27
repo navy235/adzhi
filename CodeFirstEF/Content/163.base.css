@@ -298,9 +298,15 @@ body .hide3 {
     margin-left: 20px;
 }
 
+.ml60 {
+    margin-left: 60px;
+}
+
+
 .ml130 {
     margin-left: 130px;
 }
+
 
 .pt20 {
     padding-top: 20px !important;

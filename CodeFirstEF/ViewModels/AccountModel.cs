@@ -36,6 +36,14 @@ namespace CodeFirstEF.ViewModels
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
+        public string OpenID { get; set; }
+
+
+        [HiddenInput(DisplayValue = false)]
+        public int OpenType { get; set; }
+
+
         [Required(ErrorMessage = "请确认密码")]
         [DataType(DataType.Password)]
         [Display(Name = "确认密码：")]
@@ -271,5 +279,16 @@ namespace CodeFirstEF.ViewModels
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
+    }
+
+    public class OpenLoginStatus
+    {
+        public string Uid { get; set; }
+        public int OpenType { get; set; }
+        public bool Success { get; set; }
+        public string OpenId { get; set; }
+        public string Error { get; set; }
+        public string Message { get; set; }
+        public string NickName { get; set; }
     }
 }
