@@ -40,3 +40,6 @@ D:\GitProject\adzhi\CoreHelper\bin\Debug\Ninject.xml
 D:\GitProject\adzhi\CoreHelper\bin\Debug\zh-Hans\EntityFramework.resources.dll
 D:\GitProject\adzhi\CoreHelper\obj\Debug\CoreHelper.dll
 D:\GitProject\adzhi\CoreHelper\obj\Debug\CoreHelper.pdb
+F:\GitProject\adzhi\CoreHelper\bin\Debug\Newtonsoft.Json.dll
+F:\GitProject\adzhi\CoreHelper\bin\Debug\Newtonsoft.Json.xml
+F:\GitProject\adzhi\CoreHelper\obj\Debug\CoreHelper.csprojResolveAssemblyReference.cache

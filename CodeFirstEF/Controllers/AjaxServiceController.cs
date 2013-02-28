@@ -157,6 +157,11 @@ namespace CodeFirstEF.Controllers
         }
 
 
+        /// <summary>
+        /// 确认是否存在该Email用户，注册用户时远程验证，存在返回false，不存在返回true
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public JsonResult EmailExists(string email)
         {
             if (DB_Service.Set<Member>().Count(x => x.Email == email) > 0)
@@ -166,6 +171,23 @@ namespace CodeFirstEF.Controllers
             else
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        /// <summary>
+        /// 确认是否存在该Email用户，注册找回密码时验证，存在返回true，不存在返回false
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public JsonResult HasEmailUser(string email)
+        {
+            if (DB_Service.Set<Member>().Count(x => x.Email == email) > 0)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
 

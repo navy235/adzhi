@@ -106,6 +106,7 @@
     <Compile Include="Data\Specification\ParameterRebinder.cs" />
     <Compile Include="Data\Specification\Specification.cs" />
     <Compile Include="Data\Specification\TrueSpecification.cs" />
+    <Compile Include="Enum\MemberActionType.cs" />
     <Compile Include="Error\ErrorType.cs" />
     <Compile Include="Files\FileHelper.cs" />
     <Compile Include="Filters\AjaxOnlyAttribute.cs" />
@@ -121,6 +122,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mail\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

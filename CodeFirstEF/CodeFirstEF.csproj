@@ -292,6 +292,7 @@
     <Content Include="Content\images\loading.gif" />
     <Content Include="Content\images\loading_50.gif" />
     <Content Include="Content\images\login-img.jpg" />
+    <Content Include="Content\images\login-img.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\mixr.gif" />
     <Content Include="Content\images\productBg.png" />
@@ -301,8 +302,14 @@
     <Content Include="Content\images\proInfoLine.png" />
     <Content Include="Content\images\proRpt_x.png" />
     <Content Include="Content\images\serviceImg.png" />
+    <Content Include="Content\images\stepbg.gif" />
     <Content Include="Content\images\uploadbtn.png" />
     <Content Include="Content\163.index.css" />
+    <Content Include="Content\images\zh-db.jpg" />
+    <Content Include="Content\images\zh-qq.jpg" />
+    <Content Include="Content\images\zh-rr.jpg" />
+    <Content Include="Content\images\zh-sina.jpg" />
+    <Content Include="Content\images\zh-tb.jpg" />
     <Content Include="Content\login.css" />
     <Content Include="Content\mapicon.gif" />
     <Content Include="Content\images\inputBackground.png" />
@@ -1096,6 +1103,8 @@
     <Content Include="Views\Login\QQ.cshtml" />
     <Content Include="Views\Login\Taobao.cshtml" />
     <Content Include="Views\Login\Douban.cshtml" />
+    <Content Include="Views\Login\Renren.cshtml" />
+    <Content Include="Views\Register\GetPassword.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />

@@ -11,6 +11,7 @@ using CoreHelper.Checking;
 using CoreHelper.Cookie;
 using CoreHelper.Http;
 using CoreHelper.Data.Interface;
+using CoreHelper.Enum;
 using CodeFirstEF.Concrete;
 using CodeFirstEF.Models;
 using CodeFirstEF.ViewModels;
@@ -252,7 +253,7 @@ namespace CodeFirstEF.Controllers
                 string dialog_url = "https://api.weibo.com/oauth2/authorize?response_type=code&client_id="
                    + app_id + "&redirect_uri=" + Server.UrlEncode(my_url) + "&state="
                    + Session["state"];
-                return Content("<script> location.href='" + dialog_url + "'</script>");
+                return Content("<script> window.top.location.href='" + dialog_url + "'</script>");
             }
             if (Request["state"].ToString().Equals(Session["state"].ToString()))
             {
@@ -288,7 +289,7 @@ namespace CodeFirstEF.Controllers
                     LoginUser.LastTime = DateTime.Now;
                     LoginUser.LoginCount = LoginUser.LoginCount + 1;
                     Member_Action ma = new Member_Action();
-                    ma.ActionType = 3;
+                    ma.ActionType = (int)MemberActionType.Login;
                     ma.AddTime = DateTime.Now;
                     ma.Description = "登录";
                     LoginUser.Member_Action.Add(ma);
@@ -344,7 +345,7 @@ namespace CodeFirstEF.Controllers
                 string dialog_url = "https://oauth.taobao.com/authorize?response_type=code&client_id="
                    + app_id + "&redirect_uri=" + Server.UrlEncode(my_url) + "&state="
                    + Session["state"];
-                return Content("<script> location.href='" + dialog_url + "'</script>");
+                return Content("<script>window.top.location.href='" + dialog_url + "'</script>");
             }
             if (Request["state"].ToString().Equals(Session["state"].ToString()))
             {
@@ -414,8 +415,6 @@ namespace CodeFirstEF.Controllers
 
             }
         }
-
-
         public ActionResult Douban()
         {
             //应用的APPID 
@@ -436,7 +435,7 @@ namespace CodeFirstEF.Controllers
                 string dialog_url = "https://www.douban.com/service/auth2/auth?response_type=code&client_id="
                    + app_id + "&redirect_uri=" + Server.UrlEncode(my_url) + "&state="
                    + Session["state"];
-                return Content("<script> location.href='" + dialog_url + "'</script>");
+                return Content("<script>window.top.location.href='" + dialog_url + "'</script>");
             }
             if (Request["state"].ToString().Equals(Session["state"].ToString()))
             {
@@ -459,13 +458,13 @@ namespace CodeFirstEF.Controllers
                 OpenLoginStatus OpenUser = new OpenLoginStatus()
                 {
                     Success = true,
-                    OpenType = 3,
+                    OpenType = 4,
                     Uid = user["douban_user_id"].ToString(),
                     OpenId = user["access_token"].ToString()
                 };
-                if (DB_Service.Set<Member>().Count(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 3) == 1)
+                if (DB_Service.Set<Member>().Count(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 4) == 1)
                 {
-                    Member LoginUser = DB_Service.Set<Member>().Single(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 3);
+                    Member LoginUser = DB_Service.Set<Member>().Single(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 4);
                     DB_Service.Attach<Member>(LoginUser);
                     LoginUser.LastIP = HttpHelper.IP;
                     LoginUser.LastTime = DateTime.Now;
@@ -492,6 +491,93 @@ namespace CodeFirstEF.Controllers
                     string response_profile = HttpHelper.WebPageContentGet(user_profile_url, System.Text.Encoding.UTF8);
                     NameValueCollection userProfile = ParseJson(response_profile);
                     OpenUser.NickName = userProfile["name"].ToString();
+                    Session["registerAuto"] = OpenUser;
+                    return RedirectToAction("RegAuto", "Register");
+                }
+            }
+            else
+            {
+                return View(new OpenLoginStatus()
+                {
+                    Success = false,
+                    Error = "The state does not match. You may be a victim of CSRF",
+                    Message = "request=" + Request["state"] + ",session=" + Session["state"]
+                });
+
+            }
+        }
+
+        public ActionResult Renren()
+        {
+            //应用的APPID 
+            string app_id = "3110750b91874b708336d595355b1090";
+            //应用的APPKEY 
+            string app_secret = "766220cde659449cbbe22bec8abda805";
+            //成功授权后的回调地址 
+            string my_url = "http://www.dotaeye.com/login/renren";
+
+            //Step1：获取Authorization Code 
+            //session_start(); 
+            string code = Request.QueryString["code"];
+            if (string.IsNullOrEmpty(code))
+            {
+                //state参数用于防止CSRF攻击，成功授权后回调时会原样带回 
+                Session["state"] = Guid.NewGuid();//md5(uniqid(rand(), TRUE));  
+                //拼接URL      
+                string dialog_url = "https://graph.renren.com/oauth/authorize?response_type=code&client_id="
+                   + app_id + "&redirect_uri=" + Server.UrlEncode(my_url) + "&state="
+                   + Session["state"];
+                return Content("<script>window.top.location.href='" + dialog_url + "'</script>");
+            }
+            if (Request["state"].ToString().Equals(Session["state"].ToString()))
+            {
+                Session["state"] = null;
+                //拼接URL    
+                string token_url = "https://graph.renren.com/oauth/token?grant_type=authorization_code&client_id=" + app_id + "&redirect_uri=" + Server.UrlEncode(my_url)
+                + "&client_secret=" + app_secret + "&code=" + code;
+                string response = HttpHelper.WebPageContentGet(token_url, System.Text.Encoding.UTF8);
+                NameValueCollection user = ParseJson(response);
+                if (!string.IsNullOrEmpty(user["error"]))
+                {
+                    return View(new OpenLoginStatus()
+                    {
+                        Success = false,
+                        Error = user["error"].ToString(),
+                        Message = user["error_description"].ToString()
+                    });
+                }
+                OpenLoginStatus OpenUser = new OpenLoginStatus()
+                {
+                    Success = true,
+                    OpenType = 5,
+                    NickName = user["name"].ToString(),
+                    OpenId = user["access_token"].ToString()
+                };
+                if (DB_Service.Set<Member>().Count(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 5) == 1)
+                {
+                    Member LoginUser = DB_Service.Set<Member>().Single(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 5);
+                    DB_Service.Attach<Member>(LoginUser);
+                    LoginUser.LastIP = HttpHelper.IP;
+                    LoginUser.LastTime = DateTime.Now;
+                    LoginUser.LoginCount = LoginUser.LoginCount + 1;
+                    Member_Action ma = new Member_Action();
+                    ma.ActionType = 3;
+                    ma.AddTime = DateTime.Now;
+                    ma.Description = "登录";
+                    LoginUser.Member_Action.Add(ma);
+                    DB_Service.Commit();
+                    CookieHelper.LoginCookieSave(LoginUser.MemberID.ToString(),
+                        LoginUser.Email,
+                        LoginUser.NickName,
+                        "AvtarUrl",
+                        LoginUser.GroupID.ToString(),
+                        LoginUser.LoginCount.ToString(),
+                        LoginUser.Password,
+                        "1");
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
                     Session["registerAuto"] = OpenUser;
                     return RedirectToAction("RegAuto", "Register");
                 }

@@ -335,3 +335,16 @@ F:\GitProject\adzhi\CodeFirstEF.Tests\obj\Debug\CodeFirstEF.Tests.csprojResolveA
 F:\GitProject\adzhi\CodeFirstEF.Tests\obj\Debug\CodeFirstEF.Tests.dll
 F:\GitProject\adzhi\CodeFirstEF.Tests\obj\Debug\CodeFirstEF.Tests.pdb
 D:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\BundleMinifyInlineJsCss.dll
+F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\Kendo.Mvc.xml
+F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\bg-BG\Kendo.Mvc.resources.dll
+F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\da-DK\Kendo.Mvc.resources.dll
+F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\de-DE\Kendo.Mvc.resources.dll
+F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\es-ES\Kendo.Mvc.resources.dll
+F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\fr-FR\Kendo.Mvc.resources.dll
+F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\nl-NL\Kendo.Mvc.resources.dll
+F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\pl-PL\Kendo.Mvc.resources.dll
+F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\pt-BR\Kendo.Mvc.resources.dll
+F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\pt-PT\Kendo.Mvc.resources.dll
+F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\ru-RU\Kendo.Mvc.resources.dll
+F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\uk-UA\Kendo.Mvc.resources.dll
+F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\zh-CN\Kendo.Mvc.resources.dll

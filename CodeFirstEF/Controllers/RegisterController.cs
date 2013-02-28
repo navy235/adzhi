@@ -151,5 +151,21 @@ namespace CodeFirstEF.Controllers
         {
             return View(new CompanyReg());
         }
+
+        public ActionResult GetPassword()
+        {
+            return View(new GetPasswordModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetPassword(GetPasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return View();
+        }
     }
 }

@@ -234,6 +234,14 @@ body .hide3 {
         text-decoration: underline;
     }
 
+.height10 {
+    height: 10px;
+}
+
+.height20 {
+    height: 20px;
+}
+
 .mr5 {
     margin-right: 5px;
 }
