@@ -333,3 +333,4 @@ F:\GitProject\adzhi\UserProject\obj\Debug\UserProject.Migrations.AlterGrouName.r
 F:\GitProject\adzhi\UserProject\obj\Debug\UserProject.csproj.GenerateResource.Cache
 F:\GitProject\adzhi\UserProject\obj\Debug\UserProject.dll
 F:\GitProject\adzhi\UserProject\obj\Debug\UserProject.pdb
+D:\GitProject\adzhi\UserProject\bin\BundleMinifyInlineJsCss.dll

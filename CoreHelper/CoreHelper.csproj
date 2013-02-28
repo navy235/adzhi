@@ -45,6 +45,9 @@
     <Reference Include="MiniProfiler.EntityFramework">
       <HintPath>..\CoreProjec\packages\MiniProfiler.EF.2.0.3\lib\net40\MiniProfiler.EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\CoreProjec\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\CoreProjec\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
@@ -81,6 +84,7 @@
     <Compile Include="Attribute\CheckContactAttribute.cs" />
     <Compile Include="Attribute\HintLabelAttribute.cs" />
     <Compile Include="Attribute\RequireWithAttribute.cs" />
+    <Compile Include="Attribute\StringCheckLengthAttribute.cs" />
     <Compile Include="BadWords\BadWordValidator.cs" />
     <Compile Include="Checking\CheckHelper.cs" />
     <Compile Include="Cookie\CookieHelper.cs" />

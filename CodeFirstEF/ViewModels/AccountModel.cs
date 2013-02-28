@@ -25,9 +25,10 @@ namespace CodeFirstEF.ViewModels
 
         [Required(ErrorMessage = "请输入昵称")]
         [Display(Name = "昵称：")]
-        [RegularExpression(@"^[\u0391-\uFFE5\w]+$", ErrorMessage = "昵称含有非法字符.")]
+        [RegularExpression(@"^[\u4e00-\u9fa5A|Za-z|0-9|_]+$", ErrorMessage = "昵称含有非法字符.")]
         [Remote("NickNameExists", "AjaxService", ErrorMessage = "该昵称含有非法字符或已经注册")]
-        [StringLength(7, ErrorMessage = "请输入{2}-{1}位中文昵称", MinimumLength = 2)]
+        [StringCheckLength(6, 14)]
+        [Hint("请输入6-14位昵称，英文、数字或中文均可（中文占2个字符）。")]
         public string NickName { get; set; }
 
         [Required(ErrorMessage = "请输入密码")]
@@ -97,10 +98,11 @@ namespace CodeFirstEF.ViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "请输入昵称")]
-        [Display(Name = "昵称")]
-        [RegularExpression(@"^[\u0391-\uFFE5\w]+$", ErrorMessage = "昵称含有非法字符.")]
-        [Remote("NickNameExistsNotMe", "AjaxService", ErrorMessage = "该昵称含有非法字符或已经注册")]
-        [StringLength(7, ErrorMessage = "请输入{2}-{1}位中文昵称", MinimumLength = 2)]
+        [Display(Name = "昵称：")]
+        [RegularExpression(@"^[\u4e00-\u9fa5A|Za-z|0-9|_]+$", ErrorMessage = "昵称含有非法字符.")]
+        [Remote("NickNameExists", "AjaxService", ErrorMessage = "该昵称含有非法字符或已经注册")]
+        [StringCheckLength(6, 14)]
+        [Hint("请输入6-14位昵称，英文、数字或中文均可（中文占2个字符）。")]
         public string NickName { get; set; }
 
         [Required(ErrorMessage = "请选择性别")]

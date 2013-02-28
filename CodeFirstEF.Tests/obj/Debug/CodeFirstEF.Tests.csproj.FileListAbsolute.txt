@@ -334,3 +334,4 @@ F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\zh-Hans\System.Web.Optimization.
 F:\GitProject\adzhi\CodeFirstEF.Tests\obj\Debug\CodeFirstEF.Tests.csprojResolveAssemblyReference.cache
 F:\GitProject\adzhi\CodeFirstEF.Tests\obj\Debug\CodeFirstEF.Tests.dll
 F:\GitProject\adzhi\CodeFirstEF.Tests\obj\Debug\CodeFirstEF.Tests.pdb
+D:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\BundleMinifyInlineJsCss.dll
