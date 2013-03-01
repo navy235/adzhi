@@ -33,7 +33,7 @@
                     <div class="form-field">
                         @Html.LabelFor(x => x.Password, new { @class = "form-field-lable-required" })
                         @Html.EditorFor(x => x.Password)
-                        <a href="#" tabindex="-1">忘记密码？</a>
+                        <a href="@Url.Action("GetPassword", "Register")" tabindex="-1">忘记密码？</a>
                         @Html.ValidationMessageFor(x => x.Password)
 
                     </div>

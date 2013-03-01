@@ -150,3 +150,4 @@ D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.ExecuteELMAHSql
 D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.csproj.GenerateResource.Cache
 D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.dll
 D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.pdb
+D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddMember_Action_IP_Field.resources

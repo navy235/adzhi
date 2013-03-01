@@ -35,9 +35,14 @@ namespace CodeFirstEF.Controllers
             DB_Service = _DB_Service;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string username = null)
         {
-            return View(new LogOnModel());
+            var model = new LogOnModel();
+            if (!string.IsNullOrEmpty(username))
+            {
+                model.Email = username;
+            }
+            return View(model);
         }
 
         [HttpPost]
@@ -325,6 +330,7 @@ namespace CodeFirstEF.Controllers
 
             }
         }
+
         public ActionResult Taobao()
         {
             //应用的APPID 

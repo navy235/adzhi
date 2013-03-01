@@ -158,6 +158,7 @@
     <Compile Include="Controllers\AjaxServiceController.cs" />
     <Compile Include="Controllers\AreasController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\FormatCateController.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Controllers\CompanyScaleController.cs" />
     <Compile Include="Controllers\CompanyFundController.cs" />
     <Compile Include="Controllers\CompanyBussinessController.cs" />
+    <Compile Include="Filters\PermissionAttributes.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -214,6 +216,10 @@
     <Compile Include="Migrations\201302271337552_AddMemberOpenAuth2.Designer.cs">
       <DependentUpon>201302271337552_AddMemberOpenAuth2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303010218158_AddMember_Action_IP_Field.cs" />
+    <Compile Include="Migrations\201303010218158_AddMember_Action_IP_Field.Designer.cs">
+      <DependentUpon>201303010218158_AddMember_Action_IP_Field.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\SqlResourceMigration.cs" />
     <Compile Include="Models\Area.cs" />
@@ -248,6 +254,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AccountModel.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
+    <Compile Include="ViewModels\EmailModel.cs" />
     <Compile Include="ViewModels\GroupModel.cs" />
     <Compile Include="ViewModels\ImageBox.cs" />
     <Compile Include="ViewModels\OutDoorViewModel.cs" />
@@ -270,6 +277,8 @@
     <Content Include="Content\163.core.css" />
     <Content Include="Content\Badwords\badwords.txt" />
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\EmailTemplate\getpwd.htm" />
+    <Content Include="Content\EmailTemplate\reg.htm" />
     <Content Include="Content\images\activityFlags.png" />
     <Content Include="Content\images\actTags.png" />
     <Content Include="Content\images\btn.gif" />
@@ -512,6 +521,9 @@
     <Content Include="packages.config" />
     <EmbeddedResource Include="Migrations\201302271337552_AddMemberOpenAuth2.resx">
       <DependentUpon>201302271337552_AddMemberOpenAuth2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303010218158_AddMember_Action_IP_Field.resx">
+      <DependentUpon>201303010218158_AddMember_Action_IP_Field.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -1105,6 +1117,8 @@
     <Content Include="Views\Login\Douban.cshtml" />
     <Content Include="Views\Login\Renren.cshtml" />
     <Content Include="Views\Register\GetPassword.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Register\ResetPassword.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />

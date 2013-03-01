@@ -27,6 +27,9 @@ namespace CodeFirstEF.Models
         [MaxLength(150)]
         public string Description { get; set; }
 
+        [MaxLength(50)]
+        public string IP { get; set; }
+
         public System.DateTime AddTime { get; set; }
 
         public virtual Member Member { get; set; }
