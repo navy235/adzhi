@@ -11,7 +11,7 @@ using CodeFirstEF.Concrete;
 using CodeFirstEF.Models;
 using CoreHelper.Data.Interface;
 
-namespace CoreHelper.Filters
+namespace CodeFirstEF.Filters
 {
     public class PermissionAttribute : BaseAuthorizeAttribute
     {
@@ -33,10 +33,6 @@ namespace CoreHelper.Filters
                 int groupID = Convert.ToInt32(CookieHelper.GroupID);
                 string controller = httpContext.Request.RequestContext.RouteData.Values["controller"].ToString();
                 string action = httpContext.Request.RequestContext.RouteData.Values["action"].ToString();
-
-
-
-
                 //var query = from permissions in db.Permissions
                 //            join role_permissions in db.Role_Permissions on permissions.ID equals role_permissions.PermissionID
                 //            join group_roles in db.Group_Roles on role_permissions.RoleID equals group_roles.RoleID

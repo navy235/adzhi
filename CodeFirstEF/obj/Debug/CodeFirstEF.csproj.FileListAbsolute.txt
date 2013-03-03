@@ -151,3 +151,5 @@ D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.csproj.GenerateResource.Ca
 D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.dll
 D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.pdb
 D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddMember_Action_IP_Field.resources
+F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddMember_Action_IP_Field.resources
+F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddMember_Profile_Field.resources

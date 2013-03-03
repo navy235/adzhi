@@ -165,6 +165,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
+    <Compile Include="Controllers\PersonalController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
     <Compile Include="Controllers\OutDoorController.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Controllers\CompanyScaleController.cs" />
     <Compile Include="Controllers\CompanyFundController.cs" />
     <Compile Include="Controllers\CompanyBussinessController.cs" />
+    <Compile Include="Filters\BaseAuthorizeAttribute.cs" />
     <Compile Include="Filters\PermissionAttributes.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -219,6 +221,10 @@
     <Compile Include="Migrations\201303010218158_AddMember_Action_IP_Field.cs" />
     <Compile Include="Migrations\201303010218158_AddMember_Action_IP_Field.Designer.cs">
       <DependentUpon>201303010218158_AddMember_Action_IP_Field.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201303011531514_AddMember_Profile_Field.cs" />
+    <Compile Include="Migrations\201303011531514_AddMember_Profile_Field.Designer.cs">
+      <DependentUpon>201303011531514_AddMember_Profile_Field.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\SqlResourceMigration.cs" />
@@ -275,12 +281,15 @@
     <Content Include="Binaries\Lucene.Net.China.dll" />
     <Content Include="Binaries\Ninject.dll" />
     <Content Include="Content\163.core.css" />
+    <Content Include="Content\avtar\avtar_default.jpg" />
     <Content Include="Content\Badwords\badwords.txt" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\EmailTemplate\getpwd.htm" />
     <Content Include="Content\EmailTemplate\reg.htm" />
     <Content Include="Content\images\activityFlags.png" />
     <Content Include="Content\images\actTags.png" />
+    <Content Include="Content\images\bind-email.jpg" />
+    <Content Include="Content\images\bind-mobile.jpg" />
     <Content Include="Content\images\btn.gif" />
     <Content Include="Content\images\consult.gif" />
     <Content Include="Content\images\cusp.png" />
@@ -304,6 +313,7 @@
     <Content Include="Content\images\login-img.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\mixr.gif" />
+    <Content Include="Content\images\personal.gif" />
     <Content Include="Content\images\productBg.png" />
     <Content Include="Content\images\productSpring.png" />
     <Content Include="Content\images\proIcons.png" />
@@ -312,6 +322,8 @@
     <Content Include="Content\images\proRpt_x.png" />
     <Content Include="Content\images\serviceImg.png" />
     <Content Include="Content\images\stepbg.gif" />
+    <Content Include="Content\images\twitter-bg.jpg" />
+    <Content Include="Content\images\up-ico.gif" />
     <Content Include="Content\images\uploadbtn.png" />
     <Content Include="Content\163.index.css" />
     <Content Include="Content\images\zh-db.jpg" />
@@ -524,6 +536,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303010218158_AddMember_Action_IP_Field.resx">
       <DependentUpon>201303010218158_AddMember_Action_IP_Field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303011531514_AddMember_Profile_Field.resx">
+      <DependentUpon>201303011531514_AddMember_Profile_Field.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -1119,6 +1134,9 @@
     <Content Include="Views\Register\GetPassword.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Register\ResetPassword.cshtml" />
+    <Content Include="Views\Personal\Index.cshtml" />
+    <Content Include="Views\Personal\BaseInfo.cshtml" />
+    <Content Include="Views\Personal\Avtar.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />
@@ -1146,6 +1164,7 @@
     <Content Include="Views\CompanyFund\Index.cshtml" />
     <Content Include="Views\CompanyBussiness\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\Shared\_LayoutPersonal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Lucene\" />

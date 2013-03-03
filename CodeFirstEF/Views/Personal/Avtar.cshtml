@@ -1,0 +1,133 @@
+﻿@model CodeFirstEF.ViewModels.AvtarModel
+@{
+    ViewBag.Title = "设置头像";
+    Layout = "~/Views/Shared/_LayoutPersonal.cshtml";
+}
+<article class="personal clearfix">
+    <div class="personal-left">
+        <div class="personal-nav">
+            <div class="nav-body nav-top">
+                <div class="nav-title">
+                    <em></em>
+                    <p class="nav-account"><a href="@Url.Action("Index")">我的账号</a></p>
+                    <i></i>
+                </div>
+                <div class="nav-title   nav-current">
+                    <em></em>
+                    <p class="nav-profile">个人资料</p>
+                    <i></i>
+                </div>
+                <ul class="menu-profile" style="display: block;">
+                    <li class="item-baseinfo  ">
+                        <p><a href="@Url.Action("BaseInfo")">基本信息</a></p>
+                    </li>
+                    <li class="item-avtar current ">
+                        <p><a href="@Url.Action("Avtar")">设置头像</a></p>
+                    </li>
+                    <li class="item-contact item-current">
+                        <p><a href="@Url.Action("Contact")">联系方式</a></p>
+                    </li>
+                    @*  <li class="item-workexp ">
+                        <p><a href="http://u.zhubajie.com/mydata/workexp">工作经历</a></p>
+                    </li>
+                    <li class="item-studyxp ">
+                        <p><a href="http://u.zhubajie.com/mydata/studyxp">学习经历</a></p>
+                    </li>*@
+                    <li class="item-address ">
+                        <p><a href="@Url.Action("Address")">详细地址</a></p>
+                    </li>
+                </ul>
+                <div class="nav-title ">
+                    <em></em>
+                    <p class="nav-bound">账号绑定</p>
+                    <i></i>
+                </div>
+                <ul class="menu-bound" style="display: none;">
+                    <li class="item-mobile ">
+                        <p><a href="http://u.zhubajie.com/cert/mobile">手机绑定</a></p>
+                    </li>
+                    <li class="item-email ">
+                        <p><a href="http://u.zhubajie.com/cert/email">邮箱绑定</a></p>
+                    </li>
+                    <li class="item-weobo ">
+                        <p><a href="http://u.zhubajie.com/weibo/index">微博绑定</a></p>
+                    </li>
+                </ul>
+                <div class="nav-title ">
+                    <em></em>
+                    <p class="nav-auth"><a href="http://yan.zhubajie.com/certification/index-from-t5">身份认证</a></p>
+                    <i></i>
+                </div>
+                <div class="nav-title ">
+                    <em></em>
+                    <p class="nav-security">账号安全</p>
+                    <i></i>
+                </div>
+                <ul class="menu-security" style="display: none;">
+                    <li class="item-changepwd ">
+                        <p><a href="http://u.zhubajie.com/changepass/index">修改登录密码</a></p>
+                    </li>
+                </ul>
+                <div class="nav-title ">
+                    <em></em>
+                    <p class="nav-outdoor">户外信息管理</p>
+                    <i></i>
+                </div>
+                <ul class="menu-media" style="display: none;">
+                    <li class="item-outdoor-list ">
+                        <p><a href="http://u.zhubajie.com/changepass/index">户外信息列表</a></p>
+                    </li>
+                    <li class="item-outdoor-publish ">
+                        <p><a href="http://u.zhubajie.com/changepass/index">发布户外信息</a></p>
+                    </li>
+                    <li class="item-outdoor-top ">
+                        <p><a href="http://u.zhubajie.com/changepass/index">户外置顶</a></p>
+                    </li>
+
+                </ul>
+                <div class="nav-title ">
+                    <em></em>
+                    <p class="nav-pay"><a href="http://u.zhubajie.com/pay">支付账户管理</a></p>
+                    <i></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="personal-right">
+        <div class="personal-right-body">
+            <div class="personal-body-title clearfix">
+                <h5>@ViewBag.Title</h5>
+            </div>
+            <p class="personal-body-tips mt10">@Model.NickName，选择真实头像更方便大家了解你，以下信息将显示在<a href="http://home.zhubajie.com/4740284/info">个人资料页</a>。</p>
+            <p class="personal-body-tips mt10">
+                没有合适的？快来 <a href="http://www.zhubajie.com/topic/1/p.html">在线设计</a> 专属你的形象标识吧
+            </p>
+            <div class="personal-form personal-form-avtar">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-field">
+                        @Html.LabelFor(x => x.AvtarUrl, new { @class = "form-field-lable-required" })
+                        @Html.EditorFor(x => x.AvtarUrl)
+                        @Html.ValidationMessageFor(x => x.AvtarUrl)
+                    </div>
+
+                    <div class="form-field form-field-submit c_gray">
+                        <button type="submit" class="btn btn-warning ">
+                            &nbsp;&nbsp;保&nbsp;&nbsp;存&nbsp;&nbsp;</button>
+                    </div>
+                }
+            </div>
+            <div class="personal-avtar-tips mt10">
+                <ul>
+                    <li>· 请上传您的品牌Logo或者个人真实头像</li>
+                    <li>· 请勿在形象标示上留有任何联系方式的信息</li>
+                    <li>· 支持JPG格式，图片大小不超过5MB</li>
+                    <li>· 请保证图片质量，分辨率至少为200*200</li>
+                    <li class="personal-avtar-tips-desc mt15">· 上传遇到问题，请联系客服：400-188-6666</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</article>

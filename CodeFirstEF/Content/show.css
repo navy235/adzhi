@@ -1704,6 +1704,7 @@
     color: #888;
     position: relative;
     font-family: '宋体';
+    border-bottom: #e8e8e8 1px solid;
 }
 
     .nav-bread .nav-bread-home {
@@ -3276,9 +3277,331 @@ goods-pack .goods-desc {
     word-wrap: break-word;
 }
 
+/*************************
+ *
+ *      personal
+ *
+ ************************/
+
+.personal {
+    margin: 0 auto;
+    width: 990px;
+    background: #e3f2f8;
+}
+
+.personal-left {
+    width: 153px;
+    float: left;
+    padding-top: 35px;
+}
+
+
+.personal-right {
+    margin: 0 0 0 153px;
+    background: #fff;
+}
+
+.personal-nav {
+    width: 153px;
+    padding: 15px 0 100px;
+    background: #e3f2f8;
+    position: relative;
+    z-index: 11;
+}
+
+.nav-body {
+}
+
+.nav-top {
+    position: relative;
+    top: -27px;
+}
+
+.personal-nav ul {
+    padding: 0 0 10px 0;
+    color: #666;
+    line-height: 24px;
+    _line-height: 27px;
+}
+
+    .personal-nav ul li {
+        padding: 5px 20px;
+    }
+
+        .personal-nav ul li.hover, .personal-nav ul li:hover {
+            background: #d6ebf3;
+        }
+
+        .personal-nav ul li.current {
+            background: #c6e1ee;
+        }
+
+        .personal-nav ul li a {
+            color: #666;
+            display: block;
+            text-decoration: none;
+            position: relative;
+        }
 
 
 
+.nav-title {
+    color: #666;
+    font-size: 15px;
+    font-weight: normal;
+    outline: none;
+    height: 16px;
+    padding: 8px 0 12px 15px;
+    cursor: pointer;
+    font-family: "微软雅黑",Microsoft YaHei;
+}
+
+    .nav-title p {
+        background: url(images/personal.gif) no-repeat;
+        padding-left: 21px;
+    }
+
+    .nav-title a {
+        color: #666;
+        text-decoration: none;
+        font-family: "微软雅黑",Microsoft YaHei;
+    }
+
+.nav-current {
+    background: #fff;
+    position: relative;
+    width: 138px;
+    border-bottom: 1px solid #DFDFDF;
+}
+
+    .nav-current em {
+        display: inline-block;
+        background: #ffb257;
+        width: 8px;
+        height: 35px;
+        position: absolute;
+        top: 0;
+        left: -8px;
+    }
+
+    .nav-current p {
+        font-weight: bold;
+    }
+
+.nav-title p.nav-account {
+    background-position: 0 -422px;
+}
+
+.nav-current p.nav-account {
+    background-position: 0 -716px;
+}
+
+.nav-title p.nav-profile {
+    background-position: 0 -577px;
+}
+
+.nav-current p.nav-profile {
+    background-position: 0 -447px;
+}
+
+.nav-title p.nav-bound {
+    background-position: 0 -470px;
+}
+
+.nav-current p.nav-bound {
+    background-position: 0 -596px;
+}
+
+.nav-title p.nav-auth {
+    background-position: 0 -496px;
+}
+
+.nav-current p.nav-auth {
+    font-weight: bold;
+}
+
+.nav-title p.nav-outdoor {
+    background-position: 0 -496px;
+}
+
+.nav-current p.nav-outdoor {
+    font-weight: bold;
+}
+
+.nav-title p.nav-security {
+    background-position: 0 -525px;
+}
+
+.nav-current p.nav-security {
+    background-position: 0 -665px;
+}
+
+.nav-title p.nav-pay {
+    background-position: 0 -553px;
+}
+
+.nav-current p.nav-pay {
+    background-position: 0 -691px;
+}
+
+
+.personal-right-body {
+    padding-bottom: 150px;
+    min-height: 600px;
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    width: auto;
+    height: auto;
+    padding: 15px 20px;
+    overflow: hidden;
+}
+
+.personal-body-title {
+    border-bottom: 1px solid #e6e6e6;
+    padding-bottom: 15px;
+}
+
+    .personal-body-title h5 {
+        font-size: 16px;
+        color: #333;
+        font-weight: bold;
+        float: left;
+        font-family: "微软雅黑",Microsoft YaHei;
+    }
+
+.personal-body-tips {
+    color: #999;
+    margin-bottom: 20px;
+}
+
+
+
+.menu-profile {
+    display: none;
+    position: relative;
+    zoom: 1;
+}
+
+    .menu-profile li p {
+        background: none;
+        padding: 0 0 0 15px;
+    }
+
+.personal-body-list {
+    border-top: 1px solid #E1E1E1;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+    .personal-body-list li {
+        padding: 10px 0;
+        border-bottom: 1px dashed #e1e1e1;
+    }
+
+        .personal-body-list li a {
+            margin-left: 0;
+            font-size: 14px;
+        }
+
+        .personal-body-list li.list-status a {
+            margin-left: 10px;
+        }
+
+.personal-body-bind {
+    border-top: 1px solid #E1E1E1;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+    .personal-body-bind dt {
+        float: left;
+        width: 50px;
+        height: 50px;
+    }
+
+        .personal-body-bind dt.bind-mobile {
+            background: url(images/bind-mobile.jpg) center 0 no-repeat;
+        }
+
+        .personal-body-bind dt.bind-email {
+            background: url(images/bind-email.jpg) center 7px no-repeat;
+        }
+
+    .personal-body-bind dd.bind-desc {
+        float: left;
+        width: 500px;
+        color: #999;
+        margin: 0 10px;
+    }
+
+    .personal-body-bind dd.bind-btn {
+        float: left;
+        margin-top: 10px;
+    }
+
+    .personal-body-bind dd.bind-desc span {
+        display: block;
+        font-size: 14px;
+        color: #333;
+    }
+
+        .personal-body-bind dd.bind-desc span.ok {
+            background: url(images/up-ico.gif) 60px -427px no-repeat;
+        }
+
+.personal-form {
+}
+
+    .personal-form .form-field {
+        margin: 10px 0 0 0;
+        line-height: 20px;
+    }
+
+        .personal-form .form-field label {
+            width: 100px;
+        }
+
+    .personal-form .form-field-submit {
+        margin-left: 102px;
+    }
+
+.personal-form-avtar {
+    float: left;
+    width: 500px;
+}
+
+    .personal-form-avtar .img-box img {
+        width: 198px;
+        height: 198px;
+    }
+
+    .personal-form-avtar .form-field-submit {
+        margin-left: 0px;
+    }
+
+    .personal-form-avtar .form-field-lable-required {
+        display: none;
+    }
+
+    .personal-form-avtar .k-upload {
+        margin-left: -4px;
+        margin-top: 10px;
+    }
+
+.personal-avtar-tips {
+    float: left;
+}
+
+    .personal-avtar-tips li {
+        color: #f60;
+        line-height: 20px;
+        padding-bottom: 3px;
+    }
+
+        .personal-avtar-tips li.personal-avtar-tips-desc {
+            color: #999;
+        }
 /*************************
  *
  *      footer

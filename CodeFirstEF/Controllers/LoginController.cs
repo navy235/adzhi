@@ -47,7 +47,7 @@ namespace CodeFirstEF.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(LogOnModel model, string ReturnUrl)
+        public ActionResult Index(LogOnModel model, string ReturnUrl, bool Remember = false)
         {
 
             if (ModelState.IsValid)

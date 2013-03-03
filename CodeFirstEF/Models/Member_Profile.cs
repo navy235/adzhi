@@ -28,12 +28,35 @@ namespace CodeFirstEF.Models
 
         [MaxLength(500)]
         public string AvtarUrl { get; set; }
+
         public bool Sex { get; set; }
 
         public System.DateTime Borthday { get; set; }
 
         [MaxLength(20)]
         public string CityCode { get; set; }
+
+        [MaxLength(20)]
+        public string RealName { get; set; }
+
+        [MaxLength(20)]
+        public string Mobile { get; set; }
+
+        [MaxLength(20)]
+        public string Phone { get; set; }
+
+        [MaxLength(20)]
+        public string QQ { get; set; }
+
+        [MaxLength(50)]
+        public string MSN { get; set; }
+
+        [MaxLength(50)]
+        public string Address { get; set; }
+
+        public double Lat { get; set; }
+
+        public double Lng { get; set; }
 
         [MaxLength(150)]
         public string Description { get; set; }

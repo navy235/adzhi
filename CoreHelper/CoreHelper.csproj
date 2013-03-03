@@ -112,7 +112,6 @@
     <Compile Include="Files\FileHelper.cs" />
     <Compile Include="Filters\AjaxOnlyAttribute.cs" />
     <Compile Include="Filters\GenerateStaticAttribute.cs" />
-    <Compile Include="Filters\BaseAuthorizeAttribute.cs" />
     <Compile Include="Filters\GzipCompressJsAndReplaceWhiteSpaceAttribute.cs" />
     <Compile Include="Filters\MvcOutputCacheAttribute.cs" />
     <Compile Include="Filters\SkipGzipCompressJsAndReplaceWhiteSpaceAttribute.cs" />

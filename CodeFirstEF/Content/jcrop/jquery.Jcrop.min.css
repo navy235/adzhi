@@ -26,3 +26,7 @@
 .jcrop-dark .jcrop-vline,.jcrop-dark .jcrop-hline{background:#000;filter:Alpha(opacity=70)!important;opacity:.7!important;}
 .jcrop-dark .jcrop-handle{-moz-border-radius:3px;-webkit-border-radius:3px;background-color:#FFF;border-color:#000;border-radius:3px;}
 .jcrop-holder img,img.jcrop-preview{max-width:none;}
+.jcrop_orgin { padding:5px;}
+.jcrop_preview { padding:5px;}
+.jcrop_footer {padding:5px;}
+

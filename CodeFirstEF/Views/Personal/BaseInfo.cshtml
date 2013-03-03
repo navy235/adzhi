@@ -1,0 +1,115 @@
+﻿@model CodeFirstEF.ViewModels.ProfileModel
+@{
+    ViewBag.Title = "基本信息";
+    Layout = "~/Views/Shared/_LayoutPersonal.cshtml";
+}
+<article class="personal clearfix">
+    <div class="personal-left">
+        <div class="personal-nav">
+            <div class="nav-body nav-top">
+                <div class="nav-title">
+                    <em></em>
+                    <p class="nav-account"><a href="@Url.Action("Index")">我的账号</a></p>
+                    <i></i>
+                </div>
+                <div class="nav-title   nav-current">
+                    <em></em>
+                    <p class="nav-profile">个人资料</p>
+                    <i></i>
+                </div>
+                <ul class="menu-profile" style="display: block;">
+                    <li class="item-baseinfo  current">
+                        <p><a href="@Url.Action("BaseInfo")">基本信息</a></p>
+                    </li>
+                    <li class="item-avtar ">
+                        <p><a href="@Url.Action("Avtar")">设置头像</a></p>
+                    </li>
+                    <li class="item-contact item-current">
+                        <p><a href="@Url.Action("Contact")">联系方式</a></p>
+                    </li>
+                    @*  <li class="item-workexp ">
+                        <p><a href="http://u.zhubajie.com/mydata/workexp">工作经历</a></p>
+                    </li>
+                    <li class="item-studyxp ">
+                        <p><a href="http://u.zhubajie.com/mydata/studyxp">学习经历</a></p>
+                    </li>*@
+                    <li class="item-address ">
+                        <p><a href="@Url.Action("Address")">详细地址</a></p>
+                    </li>
+                </ul>
+                <div class="nav-title ">
+                    <em></em>
+                    <p class="nav-bound">账号绑定</p>
+                    <i></i>
+                </div>
+                <ul class="menu-bound" style="display: none;">
+                    <li class="item-mobile ">
+                        <p><a href="http://u.zhubajie.com/cert/mobile">手机绑定</a></p>
+                    </li>
+                    <li class="item-email ">
+                        <p><a href="http://u.zhubajie.com/cert/email">邮箱绑定</a></p>
+                    </li>
+                    <li class="item-weobo ">
+                        <p><a href="http://u.zhubajie.com/weibo/index">微博绑定</a></p>
+                    </li>
+                </ul>
+                <div class="nav-title ">
+                    <em></em>
+                    <p class="nav-auth"><a href="http://yan.zhubajie.com/certification/index-from-t5">身份认证</a></p>
+                    <i></i>
+                </div>
+                <div class="nav-title ">
+                    <em></em>
+                    <p class="nav-security">账号安全</p>
+                    <i></i>
+                </div>
+                <ul class="menu-security" style="display: none;">
+                    <li class="item-changepwd ">
+                        <p><a href="http://u.zhubajie.com/changepass/index">修改登录密码</a></p>
+                    </li>
+                </ul>
+                <div class="nav-title ">
+                    <em></em>
+                    <p class="nav-outdoor">户外信息管理</p>
+                    <i></i>
+                </div>
+                <ul class="menu-media" style="display: none;">
+                    <li class="item-outdoor-list ">
+                        <p><a href="http://u.zhubajie.com/changepass/index">户外信息列表</a></p>
+                    </li>
+                    <li class="item-outdoor-publish ">
+                        <p><a href="http://u.zhubajie.com/changepass/index">发布户外信息</a></p>
+                    </li>
+                    <li class="item-outdoor-top ">
+                        <p><a href="http://u.zhubajie.com/changepass/index">户外置顶</a></p>
+                    </li>
+
+                </ul>
+                <div class="nav-title ">
+                    <em></em>
+                    <p class="nav-pay"><a href="http://u.zhubajie.com/pay">支付账户管理</a></p>
+                    <i></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="personal-right">
+        <div class="personal-right-body">
+            <div class="personal-body-title clearfix">
+                <h5>@ViewBag.Title</h5>
+            </div>
+            <div class="personal-form mt40">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.EditorForModel()
+                    <div class="form-field form-field-submit c_gray">
+                        <button type="submit" class="btn btn-warning ">
+                            &nbsp;&nbsp;保&nbsp;&nbsp;存&nbsp;&nbsp;</button>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</article>

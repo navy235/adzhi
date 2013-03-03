@@ -86,40 +86,51 @@ namespace CodeFirstEF.ViewModels
 
     public class ProfileModel
     {
-        [Editable(false)]
-        public int ID { get; set; }
-
-        [Required(ErrorMessage = "请输入Email地址")]
-        [DataType(DataType.EmailAddress)]
-        [Display(Name = "Email地址")]
-        [Remote("EmailExistsNotMe", "AjaxService", ErrorMessage = "该Email地址已经注册")]
-        [RegularExpression(@"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "输入的Email地址格式不正确.")]
-        [Editable(false)]
-        public string Email { get; set; }
+        [HiddenInput(DisplayValue = false)]
+        public int MemberID { get; set; }
 
         [Required(ErrorMessage = "请输入昵称")]
         [Display(Name = "昵称：")]
         [RegularExpression(@"^[\u4e00-\u9fa5A|Za-z|0-9|_]+$", ErrorMessage = "昵称含有非法字符.")]
-        [Remote("NickNameExists", "AjaxService", ErrorMessage = "该昵称含有非法字符或已经注册")]
+        [Remote("NickNameExistsNotMe", "AjaxService", ErrorMessage = "该昵称含有非法字符或已经注册")]
         [StringCheckLength(4, 14)]
         [Hint("请输入4-14位昵称，英文、数字或中文均可（中文占2个字符）。")]
         public string NickName { get; set; }
 
         [Required(ErrorMessage = "请选择性别")]
-        [Display(Name = "性别")]
-        public int Sex { get; set; }
+        [Display(Name = "性别：")]
+        [UIHint("Radio")]
+        [AdditionalMetadata("Radio", "男,女")]
+        public bool Sex { get; set; }
 
 
         [DataType(DataType.DateTime)]
-        [Display(Name = "生日")]
+        [Display(Name = "生日：")]
         public DateTime Borthday { get; set; }
 
 
         [Required(ErrorMessage = "请输入个人简介")]
-        [Display(Name = "个人简介")]
+        [Display(Name = "个人简介：")]
         [Remote("ValidateDescription", "AjaxService", ErrorMessage = "简介含有非法字符")]
         [DataType(DataType.MultilineText)]
+        [StringCheckLength(4, 200)]
+        [Hint("请输入至少4-200个字，支持中文、英文。（中文占2个字符）。")]
         public string Description { get; set; }
+    }
+
+    public class AvtarModel
+    {
+        [HiddenInput(DisplayValue = false)]
+        public int MemberID { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
+        public string NickName { get; set; }
+
+        [Required(ErrorMessage = "请上传头像")]
+        [Display(Name = "上传头像")]
+        [UIHint("UploadImgEdit")]
+        [AdditionalMetadata("UploadImgEdit", "200")]
+        public string AvtarUrl { get; set; }
     }
 
     public class GetPasswordModel
