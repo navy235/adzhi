@@ -7,6 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreHelper", "..\CoreHelper
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FF0798B7-4A2C-4F89-9FDF-9576444E5B5E}"
 	ProjectSection(SolutionItems) = preProject
+		CoreProjec.vsmdi = CoreProjec.vsmdi
 		Local.testsettings = Local.testsettings
 	EndProjectSection
 EndProject
@@ -17,6 +18,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lucene.Net.China", "..\Lucene.Net.China\Lucene.Net.China.csproj", "{0E78E9D6-EC0A-49C2-B5BB-3AB2DB62447C}"
 EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = CoreProjec.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

@@ -5,7 +5,6 @@ F:\GitProject\adzhi\CoreHelper\bin\Debug\BundleMinifyInlineJsCss.dll
 F:\GitProject\adzhi\CoreHelper\bin\Debug\EntityFramework.dll
 F:\GitProject\adzhi\CoreHelper\bin\Debug\MiniProfiler.dll
 F:\GitProject\adzhi\CoreHelper\bin\Debug\MiniProfiler.EntityFramework.dll
-F:\GitProject\adzhi\CoreHelper\bin\Debug\Ninject.dll
 F:\GitProject\adzhi\CoreHelper\bin\Debug\WebBackgrounder.dll
 F:\GitProject\adzhi\CoreHelper\bin\Debug\WebGrease.dll
 F:\GitProject\adzhi\CoreHelper\bin\Debug\WG.exe
@@ -13,8 +12,6 @@ F:\GitProject\adzhi\CoreHelper\bin\Debug\EntityFramework.xml
 F:\GitProject\adzhi\CoreHelper\bin\Debug\MiniProfiler.pdb
 F:\GitProject\adzhi\CoreHelper\bin\Debug\MiniProfiler.xml
 F:\GitProject\adzhi\CoreHelper\bin\Debug\MiniProfiler.EntityFramework.pdb
-F:\GitProject\adzhi\CoreHelper\bin\Debug\Ninject.pdb
-F:\GitProject\adzhi\CoreHelper\bin\Debug\Ninject.xml
 F:\GitProject\adzhi\CoreHelper\bin\Debug\zh-Hans\EntityFramework.resources.dll
 F:\GitProject\adzhi\CoreHelper\obj\Debug\CoreHelper.dll
 F:\GitProject\adzhi\CoreHelper\obj\Debug\CoreHelper.pdb

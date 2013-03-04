@@ -89,6 +89,11 @@ namespace CodeFirstEF.ViewModels
         [HiddenInput(DisplayValue = false)]
         public int MemberID { get; set; }
 
+        [Required(ErrorMessage = "请输入真实姓名")]
+        [Display(Name = "真实姓名：")]
+        [StringCheckLength(4, 10)]
+        public string RealName { get; set; }
+
         [Required(ErrorMessage = "请输入昵称")]
         [Display(Name = "昵称：")]
         [RegularExpression(@"^[\u4e00-\u9fa5A|Za-z|0-9|_]+$", ErrorMessage = "昵称含有非法字符.")]
@@ -97,12 +102,17 @@ namespace CodeFirstEF.ViewModels
         [Hint("请输入4-14位昵称，英文、数字或中文均可（中文占2个字符）。")]
         public string NickName { get; set; }
 
+        [Required(ErrorMessage = "请选择城市")]
+        [Display(Name = "所在城市")]
+        [UIHint("CascadingDropDownList")]
+        [AdditionalMetadata("CascadingDropDownList", "ParentDropdownList")]
+        public string CityCode { get; set; }
+
         [Required(ErrorMessage = "请选择性别")]
         [Display(Name = "性别：")]
         [UIHint("Radio")]
         [AdditionalMetadata("Radio", "男,女")]
         public bool Sex { get; set; }
-
 
         [DataType(DataType.DateTime)]
         [Display(Name = "生日：")]
@@ -123,8 +133,6 @@ namespace CodeFirstEF.ViewModels
         [HiddenInput(DisplayValue = false)]
         public int MemberID { get; set; }
 
-        [HiddenInput(DisplayValue = false)]
-        public string NickName { get; set; }
 
         [Required(ErrorMessage = "请上传头像")]
         [Display(Name = "上传头像")]
@@ -138,6 +146,7 @@ namespace CodeFirstEF.ViewModels
         [HiddenInput(DisplayValue = false)]
         public int MemberID { get; set; }
 
+        [HiddenInput(DisplayValue = true)]
         [Display(Name = "电子邮箱：")]
         public string Email { get; set; }
 
@@ -153,27 +162,21 @@ namespace CodeFirstEF.ViewModels
         public string Phone { get; set; }
 
         [Display(Name = "QQ号码：")]
-        [RegularExpression(@"^[1-9][0-9]{4,5,6,7,8,9,10}$", ErrorMessage = "请输入正确的QQ号码.")]
+        [RegularExpression(@"^[1-9][0-9]{4,10}$", ErrorMessage = "请输入正确的QQ号码.")]
         public string QQ { get; set; }
 
         [Display(Name = "MSN：")]
         [RegularExpression(@"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "输入的MSN格式不正确.")]
         public string MSN { get; set; }
 
-        [Required(ErrorMessage = "请选择城市")]
-        [Display(Name = "所在城市")]
-        [UIHint("CascadingDropDownList")]
-        [AdditionalMetadata("CascadingDropDownList", "ParentDropdownList")]
-        public string CityCode { get; set; }
 
         [Display(Name = "详细地址：")]
         [StringCheckLength(10, 60)]
-        [Hint("请输入至少10-60个字，支持中文、英文。（中文占2个字符）。")]
         public string Address { get; set; }
 
         [Display(Name = "地图上标注：")]
         [UIHint("MapMarker")]
-        [HintLabel("在地图上标注位置")]
+        [HintLabel("您还可以在地图上标注您的位置，更方便大家找到您")]
         public string Position { get; set; }
 
     }

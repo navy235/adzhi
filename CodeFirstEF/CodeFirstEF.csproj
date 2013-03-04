@@ -1146,6 +1146,7 @@
     <Content Include="Views\Personal\Index.cshtml" />
     <Content Include="Views\Personal\BaseInfo.cshtml" />
     <Content Include="Views\Personal\Avtar.cshtml" />
+    <Content Include="Views\Personal\Contact.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />

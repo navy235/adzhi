@@ -103,7 +103,7 @@
         mapShow:function(){
             var self=@name;
             $("#"+self.windowId).data("kendoWindow").center().open();
-            if(self.lng===''){
+            if(self.lng===''||self.lng==='0'){
                 self.seach();
             }else{
                 var point={

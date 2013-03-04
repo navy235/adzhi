@@ -27,15 +27,7 @@
                     <li class="item-contact item-current">
                         <p><a href="@Url.Action("Contact")">联系方式</a></p>
                     </li>
-                    @*  <li class="item-workexp ">
-                        <p><a href="http://u.zhubajie.com/mydata/workexp">工作经历</a></p>
-                    </li>
-                    <li class="item-studyxp ">
-                        <p><a href="http://u.zhubajie.com/mydata/studyxp">学习经历</a></p>
-                    </li>*@
-                    <li class="item-address ">
-                        <p><a href="@Url.Action("Address")">详细地址</a></p>
-                    </li>
+           
                 </ul>
                 <div class="nav-title ">
                     <em></em>
@@ -98,6 +90,13 @@
             <div class="personal-body-title clearfix">
                 <h5>@ViewBag.Title</h5>
             </div>
+            <p class="personal-body-tips mt10">@Model.NickName，请填写真实信息，方便大家了解你，以下信息将显示在<a href="http://home.zhubajie.com/4740284/info">个人资料页</a>。</p>
+            @if (ViewBag.Error != null)
+            { 
+                <p class="personal-error-tips">
+                    @ViewBag.Error
+                </p>
+            }
             <div class="personal-form mt40">
                 @using (Html.BeginForm())
                 {

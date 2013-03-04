@@ -45,16 +45,59 @@ namespace CodeFirstEF.Controllers
             Member member = DB_Service.Set<Member>()
                 .Include(x => x.Member_Profile)
                 .Single(x => x.MemberID == memberID);
+            if (member.Member_Profile == null)
+            {
+                member.Member_Profile = new Member_Profile();
+            }
             ProfileModel pm = new ProfileModel()
             {
                 MemberID = member.MemberID,
-                Borthday = member.Member_Profile != null ? member.Member_Profile.Borthday : DateTime.Now,
-                Description = member.Member_Profile != null ? member.Member_Profile.Description : string.Empty,
+                Borthday = member.Member_Profile.Borthday,
+                Description = member.Member_Profile.Description,
                 NickName = member.NickName,
-                Sex = member.Member_Profile != null ? member.Member_Profile.Sex : true
+                RealName = member.Member_Profile.RealName,
+                CityCode = member.Member_Profile.CityCode,
+                Sex = member.Member_Profile.Sex
             };
             return View(pm);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult BaseInfo(ProfileModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var memberID = Convert.ToInt32(CookieHelper.UID);
+                    Member member = DB_Service.Set<Member>()
+                        .Include(x => x.Member_Profile)
+                        .Single(x => x.MemberID == memberID);
+                    DB_Service.Attach<Member>(member);
+                    Member_Profile mp = new Member_Profile();
+                    if (member.Member_Profile != null)
+                    {
+                        mp = member.Member_Profile;
+                    }
+                    mp.MemberID = model.MemberID;
+                    mp.Borthday = model.Borthday;
+                    mp.CityCode = model.CityCode;
+                    mp.Description = model.Description;
+                    member.NickName = model.NickName;
+                    mp.RealName = model.RealName;
+                    mp.Sex = model.Sex;
+                    member.Member_Profile = mp;
+                    DB_Service.Commit();
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Error = ex.Message;
+                }
+            }
+            return View(model);
+        }
+
 
         public ActionResult Avtar()
         {
@@ -65,7 +108,7 @@ namespace CodeFirstEF.Controllers
             AvtarModel pm = new AvtarModel()
             {
                 MemberID = member.MemberID,
-                NickName = member.NickName,
+           
                 AvtarUrl = member.Member_Profile != null ? member.Member_Profile.AvtarUrl : Url.Content("~/Content/avtar/avtar_default.jpg"),
 
             };
@@ -114,22 +157,12 @@ namespace CodeFirstEF.Controllers
             {
                 member.Member_Profile = new Member_Profile();
             }
+
             ContactModel cm = new ContactModel()
             {
-                //{
-                //    MemberID = member.MemberID,
-                //    Address = member.Member_Profile != null ? member.Member_Profile.Address : string.Empty,
-                //    CityCode = member.Member_Profile != null ? member.Member_Profile.CityCode : string.Empty,
-                //    Email = member.Email,
-                //    Mobile = member.Member_Profile != null ? member.Member_Profile.Mobile : string.Empty,
-                //    Phone = member.Member_Profile != null ? member.Member_Profile.Phone : string.Empty,
-                //    MSN = member.Member_Profile != null ? member.Member_Profile.MSN : string.Empty,
-                //    Position = member.Member_Profile != null ? member.Member_Profile.Lat + "|" + member.Member_Profile.Lng : string.Empty,
-                //    QQ = member.Member_Profile != null ? member.Member_Profile.QQ : member.Member_Profile.QQ
-
                 MemberID = member.MemberID,
                 Address = member.Member_Profile.Address,
-                CityCode = member.Member_Profile.CityCode,
+            
                 Email = member.Email,
                 Mobile = member.Member_Profile.Mobile,
                 Phone = member.Member_Profile.Phone,
@@ -138,8 +171,46 @@ namespace CodeFirstEF.Controllers
                 QQ = member.Member_Profile.QQ
 
             };
-            return View(member);
+            return View(cm);
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Contact(ContactModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var memberID = Convert.ToInt32(CookieHelper.UID);
+                    Member member = DB_Service.Set<Member>()
+                        .Include(x => x.Member_Profile)
+                        .Single(x => x.MemberID == memberID);
+                    DB_Service.Attach<Member>(member);
+                    Member_Profile mp = new Member_Profile();
+                    if (member.Member_Profile != null)
+                    {
+                        mp = member.Member_Profile;
+                    }
+                    mp.MemberID = member.MemberID;
+                    mp.Address = model.Address;
+                    mp.Phone = model.Phone;
+                    mp.Mobile = model.Mobile;
+                    mp.MSN = model.MSN;
+                    mp.QQ = model.QQ;
+                    if (model.Position.IndexOf("|") != -1)
+                    {
+                        mp.Lat = Convert.ToDouble(model.Position.Split('|')[0]);
+                        mp.Lng = Convert.ToDouble(model.Position.Split('|')[1]);
+                    }
+                    member.Member_Profile = mp;
+                    DB_Service.Commit();
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Error = ex.Message;
+                }
+            }
+            return View(model);
+        }
     }
 }
