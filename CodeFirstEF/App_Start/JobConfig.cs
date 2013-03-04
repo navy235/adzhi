@@ -1,7 +1,9 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Data.Entity.Migrations;
 using StackExchange.Profiling;
@@ -15,6 +17,8 @@ using CodeFirstEF.App_Start;
 using CodeFirstEF.Jobs;
 using CodeFirstEF.Concrete;
 using CodeFirstEF.Migrations;
+using Ninject;
+using Ninject.Web.Common;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(JobConfig), "PreStart")]
 [assembly: WebActivator.PostApplicationStartMethod(typeof(JobConfig), "Start")]
@@ -24,10 +28,13 @@ namespace CodeFirstEF.App_Start
 {
     public static class JobConfig
     {
+
+        private static readonly Bootstrapper bootstrapper = new Bootstrapper();
         private static JobManager _jobManager;
 
         public static void PreStart()
         {
+            NinjectPreStart();
             MiniProfilerPreStart();
         }
 
@@ -42,7 +49,47 @@ namespace CodeFirstEF.App_Start
         public static void Shutdown()
         {
             BackgroundJobsStop();
+            NinjectStop();
         }
+
+
+
+        private static void NinjectPreStart()
+        {
+            DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
+            DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
+            bootstrapper.Initialize(CreateKernel);
+        }
+
+        private static IKernel CreateKernel()
+        {
+            var kernel = new StandardKernel();
+            kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
+            kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
+            NinjectBinding.Binding(kernel);
+            //GlobalConfiguration.Configuration.DependencyResolver.GetService(new NinjectDependencyResolver(kernel));
+            return kernel;
+        }
+
+        private static void NinjectStop()
+        {
+            bootstrapper.ShutDown();
+        }
+
+        private static void DbMigratorPostStart()
+        {
+            var dbMigrator = new DbMigrator(new CodeFirstEF.Migrations.Configuration());
+            // After upgrading to EF 4.3 and MiniProfile 1.9, there is a bug that causes several 
+            // 'Invalid object name 'dbo.__MigrationHistory' to be thrown when the database is first created; 
+            // it seems these can safely be ignored, and the database will still be created.
+            dbMigrator.Update();
+        }
+
+        private static void AppPostStart()
+        {
+            GlobalFilters.Filters.Add(new ElmahHandleErrorAttribute());
+        }
+
 
         private static void BackgroundJobsPostStart()
         {
@@ -66,7 +113,6 @@ namespace CodeFirstEF.App_Start
             _jobManager.Dispose();
         }
 
-
         private static void MiniProfilerPreStart()
         {
             MiniProfilerEF.Initialize();
@@ -83,19 +129,6 @@ namespace CodeFirstEF.App_Start
             }
         }
 
-        private static void DbMigratorPostStart()
-        {
-            var dbMigrator = new DbMigrator(new CodeFirstEF.Migrations.Configuration());
-            // After upgrading to EF 4.3 and MiniProfile 1.9, there is a bug that causes several 
-            // 'Invalid object name 'dbo.__MigrationHistory' to be thrown when the database is first created; 
-            // it seems these can safely be ignored, and the database will still be created.
-            dbMigrator.Update();
-        }
-
-        private static void AppPostStart()
-        {
-            GlobalFilters.Filters.Add(new ElmahHandleErrorAttribute());
-        }
 
         private class MiniProfilerStartupModule : IHttpModule
         {

@@ -133,6 +133,52 @@ namespace CodeFirstEF.ViewModels
         public string AvtarUrl { get; set; }
     }
 
+    public class ContactModel
+    {
+        [HiddenInput(DisplayValue = false)]
+        public int MemberID { get; set; }
+
+        [Display(Name = "电子邮箱：")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "手机号码")]
+        [Display(Name = "手机号码：")]
+        [RegularExpression(@"^(13[0-9]|15[-9]|18[0-9])\d{8}$", ErrorMessage = "请输入正确的手机号码.")]
+        public string Mobile { get; set; }
+
+
+        [Display(Name = "固定电话：")]
+        [RegularExpression(@"^0\d{2,3}(\-)?\d{7,8}$", ErrorMessage = "请按照格式输入正确的固定电话号码.")]
+        [Hint("请按照区号-电话号码（如：021-888234）格式输入")]
+        public string Phone { get; set; }
+
+        [Display(Name = "QQ号码：")]
+        [RegularExpression(@"^[1-9][0-9]{4,5,6,7,8,9,10}$", ErrorMessage = "请输入正确的QQ号码.")]
+        public string QQ { get; set; }
+
+        [Display(Name = "MSN：")]
+        [RegularExpression(@"^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "输入的MSN格式不正确.")]
+        public string MSN { get; set; }
+
+        [Required(ErrorMessage = "请选择城市")]
+        [Display(Name = "所在城市")]
+        [UIHint("CascadingDropDownList")]
+        [AdditionalMetadata("CascadingDropDownList", "ParentDropdownList")]
+        public string CityCode { get; set; }
+
+        [Display(Name = "详细地址：")]
+        [StringCheckLength(10, 60)]
+        [Hint("请输入至少10-60个字，支持中文、英文。（中文占2个字符）。")]
+        public string Address { get; set; }
+
+        [Display(Name = "地图上标注：")]
+        [UIHint("MapMarker")]
+        [HintLabel("在地图上标注位置")]
+        public string Position { get; set; }
+
+    }
+
+
     public class GetPasswordModel
     {
         [Required(ErrorMessage = "请输入电子邮箱")]

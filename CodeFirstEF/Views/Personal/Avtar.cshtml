@@ -102,6 +102,13 @@
             <p class="personal-body-tips mt10">
                 没有合适的？快来 <a href="http://www.zhubajie.com/topic/1/p.html">在线设计</a> 专属你的形象标识吧
             </p>
+            @if (ViewBag.Error != null)
+            { 
+                <p class="personal-error-tips">
+                    @ViewBag.Error
+                </p>
+            }
+
             <div class="personal-form personal-form-avtar">
                 @using (Html.BeginForm())
                 {

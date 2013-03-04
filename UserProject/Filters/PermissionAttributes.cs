@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Data.Entity;
 using CoreHelper.Cookie;
+using CoreHelper.Filters;
 using CoreHelper.Error;
 using UserProject.Concrete;
 using UserProject.Models;

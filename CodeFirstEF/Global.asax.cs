@@ -6,13 +6,6 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Optimization;
-using StackExchange.Profiling;
-using StackExchange.Profiling.MVCHelpers;
-using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-using CodeFirstEF.Concrete;
-using WebActivator;
-using Elmah;
-using Elmah.Contrib.Mvc;
 
 namespace CodeFirstEF
 {
@@ -27,7 +20,7 @@ namespace CodeFirstEF
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory());
+
         }
     }
 }

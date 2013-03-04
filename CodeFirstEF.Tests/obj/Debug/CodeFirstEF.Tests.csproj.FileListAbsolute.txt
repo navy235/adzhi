@@ -348,3 +348,6 @@ F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\pt-PT\Kendo.Mvc.resources.dll
 F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\ru-RU\Kendo.Mvc.resources.dll
 F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\uk-UA\Kendo.Mvc.resources.dll
 F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\zh-CN\Kendo.Mvc.resources.dll
+D:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\Ninject.Web.Common.dll
+D:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\Ninject.Web.Common.pdb
+D:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\Ninject.Web.Common.xml
