@@ -13,7 +13,7 @@ using CoreHelper.Data.Interface;
 using CodeFirstEF.Concrete;
 using CodeFirstEF.Models;
 using CodeFirstEF.ViewModels;
-
+using CodeFirstEF.Serivces;
 namespace CodeFirstEF.Controllers
 {
     public class RegisterController : Controller
@@ -21,10 +21,19 @@ namespace CodeFirstEF.Controllers
         //
         // GET: /Register/
         private IUnitOfWork DB_Service;
+        private IMemberService memberService;
+        private IEmailService emailService;
+        private IMember_ActionService member_ActionService;
 
-        public RegisterController(IUnitOfWork _DB_Service)
+        public RegisterController(IUnitOfWork _DB_Service
+            , IMemberService _memberService
+            , IEmailService _emailService
+            , IMember_ActionService _member_ActionService)
         {
             DB_Service = _DB_Service;
+            memberService = _memberService;
+            emailService = _emailService;
+            member_ActionService = _member_ActionService;
         }
 
         public ActionResult Index()
@@ -41,27 +50,8 @@ namespace CodeFirstEF.Controllers
                 #region 注册用户并登录
                 try
                 {
-                    Member mb = new Member();
-                    mb.Email = model.Email;
-                    mb.NickName = model.NickName;
-                    mb.Status = 1;//注册未激活，0为禁用
-                    mb.Password = CheckHelper.StrToMd5(model.Password);
-                    mb.GroupID = 1;
-                    mb.AddTime = DateTime.Now;
-                    mb.LastTime = DateTime.Now;
-                    mb.AddIP = HttpHelper.IP;
-                    mb.LastIP = HttpHelper.IP;
-                    mb.LoginCount = 1;
-
-                    DB_Service.Add<Member>(mb);
-                    DB_Service.Commit();
-                    CookieHelper.LoginCookieSave(mb.MemberID.ToString(),
-                        mb.Email,
-                        mb.NickName,
-                        "",
-                        mb.GroupID.ToString(),
-                        mb.LoginCount.ToString(),
-                        mb.Password, "1");
+                    Member mb = memberService.Create(model);
+                    memberService.SetLoginCookie(mb);
                     return Redirect(Url.Action("Regok"));
 
                 }
@@ -105,29 +95,8 @@ namespace CodeFirstEF.Controllers
                 #region 注册用户并登录
                 try
                 {
-                    Member mb = new Member();
-                    mb.Email = model.Email;
-                    mb.NickName = model.NickName;
-                    mb.OpenID = model.OpenID;
-                    mb.OpenType = model.OpenType;
-                    mb.Status = 1;//注册未激活，0为禁用
-                    mb.Password = CheckHelper.StrToMd5(model.Password);
-                    mb.GroupID = 1;
-                    mb.AddTime = DateTime.Now;
-                    mb.LastTime = DateTime.Now;
-                    mb.AddIP = HttpHelper.IP;
-                    mb.LastIP = HttpHelper.IP;
-                    mb.LoginCount = 1;
-
-                    DB_Service.Add<Member>(mb);
-                    DB_Service.Commit();
-                    CookieHelper.LoginCookieSave(mb.MemberID.ToString(),
-                        mb.Email,
-                        mb.NickName,
-                        "",
-                        mb.GroupID.ToString(),
-                        mb.LoginCount.ToString(),
-                        mb.Password, "1");
+                    Member mb = memberService.Create(model);
+                    memberService.SetLoginCookie(mb);
                     return Redirect(Url.Action("Regok"));
 
                 }
@@ -169,17 +138,7 @@ namespace CodeFirstEF.Controllers
             {
                 int memberAction = (int)MemberActionType.GetPassword;
                 int limitMin = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["GetPasswordEmailTimeDiff"]);
-                DateTime LimitDate = DateTime.Now.AddMinutes(-10);
-                string IP = HttpHelper.IP;
-                var query = DB_Service.Set<Member>()
-                    .Include(x => x.Member_Action)
-                    .Where(x =>
-                        (x.Member_Action.Any(ma =>
-                            ma.ActionType == memberAction
-                            && ma.AddTime > LimitDate
-                            && ma.IP == IP
-                            )) && x.Email.Equals(model.Email, StringComparison.OrdinalIgnoreCase));
-                if (query.Count() > 0)
+                if (memberService.HasGetPasswordActionInLimitTime(model, limitMin, memberAction))
                 {
                     ViewBag.SendMail = true;
                     ViewBag.HasSendMail = true;
@@ -187,28 +146,14 @@ namespace CodeFirstEF.Controllers
                 }
                 else
                 {
-                    Member member = DB_Service.Set<Member>().Single(x => x.Email.Equals(model.Email, StringComparison.OrdinalIgnoreCase));
+                    Member member = memberService.FindMemberByEmail(model.Email);
                     string userKey = Guid.NewGuid().ToString();
-                    EmailModel em = new EmailModel();
-                    em.Email = model.Email;
-                    em.Title = member.NickName + " 您好！找回www.dotaeye.com的密码!";
-                    em.Content = System.IO.File.ReadAllText(Server.MapPath("~/Content/emailTemplate/getpwd.htm"), System.Text.Encoding.Default);
-                    em.Content = em.Content.Replace("{ukey}", userKey)
-                        .Replace("{nid}", member.NickName)
-                        .Replace("{uid}", member.MemberID.ToString())
-                        .Replace("{time}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"))
-                        .Replace("{email}", model.Email);
-                    MailHelper.SendMail(em.Email, em.Title, em.Content);
-                    Member_Action member_Action = new Member_Action()
-                    {
-                        MemberID = member.MemberID,
-                        ActionType = memberAction,
-                        AddTime = DateTime.Now,
-                        Description = userKey,
-                        IP = IP
-                    };
-                    DB_Service.Add<Member_Action>(member_Action);
-                    DB_Service.Commit();
+
+                    EmailModel em = emailService.GetResetPasswordMail(member.MemberID, member.Email, member.NickName, userKey);
+                    emailService.SendMail(em);
+
+                    member_ActionService.Create(member, memberAction, userKey);
+
                     ViewBag.HasSendMail = false;
                     ViewBag.SendMail = true;
                     ViewBag.Title = "";
@@ -228,12 +173,7 @@ namespace CodeFirstEF.Controllers
             }
             else
             {
-                DateTime LimitDate = DateTime.Now.AddHours(-12);
-                var query = DB_Service.Set<Member_Action>()
-                    .Where(x => x.Description.Equals(userKey, StringComparison.OrdinalIgnoreCase)
-                    && x.AddTime > LimitDate
-                    );
-                if (query.Count() > 0)
+                if (member_ActionService.HasDescriptionActionInLimiteTime(userKey, 12))
                 {
                     ViewBag.haveChangePwd = false;
                     return View(new ResetPasswordModel());
@@ -256,24 +196,14 @@ namespace CodeFirstEF.Controllers
             }
             else
             {
-                DateTime LimitDate = DateTime.Now.AddHours(-12);
-                var query = DB_Service.Set<Member>()
-                    .Include(x => x.Member_Action)
-                    .Where(x =>
-                        (x.Member_Action
-                            .Any(ma => ma.Description.Equals(userKey, StringComparison.OrdinalIgnoreCase)
-                                && ma.AddTime > LimitDate
-                                )
-                         ));
-                if (query.Count() > 0)
-                {
-                    Member member = query.Single();
 
+                bool isFound;
+                Member member = memberService.FindDescriptionMemberInLimitTime(userKey, 12, out isFound);
+                if (isFound)
+                {
                     if (model.NewPassword.Equals(model.ConfirmPassword, StringComparison.OrdinalIgnoreCase))
                     {
-                        DB_Service.Attach<Member>(member);
-                        member.Password = CheckHelper.StrToMd5(model.NewPassword);
-                        DB_Service.Commit();
+                        memberService.ChangePassword(member, model.NewPassword);
                     }
                     ViewBag.haveChangePwd = true;
                     ViewBag.Email = member.Email;

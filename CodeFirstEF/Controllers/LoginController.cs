@@ -13,6 +13,7 @@ using CoreHelper.Http;
 using CoreHelper.Data.Interface;
 using CoreHelper.Enum;
 using CodeFirstEF.Concrete;
+using CodeFirstEF.Serivces;
 using CodeFirstEF.Models;
 using CodeFirstEF.ViewModels;
 using Kendo.Mvc.UI;
@@ -29,10 +30,13 @@ namespace CodeFirstEF.Controllers
         //
         // GET: /Register/
         private IUnitOfWork DB_Service;
+        private IMemberService memberService;
 
-        public LoginController(IUnitOfWork _DB_Service)
+        public LoginController(IUnitOfWork _DB_Service
+            , IMemberService _memberService)
         {
             DB_Service = _DB_Service;
+            memberService = _memberService;
         }
 
         public ActionResult Index(string username = null)
@@ -55,31 +59,10 @@ namespace CodeFirstEF.Controllers
                 try
                 {
                     string Md5Password = CheckHelper.StrToMd5(model.Password);
-
-                    if (DB_Service.Set<Member>().Count(x => x.Email == model.Email && x.Password == Md5Password) == 1)
+                    if (memberService.Login(model.Email, Md5Password))
                     {
-                        Member LoginUser = DB_Service.Set<Member>().Single(x => x.Email == model.Email);
-                        DB_Service.Attach<Member>(LoginUser);
-                        LoginUser.LastIP = HttpHelper.IP;
-                        LoginUser.LastTime = DateTime.Now;
-                        LoginUser.LoginCount = LoginUser.LoginCount + 1;
-                        Member_Action ma = new Member_Action();
-                        ma.ActionType = 3;
-                        ma.AddTime = DateTime.Now;
-                        ma.Description = "登录";
-                        LoginUser.Member_Action.Add(ma);
-                        DB_Service.Commit();
-                        CookieHelper.LoginCookieSave(LoginUser.MemberID.ToString(),
-                            LoginUser.Email,
-                            LoginUser.NickName,
-                            "AvtarUrl",
-                            LoginUser.GroupID.ToString(),
-                            LoginUser.LoginCount.ToString(),
-                            LoginUser.Password,
-                            "1");
                         ViewBag.Message = null;
-                        if (Url.IsLocalUrl(ReturnUrl) && ReturnUrl.Length > 1 && ReturnUrl.StartsWith("/")
-                       && !ReturnUrl.StartsWith("//") && !ReturnUrl.StartsWith("/\\"))
+                        if (Url.IsLocalUrl(ReturnUrl))
                         {
                             return Redirect(ReturnUrl);
                         }
@@ -87,7 +70,6 @@ namespace CodeFirstEF.Controllers
                         {
                             return Redirect(Url.Action("Index"));
                         }
-
                     }
                     else
                     {
@@ -186,30 +168,11 @@ namespace CodeFirstEF.Controllers
                 OpenLoginStatus OpenUser = new OpenLoginStatus()
                 {
                     Success = true,
-                    OpenType = 1,
+                    OpenType = (int)OpenLoginType.QQ,
                     OpenId = user["openid"].ToString()
                 };
-                if (DB_Service.Set<Member>().Count(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 1) == 1)
+                if (memberService.OpenUserLogin(OpenUser, OpenLoginType.QQ))
                 {
-                    Member LoginUser = DB_Service.Set<Member>().Single(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 1);
-                    DB_Service.Attach<Member>(LoginUser);
-                    LoginUser.LastIP = HttpHelper.IP;
-                    LoginUser.LastTime = DateTime.Now;
-                    LoginUser.LoginCount = LoginUser.LoginCount + 1;
-                    Member_Action ma = new Member_Action();
-                    ma.ActionType = 3;
-                    ma.AddTime = DateTime.Now;
-                    ma.Description = "登录";
-                    LoginUser.Member_Action.Add(ma);
-                    DB_Service.Commit();
-                    CookieHelper.LoginCookieSave(LoginUser.MemberID.ToString(),
-                        LoginUser.Email,
-                        LoginUser.NickName,
-                        "AvtarUrl",
-                        LoginUser.GroupID.ToString(),
-                        LoginUser.LoginCount.ToString(),
-                        LoginUser.Password,
-                        "1");
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -282,31 +245,12 @@ namespace CodeFirstEF.Controllers
                 OpenLoginStatus OpenUser = new OpenLoginStatus()
                 {
                     Success = true,
-                    OpenType = 2,
+                    OpenType = (int)OpenLoginType.Sina,
                     Uid = user["uid"].ToString(),
                     OpenId = user["access_token"].ToString()
                 };
-                if (DB_Service.Set<Member>().Count(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 2) == 1)
+                if (memberService.OpenUserLogin(OpenUser, OpenLoginType.Sina))
                 {
-                    Member LoginUser = DB_Service.Set<Member>().Single(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 2);
-                    DB_Service.Attach<Member>(LoginUser);
-                    LoginUser.LastIP = HttpHelper.IP;
-                    LoginUser.LastTime = DateTime.Now;
-                    LoginUser.LoginCount = LoginUser.LoginCount + 1;
-                    Member_Action ma = new Member_Action();
-                    ma.ActionType = (int)MemberActionType.Login;
-                    ma.AddTime = DateTime.Now;
-                    ma.Description = "登录";
-                    LoginUser.Member_Action.Add(ma);
-                    DB_Service.Commit();
-                    CookieHelper.LoginCookieSave(LoginUser.MemberID.ToString(),
-                        LoginUser.Email,
-                        LoginUser.NickName,
-                        "AvtarUrl",
-                        LoginUser.GroupID.ToString(),
-                        LoginUser.LoginCount.ToString(),
-                        LoginUser.Password,
-                        "1");
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -375,33 +319,14 @@ namespace CodeFirstEF.Controllers
                 OpenLoginStatus OpenUser = new OpenLoginStatus()
                 {
                     Success = true,
-                    OpenType = 3,
+                    OpenType = (int)OpenLoginType.Taobao,
                     Uid = user["taobao_user_id"].ToString(),
                     OpenId = user["access_token"].ToString(),
                     NickName = user["taobao_user_nick"].ToString()
 
                 };
-                if (DB_Service.Set<Member>().Count(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 3) == 1)
+                if (memberService.OpenUserLogin(OpenUser, OpenLoginType.Taobao))
                 {
-                    Member LoginUser = DB_Service.Set<Member>().Single(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 3);
-                    DB_Service.Attach<Member>(LoginUser);
-                    LoginUser.LastIP = HttpHelper.IP;
-                    LoginUser.LastTime = DateTime.Now;
-                    LoginUser.LoginCount = LoginUser.LoginCount + 1;
-                    Member_Action ma = new Member_Action();
-                    ma.ActionType = 3;
-                    ma.AddTime = DateTime.Now;
-                    ma.Description = "登录";
-                    LoginUser.Member_Action.Add(ma);
-                    DB_Service.Commit();
-                    CookieHelper.LoginCookieSave(LoginUser.MemberID.ToString(),
-                        LoginUser.Email,
-                        LoginUser.NickName,
-                        "AvtarUrl",
-                        LoginUser.GroupID.ToString(),
-                        LoginUser.LoginCount.ToString(),
-                        LoginUser.Password,
-                        "1");
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -464,31 +389,12 @@ namespace CodeFirstEF.Controllers
                 OpenLoginStatus OpenUser = new OpenLoginStatus()
                 {
                     Success = true,
-                    OpenType = 4,
+                    OpenType = (int)OpenLoginType.Douban,
                     Uid = user["douban_user_id"].ToString(),
                     OpenId = user["access_token"].ToString()
                 };
-                if (DB_Service.Set<Member>().Count(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 4) == 1)
+                if (memberService.OpenUserLogin(OpenUser, OpenLoginType.Douban))
                 {
-                    Member LoginUser = DB_Service.Set<Member>().Single(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 4);
-                    DB_Service.Attach<Member>(LoginUser);
-                    LoginUser.LastIP = HttpHelper.IP;
-                    LoginUser.LastTime = DateTime.Now;
-                    LoginUser.LoginCount = LoginUser.LoginCount + 1;
-                    Member_Action ma = new Member_Action();
-                    ma.ActionType = 3;
-                    ma.AddTime = DateTime.Now;
-                    ma.Description = "登录";
-                    LoginUser.Member_Action.Add(ma);
-                    DB_Service.Commit();
-                    CookieHelper.LoginCookieSave(LoginUser.MemberID.ToString(),
-                        LoginUser.Email,
-                        LoginUser.NickName,
-                        "AvtarUrl",
-                        LoginUser.GroupID.ToString(),
-                        LoginUser.LoginCount.ToString(),
-                        LoginUser.Password,
-                        "1");
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -555,31 +461,12 @@ namespace CodeFirstEF.Controllers
                 OpenLoginStatus OpenUser = new OpenLoginStatus()
                 {
                     Success = true,
-                    OpenType = 5,
+                    OpenType = (int)OpenLoginType.Renren,
                     NickName = user["name"].ToString(),
                     OpenId = user["access_token"].ToString()
                 };
-                if (DB_Service.Set<Member>().Count(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 5) == 1)
+                if (memberService.OpenUserLogin(OpenUser, OpenLoginType.Renren))
                 {
-                    Member LoginUser = DB_Service.Set<Member>().Single(x => x.OpenID.Equals(OpenUser.OpenId) && x.OpenType == 5);
-                    DB_Service.Attach<Member>(LoginUser);
-                    LoginUser.LastIP = HttpHelper.IP;
-                    LoginUser.LastTime = DateTime.Now;
-                    LoginUser.LoginCount = LoginUser.LoginCount + 1;
-                    Member_Action ma = new Member_Action();
-                    ma.ActionType = 3;
-                    ma.AddTime = DateTime.Now;
-                    ma.Description = "登录";
-                    LoginUser.Member_Action.Add(ma);
-                    DB_Service.Commit();
-                    CookieHelper.LoginCookieSave(LoginUser.MemberID.ToString(),
-                        LoginUser.Email,
-                        LoginUser.NickName,
-                        "AvtarUrl",
-                        LoginUser.GroupID.ToString(),
-                        LoginUser.LoginCount.ToString(),
-                        LoginUser.Password,
-                        "1");
                     return RedirectToAction("Index", "Home");
                 }
                 else

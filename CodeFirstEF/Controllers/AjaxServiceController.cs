@@ -9,7 +9,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Data.Entity;
 using CodeFirstEF.Models;
-
+using CodeFirstEF.Serivces;
 using CoreHelper;
 using CoreHelper.Data.Interface;
 using CoreHelper.Cookie;
@@ -22,10 +22,13 @@ namespace CodeFirstEF.Controllers
     public class AjaxServiceController : Controller
     {
         private IUnitOfWork DB_Service;
+        private IMemberService memberService;
 
-        public AjaxServiceController(IUnitOfWork _DB_Service)
+        public AjaxServiceController(IUnitOfWork _DB_Service
+            , IMemberService _memberService)
         {
             DB_Service = _DB_Service;
+            memberService = _memberService;
         }
 
         #region  Control
@@ -164,7 +167,7 @@ namespace CodeFirstEF.Controllers
         /// <returns></returns>
         public JsonResult EmailExists(string email)
         {
-            if (DB_Service.Set<Member>().Count(x => x.Email == email) > 0)
+            if (memberService.ExistsEmail(email))
             {
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
@@ -181,7 +184,7 @@ namespace CodeFirstEF.Controllers
         /// <returns></returns>
         public JsonResult HasEmailUser(string email)
         {
-            if (DB_Service.Set<Member>().Count(x => x.Email == email) > 0)
+            if (memberService.ExistsEmail(email))
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
@@ -193,7 +196,7 @@ namespace CodeFirstEF.Controllers
 
         public JsonResult NickNameExists(string nickName)
         {
-            if (!(DB_Service.Set<Member>().Count(x => x.NickName == nickName) > 0) && !BadWordsHelper.HasBadWord(nickName))
+            if (!memberService.ExistsNickName(nickName) && !BadWordsHelper.HasBadWord(nickName))
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
@@ -215,7 +218,7 @@ namespace CodeFirstEF.Controllers
         public JsonResult EmailExistsNotMe(string email)
         {
             int uid = Convert.ToInt32(CookieHelper.UID);
-            if (!(DB_Service.Set<Member>().Where(x => x.MemberID != uid).Count(x => x.Email == email) > 0))
+            if (!memberService.ExistsEmailNotMe(uid, email))
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
@@ -229,7 +232,7 @@ namespace CodeFirstEF.Controllers
         public JsonResult NickNameExistsNotMe(string nickName)
         {
             int uid = Convert.ToInt32(CookieHelper.UID);
-            if (!(DB_Service.Set<Member>().Where(x => x.MemberID != uid).Count(x => x.NickName == nickName) > 0))
+            if (!memberService.ExistsNickNameNotMe(uid, nickName))
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }

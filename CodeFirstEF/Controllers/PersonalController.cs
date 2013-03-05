@@ -16,6 +16,7 @@ using CodeFirstEF.Concrete;
 using CodeFirstEF.Models;
 using CodeFirstEF.ViewModels;
 using CodeFirstEF.Filters;
+using CodeFirstEF.Serivces;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 
@@ -25,26 +26,35 @@ namespace CodeFirstEF.Controllers
     [BaseAuthorize]
     public class PersonalController : Controller
     {
-        private IUnitOfWork DB_Service;
+        //
+        // GET: /Login/
 
-        public PersonalController(IUnitOfWork _DB_Service)
+        //
+        // GET: /Register/
+        private IUnitOfWork DB_Service;
+        private IMemberService memberService;
+
+        public PersonalController(IUnitOfWork _DB_Service
+            , IMemberService _memberService)
         {
             DB_Service = _DB_Service;
+            memberService = _memberService;
         }
 
         public ActionResult Index()
         {
+            ViewBag.MenuItem = "account";
             var memberID = Convert.ToInt32(CookieHelper.UID);
-            Member member = DB_Service.Set<Member>().Single(x => x.MemberID == memberID);
+            Member member = memberService.Find(memberID);
             return View(member);
         }
 
         public ActionResult BaseInfo()
         {
+            ViewBag.MenuItem = "baseinfo";
             var memberID = Convert.ToInt32(CookieHelper.UID);
-            Member member = DB_Service.Set<Member>()
-                .Include(x => x.Member_Profile)
-                .Single(x => x.MemberID == memberID);
+            Member member = memberService.FindMemberWithProfile(memberID);
+
             if (member.Member_Profile == null)
             {
                 member.Member_Profile = new Member_Profile();
@@ -66,29 +76,13 @@ namespace CodeFirstEF.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult BaseInfo(ProfileModel model)
         {
+            ViewBag.MenuItem = "baseinfo";
             if (ModelState.IsValid)
             {
                 try
                 {
                     var memberID = Convert.ToInt32(CookieHelper.UID);
-                    Member member = DB_Service.Set<Member>()
-                        .Include(x => x.Member_Profile)
-                        .Single(x => x.MemberID == memberID);
-                    DB_Service.Attach<Member>(member);
-                    Member_Profile mp = new Member_Profile();
-                    if (member.Member_Profile != null)
-                    {
-                        mp = member.Member_Profile;
-                    }
-                    mp.MemberID = model.MemberID;
-                    mp.Borthday = model.Borthday;
-                    mp.CityCode = model.CityCode;
-                    mp.Description = model.Description;
-                    member.NickName = model.NickName;
-                    mp.RealName = model.RealName;
-                    mp.Sex = model.Sex;
-                    member.Member_Profile = mp;
-                    DB_Service.Commit();
+                    memberService.SaveMemberBaseInfo(memberID, model);
                 }
                 catch (Exception ex)
                 {
@@ -101,14 +95,12 @@ namespace CodeFirstEF.Controllers
 
         public ActionResult Avtar()
         {
+            ViewBag.MenuItem = "avtar";
             var memberID = Convert.ToInt32(CookieHelper.UID);
-            Member member = DB_Service.Set<Member>()
-                .Include(x => x.Member_Profile)
-                .Single(x => x.MemberID == memberID);
+            Member member = memberService.FindMemberWithProfile(memberID);
             AvtarModel pm = new AvtarModel()
             {
                 MemberID = member.MemberID,
-           
                 AvtarUrl = member.Member_Profile != null ? member.Member_Profile.AvtarUrl : Url.Content("~/Content/avtar/avtar_default.jpg"),
 
             };
@@ -119,24 +111,13 @@ namespace CodeFirstEF.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Avtar(AvtarModel model)
         {
+            ViewBag.MenuItem = "avtar";
             if (ModelState.IsValid)
             {
                 try
                 {
                     var memberID = Convert.ToInt32(CookieHelper.UID);
-                    Member member = DB_Service.Set<Member>()
-                        .Include(x => x.Member_Profile)
-                        .Single(x => x.MemberID == memberID);
-                    DB_Service.Attach<Member>(member);
-                    Member_Profile mp = new Member_Profile();
-                    if (member.Member_Profile != null)
-                    {
-                        mp = member.Member_Profile;
-                    }
-                    mp.MemberID = member.MemberID;
-                    mp.AvtarUrl = model.AvtarUrl;
-                    member.Member_Profile = mp;
-                    DB_Service.Commit();
+                    memberService.SaveMemberAvtar(memberID, model);
                 }
                 catch (Exception ex)
                 {
@@ -149,10 +130,9 @@ namespace CodeFirstEF.Controllers
 
         public ActionResult Contact()
         {
+            ViewBag.MenuItem = "contact";
             var memberID = Convert.ToInt32(CookieHelper.UID);
-            Member member = DB_Service.Set<Member>()
-                .Include(x => x.Member_Profile)
-                .Single(x => x.MemberID == memberID);
+            Member member = memberService.Find(memberID);
             if (member.Member_Profile == null)
             {
                 member.Member_Profile = new Member_Profile();
@@ -162,7 +142,6 @@ namespace CodeFirstEF.Controllers
             {
                 MemberID = member.MemberID,
                 Address = member.Member_Profile.Address,
-            
                 Email = member.Email,
                 Mobile = member.Member_Profile.Mobile,
                 Phone = member.Member_Profile.Phone,
@@ -177,33 +156,13 @@ namespace CodeFirstEF.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Contact(ContactModel model)
         {
+            ViewBag.MenuItem = "contact";
             if (ModelState.IsValid)
             {
                 try
                 {
                     var memberID = Convert.ToInt32(CookieHelper.UID);
-                    Member member = DB_Service.Set<Member>()
-                        .Include(x => x.Member_Profile)
-                        .Single(x => x.MemberID == memberID);
-                    DB_Service.Attach<Member>(member);
-                    Member_Profile mp = new Member_Profile();
-                    if (member.Member_Profile != null)
-                    {
-                        mp = member.Member_Profile;
-                    }
-                    mp.MemberID = member.MemberID;
-                    mp.Address = model.Address;
-                    mp.Phone = model.Phone;
-                    mp.Mobile = model.Mobile;
-                    mp.MSN = model.MSN;
-                    mp.QQ = model.QQ;
-                    if (model.Position.IndexOf("|") != -1)
-                    {
-                        mp.Lat = Convert.ToDouble(model.Position.Split('|')[0]);
-                        mp.Lng = Convert.ToDouble(model.Position.Split('|')[1]);
-                    }
-                    member.Member_Profile = mp;
-                    DB_Service.Commit();
+                    memberService.SaveMemberContact(memberID, model);
                 }
                 catch (Exception ex)
                 {
