@@ -73,7 +73,7 @@
         },
         onSuccess:function(e){
             var self=@name;
-            var resData = eval("(" + e.response + ")");
+            var resData = e.response ;
             var $input=$('#'+self.id);
             if (resData.err === ''&&resData.status==='upload') {
                 var template=$('#'+'@(name + "_template")').clone();

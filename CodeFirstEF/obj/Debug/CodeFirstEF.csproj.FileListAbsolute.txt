@@ -168,3 +168,5 @@ F:\GitProject\adzhi\CodeFirstEF\bin\Ninject.Web.Mvc.pdb
 F:\GitProject\adzhi\CodeFirstEF\bin\Ninject.Web.Mvc.xml
 D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.RemoveProfileAvtarToMember.resources
 D:\GitProject\adzhi\CodeFirstEF\bin\Microsoft.Web.Helpers.dll
+F:\GitProject\adzhi\CodeFirstEF\bin\Microsoft.Web.Helpers.dll
+F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.RemoveProfileAvtarToMember.resources

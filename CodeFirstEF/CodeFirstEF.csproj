@@ -275,7 +275,9 @@
     <Compile Include="Models\CompanyFund.cs" />
     <Compile Include="Models\CompanyBussiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serivces\AreaAttService.cs" />
     <Compile Include="Serivces\EmailService.cs" />
+    <Compile Include="Serivces\Interface\IAreaAttService.cs" />
     <Compile Include="Serivces\Interface\IEmailService.cs" />
     <Compile Include="Serivces\Interface\IMemberService.cs" />
     <Compile Include="Serivces\Interface\IMember_ActionService.cs" />
@@ -1171,6 +1173,7 @@
     <Content Include="Views\Personal\_PersonalLeftNav.cshtml" />
     <Content Include="Views\Personal\ChangePwd.cshtml" />
     <Content Include="Views\Personal\BindEmail.cshtml" />
+    <Content Include="Views\Personal\AddOutDoor.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />
@@ -1186,6 +1189,7 @@
     <Content Include="Views\Show\List.cshtml" />
     <Content Include="Views\Show\Details.cshtml" />
     <Content Include="Views\Shared\_LayoutDetails.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Price.cshtml" />
     <None Include="Views\Shared\_LayoutList.cshtml" />
     <Content Include="Views\Shared\_TopListMenu.cshtml" />
     <Content Include="Views\Shared\_ListMain.cshtml" />

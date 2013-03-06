@@ -40,7 +40,32 @@ textarea {
     margin: 0.5em 0 0 0;
 }
 
+.form-step {
+    float: left;
+    margin-left: 15px;
+}
 
+    .form-step li {
+        float: left;
+        margin-left: 1px;
+        color: #b5b5b5;
+    }
+
+        .form-step li.cur {
+            color: #333;
+        }
+
+        .form-step li i {
+            display: block;
+            background-color: #eee;
+            width: 150px;
+            height: 8px;
+            overflow: hidden;
+            margin: 5px 0 15px 0;
+        }
+        .form-step li.cur i {
+            background-color: #ff9c00;
+        }
 
 .form-title {
     color: #333;
@@ -203,7 +228,7 @@ textarea {
 
 .field-prompt-message {
     display: block;
-    margin-left: 155px;
+    margin-left: 105px;
     color: #999;
 }
 

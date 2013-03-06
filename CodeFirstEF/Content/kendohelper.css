@@ -3,6 +3,10 @@ html .k-upload {
     display: inline-block;
 }
 
+* + html .k-upload {
+    width: 120px;
+}
+
 .k-window {
     padding-top: 0;
     background-color: #fff;
@@ -34,7 +38,9 @@ html .k-upload {
     background: none;
     border: none;
     height: auto;
+    width: auto;
     margin-top: 0px;
+    box-sizing: border-box;
 }
 
 .k-window-titlebar .k-window-title {

@@ -93,7 +93,7 @@
         },
         onSuccess:function(e){
             var self=@name;
-            var resData = eval("(" + e.response + ")");
+            var resData = e.response ;
             if (resData.err === ''&&resData.status==='upload') {
                 self.buildEditor(resData.imgname,resData.imgurl);
                 self.hideUploadSuccess();

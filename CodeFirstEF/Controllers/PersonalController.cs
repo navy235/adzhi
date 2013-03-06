@@ -36,16 +36,19 @@ namespace CodeFirstEF.Controllers
         private IMemberService memberService;
         private IEmailService emailService;
         private IMember_ActionService member_ActionService;
+        private IAreaAttService areaAttService;
 
         public PersonalController(IUnitOfWork _DB_Service
             , IMemberService _memberService
             , IEmailService _emailService
-            , IMember_ActionService _member_ActionService)
+            , IMember_ActionService _member_ActionService
+            , IAreaAttService _areaAttService)
         {
             DB_Service = _DB_Service;
             memberService = _memberService;
             emailService = _emailService;
             member_ActionService = _member_ActionService;
+            areaAttService = _areaAttService;
         }
 
         public ActionResult Index()
@@ -297,27 +300,35 @@ namespace CodeFirstEF.Controllers
                 {
                     if (member.Status >= emailActived)
                     {
-                        return Content("<script>alert('您的邮箱已经绑定，请勿重复绑定!');window.top.location='/" + Url.Action("BindEmail") + "';</script>");
+                        return Content("<script>alert('您的邮箱已经绑定，请勿重复绑定!');window.top.location='" + Url.Action("BindEmail") + "';</script>");
                     }
                     else
                     {
-                        if (member.Status < emailActived)
+                        if (member.Status < (int)MemberStatus.Registered)
                         {
-                            return Content("<script>alert('您的帐号由于非法操作已经被锁定!');window.top.location='/" + Url.Action("Index", "Register") + "';</script>");
+                            return Content("<script>alert('您的帐号由于非法操作已经被锁定!');window.top.location='" + Url.Action("Index", "Register") + "';</script>");
                         }
                         else
                         {
                             memberService.ActiveEmail(member, emailActived);
-                            return Content("<script>alert('恭喜您，邮箱绑定成功!');window.top.location='/" + Url.Action("BindEmail") + "';</script>");
+                            return Content("<script>alert('恭喜您，邮箱绑定成功!');window.top.location='" + Url.Action("BindEmail") + "';</script>");
                         }
                     }
                 }
                 else
                 {
-                    return Content("<script>alert('您的验证已过期或非法提交，请重新获取绑定邮件!');window.location='/" + Url.Action("BindEmail") + "';</script>");
+                    return Content("<script>alert('您的验证已过期或非法提交，请重新获取绑定邮件!');window.location='" + Url.Action("BindEmail") + "';</script>");
                 }
 
             }
+        }
+
+
+        public ActionResult AddOutDoor()
+        {
+            ViewBag.MenuItem = "outdoor-publish";
+            ViewBag.Data_AreaAtt = areaAttService.GetSelectList();
+            return View(new OutDoorViewModel());
         }
 
 

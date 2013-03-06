@@ -276,7 +276,7 @@ namespace CodeFirstEF.Controllers
         public ActionResult UpLoadSave(IEnumerable<HttpPostedFileBase> attachments, string status = "upload")
         {
             string res = FileHelper.UpLoadSave(attachments, status);
-            return Json(res);
+            return Content(res);
         }
 
         public ActionResult EditSave(IEnumerable<HttpPostedFileBase> editattachments, int uploadmaxsize = 10240000)
@@ -304,7 +304,7 @@ namespace CodeFirstEF.Controllers
         public ActionResult UpLoadRemove(string[] fileNames)
         {
             var res = string.Format("{{\"err\":\"\",\"status\":\"remove\"}}");
-            return Json(res);
+            return Content(res);
         }
 
         public ActionResult CropImg(string imgurl, int width, int height, int x, int y, int targetwidth)
@@ -319,7 +319,7 @@ namespace CodeFirstEF.Controllers
             {
                 res = string.Format("{{\"err\":\"{0}\"}}", "保存失败！");
             }
-            return Json(res, JsonRequestBehavior.AllowGet);
+            return Content(res);
         }
         #endregion
 

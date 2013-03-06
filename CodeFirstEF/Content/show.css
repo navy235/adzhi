@@ -3312,6 +3312,7 @@ goods-pack .goods-desc {
 .nav-body {
 }
 
+
 .nav-top {
     position: relative;
     top: -27px;
@@ -3341,6 +3342,11 @@ goods-pack .goods-desc {
             display: block;
             text-decoration: none;
             position: relative;
+        }
+
+        .personal-nav ul li p {
+            background: none;
+            padding: 0 0 0 15px;
         }
 
 
@@ -3460,7 +3466,7 @@ goods-pack .goods-desc {
 .personal-body-title {
     border-bottom: 1px solid #e6e6e6;
     padding-bottom: 15px;
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
 
     .personal-body-title h5 {
@@ -3488,10 +3494,7 @@ goods-pack .goods-desc {
     zoom: 1;
 }
 
-    .menu-profile li p {
-        background: none;
-        padding: 0 0 0 15px;
-    }
+
 
 .personal-body-list {
     border-top: 1px solid #E1E1E1;

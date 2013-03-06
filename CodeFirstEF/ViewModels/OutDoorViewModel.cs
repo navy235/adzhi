@@ -35,11 +35,6 @@ namespace CodeFirstEF.ViewModels
         public string Name { get; set; }
 
 
-        [Required(ErrorMessage = "请输入具体位置")]
-        [Display(Name = "具体位置")]
-        [CheckContact]
-        [Hint("请输入具体位置")]
-        public string Location { get; set; }
 
 
         [Required(ErrorMessage = "请选择媒体类别")]
@@ -64,8 +59,8 @@ namespace CodeFirstEF.ViewModels
 
         [Required(ErrorMessage = "请输入价格")]
         [Display(Name = "价格")]
-        [DataType(DataType.Currency)]
         [Range(0F, 1000000F, ErrorMessage = "{0}必须位于{1}-{2}之间")]
+        [UIHint("Price")]
         [HintClass("price")]
         public decimal Price { get; set; }
 
@@ -74,20 +69,36 @@ namespace CodeFirstEF.ViewModels
         [Required(ErrorMessage = "请输入价格说明")]
         public string PriceExten { get; set; }
 
-        [Required(ErrorMessage = "请选择媒体最短周期")]
-        [Display(Name = "媒体最短周期")]
+        [Required(ErrorMessage = "请选择最短购买周期")]
+        [Display(Name = "最短购买周期")]
         [UIHint("SingleDropdownList")]
         public string PeriodCode { get; set; }
 
 
         [HintSeparateTitle("位置信息")]
-        [Display(Name = "媒体地图")]
+
+        [Required(ErrorMessage = "请选择媒体城市")]
+        [Display(Name = "媒体城市")]
+        [HintClass("city")]
+        [UIHint("CascadingDropDownList")]
+        [AdditionalMetadata("CascadingDropDownList", "ParentDropdownList")]
+        public string CityCode { get; set; }
+
+        [Required(ErrorMessage = "请输入具体位置")]
+        [Display(Name = "具体位置")]
+        [CheckContact]
+        [Hint("请输入具体位置")]
+        public string Location { get; set; }
+
+        [Display(Name = "地图坐标")]
         [Required(ErrorMessage = "请标记媒体地图坐标.")]
         [UIHint("MapMarker")]
         public string Position { get; set; }
 
-        [Display(Name = "是否照明")]
+        [Display(Name = "是否有照明")]
         [Required(ErrorMessage = "请输入照明信息")]
+        [UIHint("Radio")]
+        [AdditionalMetadata("Radio", "是,否")]
         public bool HasLight { get; set; }
 
         [Display(Name = "照明开始时间")]
@@ -100,18 +111,15 @@ namespace CodeFirstEF.ViewModels
         [UIHint("SingleTime")]
         public string LightEnd { get; set; }
 
-
         [Required(ErrorMessage = "请输入媒体宽度")]
         [Display(Name = "媒体宽度")]
         [UIHint("Number")]
         public double Wdith { get; set; }
 
-
         [Required(ErrorMessage = "请输入媒体高度")]
         [Display(Name = "媒体高度")]
         [UIHint("Number")]
         public double Height { get; set; }
-
 
         [Required(ErrorMessage = "请输入媒体面数")]
         [Display(Name = "媒体面数")]
@@ -123,20 +131,10 @@ namespace CodeFirstEF.ViewModels
         [UIHint("Integer")]
         public int TrafficAuto { get; set; }
 
-
         [Required(ErrorMessage = "请输入日交通人流量")]
         [Display(Name = "日交通人流量")]
         [UIHint("Integer")]
         public int TrafficPerson { get; set; }
-
-
-        [Required(ErrorMessage = "请选择媒体城市")]
-        [Display(Name = "媒体城市")]
-        [HintClass("city")]
-        [UIHint("CascadingDropDownList")]
-        [AdditionalMetadata("CascadingDropDownList", "ParentDropdownList")]
-        public string CityCode { get; set; }
-
 
         [Required(ErrorMessage = "请输入开始时间")]
         [Display(Name = "开始时间")]
