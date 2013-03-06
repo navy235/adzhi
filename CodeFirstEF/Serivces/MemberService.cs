@@ -14,9 +14,12 @@ namespace CodeFirstEF.Serivces
     {
         private readonly IUnitOfWork DB_Service;
 
+
+
         public MemberService(IUnitOfWork DB_Service)
         {
             this.DB_Service = DB_Service;
+
         }
 
         public Member Create(RegisterModel model)
@@ -26,7 +29,7 @@ namespace CodeFirstEF.Serivces
             mb.NickName = model.NickName;
             mb.OpenID = model.OpenID;
             mb.OpenType = model.OpenType;
-            mb.Status = 1;//注册未激活，0为禁用
+            mb.Status = (int)MemberStatus.Registered;//注册未激活，0为禁用
             mb.Password = CheckHelper.StrToMd5(model.Password);
             mb.GroupID = 1;
             mb.AddTime = DateTime.Now;
@@ -52,9 +55,11 @@ namespace CodeFirstEF.Serivces
                 LoginUser.LastIP = HttpHelper.IP;
                 LoginUser.LastTime = DateTime.Now;
                 LoginUser.LoginCount = LoginUser.LoginCount + 1;
+                int memberAction = (int)MemberActionType.Login;
                 Member_Action ma = new Member_Action();
-                ma.ActionType = (int)MemberActionType.Login;
+                ma.ActionType = memberAction;
                 ma.AddTime = DateTime.Now;
+                ma.IP = HttpHelper.IP;
                 ma.Description = "登录";
                 LoginUser.Member_Action.Add(ma);
                 DB_Service.Commit();
@@ -127,9 +132,9 @@ namespace CodeFirstEF.Serivces
             CookieHelper.LoginCookieSave(member.MemberID.ToString(),
                 member.Email,
                 member.NickName,
-                "",
+                member.AvtarUrl,
                 member.GroupID.ToString(),
-                member.LoginCount.ToString(),
+                member.Status.ToString(),
                 member.Password, "1");
         }
 
@@ -173,11 +178,27 @@ namespace CodeFirstEF.Serivces
             }
         }
 
-        public void ChangePassword(Member member, string newpassword)
+        public void ResetPassword(Member member, string newpassword)
         {
             DB_Service.Attach<Member>(member);
             member.Password = CheckHelper.StrToMd5(newpassword);
             DB_Service.Commit();
+        }
+
+        public bool ChangePassword(int MemberID, string oldpassword, string newpassword)
+        {
+            bool success = false;
+            Member member = Find(MemberID);
+            string Md5Password = CheckHelper.StrToMd5(oldpassword);
+            if (Md5Password == member.Password)
+            {
+                success = true;
+                DB_Service.Attach<Member>(member);
+                member.Password = CheckHelper.StrToMd5(newpassword);
+                DB_Service.Commit();
+                SetLoginCookie(member);
+            }
+            return success;
         }
 
 
@@ -199,21 +220,16 @@ namespace CodeFirstEF.Serivces
             mp.Sex = model.Sex;
             member.Member_Profile = mp;
             DB_Service.Commit();
+            SetLoginCookie(member);
         }
 
         public void SaveMemberAvtar(int MemberID, AvtarModel model)
         {
-            Member member = FindMemberWithProfile(MemberID);
+            Member member = Find(MemberID);
             DB_Service.Attach<Member>(member);
-            Member_Profile mp = new Member_Profile();
-            if (member.Member_Profile != null)
-            {
-                mp = member.Member_Profile;
-            }
-            mp.MemberID = member.MemberID;
-            mp.AvtarUrl = model.AvtarUrl;
-            member.Member_Profile = mp;
+            member.AvtarUrl = model.AvtarUrl;
             DB_Service.Commit();
+            SetLoginCookie(member);
         }
 
         public void SaveMemberContact(int MemberID, ContactModel model)
@@ -262,13 +278,19 @@ namespace CodeFirstEF.Serivces
         }
 
 
+        public bool ValidatePassword(int MemberID, string Password)
+        {
+            string Md5Password = CheckHelper.StrToMd5(Password);
+            return DB_Service.Set<Member>().Count(x => x.Password.Equals(Md5Password, StringComparison.CurrentCultureIgnoreCase) && x.MemberID == MemberID) > 0;
+        }
 
 
-
-
-
-
-
-
+        public void ActiveEmail(Member member, int Status)
+        {
+            DB_Service.Attach<Member>(member);
+            member.Status = Status;
+            DB_Service.Commit();
+            SetLoginCookie(member);
+        }
     }
 }

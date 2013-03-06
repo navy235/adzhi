@@ -14,15 +14,15 @@
             <div class="personal-body-title clearfix">
                 <h5>@ViewBag.Title</h5>
             </div>
-            <p class="personal-body-tips mt10">@CoreHelper.Cookie.CookieHelper.NickName，选择真实头像更方便大家了解你，以下信息将显示在<a href="http://home.zhubajie.com/4740284/info">个人资料页</a>。</p>
+            @ViewHelpers.Alert("友情提醒：",
+                CoreHelper.Cookie.CookieHelper.NickName + ",选择真实头像更方便大家了解你。", false, CoreHelper.Enum.AlertType.info.ToString())
             <p class="personal-body-tips mt10">
                 没有合适的？快来 <a href="http://www.zhubajie.com/topic/1/p.html">在线设计</a> 专属你的形象标识吧
             </p>
             @if (ViewBag.Error != null)
             { 
-                <p class="personal-error-tips">
-                    @ViewBag.Error
-                </p>
+                @ViewHelpers.Alert("错误信息：",
+                ViewBag.Error, false, CoreHelper.Enum.AlertType.error.ToString())
             }
 
             <div class="personal-form personal-form-avtar">

@@ -1,0 +1,70 @@
+﻿@model CodeFirstEF.ViewModels.ProfileModel
+@{
+    ViewBag.Title = "邮箱绑定";
+    Layout = "~/Views/Shared/_LayoutPersonal.cshtml";
+}
+<article class="personal clearfix">
+    <div class="personal-left">
+        <div class="personal-nav">
+            @Html.Partial("_PersonalLeftNav")
+        </div>
+    </div>
+    <div class="personal-right">
+        <div class="personal-right-body">
+            <div class="personal-body-title clearfix">
+                <h5>@ViewBag.Title</h5>
+            </div>
+            @if (!ViewBag.Actived)
+            {
+
+
+
+                if (ViewBag.BeforeSend != null)
+                { 
+                @ViewHelpers.Alert("发送成功！",
+                    "绑定邮件已经发送到您的邮箱，请在" + CodeFirstEF.Config.ConfigSetting.ActiveEmailTimeDiffHour + "小时内进行绑定", false, CoreHelper.Enum.AlertType.success.ToString())
+                    
+                }
+                else
+                {
+
+                    if (ViewBag.HasSendEmail)
+                    { 
+                @ViewHelpers.Alert("错误信息：",
+                    CoreHelper.Cookie.CookieHelper.NickName + "，您所使用的邮箱刚获取过绑定邮件，请到您的邮箱收取邮件, 或过" + CodeFirstEF.Config.ConfigSetting.GetBindEmailTimeDiffMin + "分钟再试", false, CoreHelper.Enum.AlertType.error.ToString())
+                    }
+                    else
+                    {
+                @ViewHelpers.Alert("友情提醒：",
+                CoreHelper.Cookie.CookieHelper.NickName + ",点击下面按钮获取邮件进行绑定。", false, CoreHelper.Enum.AlertType.info.ToString())
+                    }
+                }
+                    
+                <div class="personal-form mt20">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-field c_gray">
+                            <button type="submit" class="btn btn-warning ">
+                                获取绑定邮件</button>
+                        </div>
+                    }
+                </div>
+            
+            }
+            else
+            {
+                @ViewHelpers.Alert("友情提醒：",
+                CoreHelper.Cookie.CookieHelper.NickName + ",您的邮箱" + CoreHelper.Cookie.CookieHelper.Email + "已经绑定成功。", false, CoreHelper.Enum.AlertType.info.ToString())
+                <div class="personal-body-bind">
+                    <dl class="clearfix">
+                        <dt class="bind-email"></dt>
+                        <dd class="bind-desc"><span class="ok">邮箱绑定</span>已绑定邮箱：@CoreHelper.Cookie.CookieHelper.Email</dd>
+                    </dl>
+                </div>
+            
+            }
+        </div>
+
+    </div>
+</article>

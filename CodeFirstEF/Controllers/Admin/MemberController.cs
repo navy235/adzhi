@@ -85,6 +85,7 @@ namespace CodeFirstEF.Controllers
                     Member member = new Member();
                     member.Email = model.Email;
                     member.NickName = model.NickName;
+                    member.AvtarUrl = model.AvtarUrl;
                     member.GroupID = model.GroupID;
                     member.Password = CheckHelper.StrToMd5(model.Password);
                     member.Status = 1;//注册未激活，0为禁用
@@ -93,7 +94,6 @@ namespace CodeFirstEF.Controllers
                     member.AddIP = HttpHelper.IP;
                     member.LastIP = HttpHelper.IP;
                     member.Member_Profile = new Member_Profile();
-                    member.Member_Profile.AvtarUrl = model.AvtarUrl;
                     member.Member_Profile.Borthday = model.Borthday;
                     member.Member_Profile.CityCode = model.CityCode;
                     member.Member_Profile.Description = model.Description;
@@ -127,7 +127,7 @@ namespace CodeFirstEF.Controllers
             model.Email = member.Email;
             model.NickName = member.NickName;
             model.GroupID = member.GroupID;
-            model.AvtarUrl = member.Member_Profile.AvtarUrl;
+            model.AvtarUrl = member.AvtarUrl;
             model.CityCode = member.Member_Profile.CityCode;
             model.Sex = member.Member_Profile.Sex;
             model.Borthday = member.Member_Profile.Borthday;
@@ -153,7 +153,7 @@ namespace CodeFirstEF.Controllers
                     Member member = DB_Service.Set<Member>().Include(x => x.Member_Profile).Single(x => x.MemberID == model.MemberID);
                     DB_Service.Attach<Member>(member);
                     member.GroupID = model.GroupID;
-                    member.Member_Profile.AvtarUrl = model.AvtarUrl;
+                    member.AvtarUrl = model.AvtarUrl;
                     member.Member_Profile.CityCode = model.CityCode;
                     member.Member_Profile.Sex = model.Sex;
                     member.Member_Profile.Borthday = model.Borthday;

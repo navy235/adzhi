@@ -65,7 +65,7 @@ namespace CoreHelper.Cookie
             string nickName, 
             string avtarUrl, 
             string groupID, 
-            string loginCount,
+            string Status,
             string pwd, 
             string remember)
         {
@@ -76,7 +76,7 @@ namespace CoreHelper.Cookie
             cookie.Values.Add("Email", CheckHelper.Escape(email));
             cookie.Values.Add("AvtarUrl", avtarUrl);
             cookie.Values.Add("GroupID", groupID);
-            cookie.Values.Add("LoginCount", loginCount);
+            cookie.Values.Add("Status", Status);
             cookie.Values.Add("PWD", CheckHelper.StrToSHA1(pwd));
 
             switch (remember)
@@ -172,11 +172,11 @@ namespace CoreHelper.Cookie
             }
         }
 
-        public static string LoginCount
+        public static string Status
         {
             get
             {
-                return CheckHelper.UnEscape(GetCookie(ConfigurationManager.AppSettings["CookieName"], "LoginCount"));
+                return CheckHelper.UnEscape(GetCookie(ConfigurationManager.AppSettings["CookieName"], "Status"));
             }
         }
 

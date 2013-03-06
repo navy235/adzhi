@@ -3460,6 +3460,7 @@ goods-pack .goods-desc {
 .personal-body-title {
     border-bottom: 1px solid #e6e6e6;
     padding-bottom: 15px;
+    margin-bottom:10px;
 }
 
     .personal-body-title h5 {

@@ -14,6 +14,7 @@ using CodeFirstEF.Concrete;
 using CodeFirstEF.Models;
 using CodeFirstEF.ViewModels;
 using CodeFirstEF.Serivces;
+using CodeFirstEF.Config;
 namespace CodeFirstEF.Controllers
 {
     public class RegisterController : Controller
@@ -137,7 +138,7 @@ namespace CodeFirstEF.Controllers
             if (ModelState.IsValid)
             {
                 int memberAction = (int)MemberActionType.GetPassword;
-                int limitMin = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["GetPasswordEmailTimeDiff"]);
+                int limitMin = Convert.ToInt32(ConfigSetting.GetPasswordEmailTimeDiffMin);
                 if (memberService.HasGetPasswordActionInLimitTime(model, limitMin, memberAction))
                 {
                     ViewBag.SendMail = true;
@@ -173,7 +174,8 @@ namespace CodeFirstEF.Controllers
             }
             else
             {
-                if (member_ActionService.HasDescriptionActionInLimiteTime(userKey, 12))
+                int limitHours = Convert.ToInt32(ConfigSetting.ResetPasswordTimeDiffHour);
+                if (member_ActionService.HasDescriptionActionInLimiteTime(userKey, limitHours))
                 {
                     ViewBag.haveChangePwd = false;
                     return View(new ResetPasswordModel());
@@ -203,7 +205,7 @@ namespace CodeFirstEF.Controllers
                 {
                     if (model.NewPassword.Equals(model.ConfirmPassword, StringComparison.OrdinalIgnoreCase))
                     {
-                        memberService.ChangePassword(member, model.NewPassword);
+                        memberService.ResetPassword(member, model.NewPassword);
                     }
                     ViewBag.haveChangePwd = true;
                     ViewBag.Email = member.Email;

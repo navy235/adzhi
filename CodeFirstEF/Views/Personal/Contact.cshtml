@@ -6,7 +6,7 @@
 <article class="personal clearfix">
     <div class="personal-left">
         <div class="personal-nav">
-           @Html.Partial("_PersonalLeftNav")
+            @Html.Partial("_PersonalLeftNav")
         </div>
     </div>
     <div class="personal-right">
@@ -14,12 +14,14 @@
             <div class="personal-body-title clearfix">
                 <h5>@ViewBag.Title</h5>
             </div>
-            <p class="personal-body-tips mt10">@CoreHelper.Cookie.CookieHelper.NickName，请填写真实的联系方式，方便大家联系您，以下信息将显示在<a href="http://home.zhubajie.com/4740284/info">个人资料页</a>。</p>
+
+            @ViewHelpers.Alert("友情提醒：",
+                CoreHelper.Cookie.CookieHelper.NickName + ",请填写真实的联系方式，方便大家联系您。", false, CoreHelper.Enum.AlertType.info.ToString())
+
             @if (ViewBag.Error != null)
             { 
-                <p class="personal-error-tips">
-                    @ViewBag.Error
-                </p>
+                   @ViewHelpers.Alert("错误信息：",
+                ViewBag.Error, false, CoreHelper.Enum.AlertType.error.ToString())
             }
             <div class="personal-form personal-form-contact mt40">
                 @using (Html.BeginForm())

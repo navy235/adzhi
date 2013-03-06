@@ -1,6 +1,6 @@
 ﻿@model CodeFirstEF.Models.Member
 @{
-    ViewBag.Title = "我的订单";
+    ViewBag.Title = "我的帐号";
     Layout = "~/Views/Shared/_LayoutPersonal.cshtml";
 }
 <article class="personal clearfix">
@@ -12,9 +12,12 @@
     <div class="personal-right">
         <div class="personal-right-body">
             <div class="personal-body-title clearfix">
-                <h5>我的帐号</h5>
+                <h5>@ViewBag.Title</h5>
             </div>
-            <p class="personal-body-tips mt10">@Model.NickName，填写真实的资料更方便大家了解你，以下信息将显示在<a href="http://home.zhubajie.com/4740284/info">个人资料页</a>。</p>
+
+            @ViewHelpers.Alert("友情提醒：",
+                CoreHelper.Cookie.CookieHelper.NickName + ",填写真实的资料更方便大家了解你。", false, CoreHelper.Enum.AlertType.info.ToString())
+
             <ul class="personal-body-list">
                 <li>登录名：<a href="http://home.zhubajie.com/6200334">@Model.Email</a></li>
                 <li>昵称：<a href="http://home.zhubajie.com/6200334">@Model.NickName</a></li>

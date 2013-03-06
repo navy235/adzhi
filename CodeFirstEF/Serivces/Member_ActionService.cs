@@ -40,5 +40,17 @@ namespace CodeFirstEF.Serivces
                    );
             return query.Count() > 0;
         }
+
+
+        public bool HasActionByActionTypeInLimiteTime(int MemberID, int memberAction, int limitMins)
+        {
+            DateTime LimitDate = DateTime.Now.AddMinutes(-limitMins);
+            var query = DB_Service.Set<Member_Action>()
+                  .Where(x => x.MemberID == MemberID
+                  && x.ActionType == memberAction
+                  && x.AddTime > LimitDate
+                  );
+            return query.Count() > 0;
+        }
     }
 }

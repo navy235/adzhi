@@ -229,6 +229,8 @@ namespace CodeFirstEF.Controllers
         }
 
 
+
+
         public JsonResult NickNameExistsNotMe(string nickName)
         {
             int uid = Convert.ToInt32(CookieHelper.UID);
@@ -245,6 +247,19 @@ namespace CodeFirstEF.Controllers
         public JsonResult ValidateDescription(string Description)
         {
             if (!BadWordsHelper.HasBadWord(Description))
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult ValidatePassword(string OldPassword)
+        {
+            int uid = Convert.ToInt32(CookieHelper.UID);
+            if (memberService.ValidatePassword(uid, OldPassword))
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }

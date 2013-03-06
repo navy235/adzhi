@@ -193,7 +193,7 @@ namespace CodeFirstEF.ViewModels
 
     public class ChangePasswordModel
     {
-        [Editable(false)]
+        [HiddenInput(DisplayValue = false)]
         public int ID { get; set; }
 
         [Required(ErrorMessage = "请输入旧密码")]

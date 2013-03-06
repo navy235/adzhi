@@ -9,5 +9,7 @@ namespace CodeFirstEF.Serivces
         Member_Action Create(Member member, int memberAction, string description);
 
         bool HasDescriptionActionInLimiteTime(string description, int limitHours);
+
+        bool HasActionByActionTypeInLimiteTime(int MemberID, int memberAction, int limitMins);
     }
 }

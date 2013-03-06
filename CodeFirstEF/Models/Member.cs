@@ -27,6 +27,9 @@ namespace CodeFirstEF.Models
         [MaxLength(50)]
         public string Password { get; set; }
 
+        [MaxLength(500)]
+        public string AvtarUrl { get; set; }
+
         public int GroupID { get; set; }
 
         public System.DateTime LastTime { get; set; }

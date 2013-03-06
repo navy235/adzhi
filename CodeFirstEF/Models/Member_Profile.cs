@@ -26,8 +26,7 @@ namespace CodeFirstEF.Models
         [Key]
         public int MemberID { get; set; }
 
-        [MaxLength(500)]
-        public string AvtarUrl { get; set; }
+      
 
         public bool Sex { get; set; }
 

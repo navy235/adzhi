@@ -17,6 +17,7 @@ using CodeFirstEF.Models;
 using CodeFirstEF.ViewModels;
 using CodeFirstEF.Filters;
 using CodeFirstEF.Serivces;
+using CodeFirstEF.Config;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 
@@ -33,12 +34,18 @@ namespace CodeFirstEF.Controllers
         // GET: /Register/
         private IUnitOfWork DB_Service;
         private IMemberService memberService;
+        private IEmailService emailService;
+        private IMember_ActionService member_ActionService;
 
         public PersonalController(IUnitOfWork _DB_Service
-            , IMemberService _memberService)
+            , IMemberService _memberService
+            , IEmailService _emailService
+            , IMember_ActionService _member_ActionService)
         {
             DB_Service = _DB_Service;
             memberService = _memberService;
+            emailService = _emailService;
+            member_ActionService = _member_ActionService;
         }
 
         public ActionResult Index()
@@ -97,12 +104,11 @@ namespace CodeFirstEF.Controllers
         {
             ViewBag.MenuItem = "avtar";
             var memberID = Convert.ToInt32(CookieHelper.UID);
-            Member member = memberService.FindMemberWithProfile(memberID);
+            Member member = memberService.Find(memberID);
             AvtarModel pm = new AvtarModel()
             {
                 MemberID = member.MemberID,
-                AvtarUrl = member.Member_Profile != null ? member.Member_Profile.AvtarUrl : Url.Content("~/Content/avtar/avtar_default.jpg"),
-
+                AvtarUrl = member.AvtarUrl ?? Url.Content(ConfigSetting.Default_AvtarUrl)
             };
             return View(pm);
         }
@@ -132,7 +138,7 @@ namespace CodeFirstEF.Controllers
         {
             ViewBag.MenuItem = "contact";
             var memberID = Convert.ToInt32(CookieHelper.UID);
-            Member member = memberService.Find(memberID);
+            Member member = memberService.FindMemberWithProfile(memberID);
             if (member.Member_Profile == null)
             {
                 member.Member_Profile = new Member_Profile();
@@ -171,5 +177,149 @@ namespace CodeFirstEF.Controllers
             }
             return View(model);
         }
+
+
+
+        public ActionResult ChangePwd()
+        {
+            ViewBag.MenuItem = "changepwd";
+            var memberID = Convert.ToInt32(CookieHelper.UID);
+            Member member = memberService.Find(memberID);
+            return View(new ChangePasswordModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePwd(ChangePasswordModel model)
+        {
+            ViewBag.MenuItem = "changepwd";
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var memberID = Convert.ToInt32(CookieHelper.UID);
+                    if (memberService.ChangePassword(memberID, model.OldPassword, model.NewPassword))
+                    {
+
+                    }
+                    else
+                    {
+                        ViewBag.Error = "旧密码错误";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Error = ex.Message;
+                }
+            }
+            return View(model);
+        }
+
+
+        public ActionResult BindEmail()
+        {
+            ViewBag.MenuItem = "email";
+            var memberID = Convert.ToInt32(CookieHelper.UID);
+            Member member = memberService.Find(memberID);
+            if (member.Status <= (int)MemberStatus.Registered)
+            {
+                int actionEmailActive = (int)MemberActionType.EmailActvie;
+                int limitMins = Convert.ToInt32(ConfigSetting.GetBindEmailTimeDiffMin);
+                if (member_ActionService.HasActionByActionTypeInLimiteTime(memberID, actionEmailActive, limitMins))
+                {
+                    ViewBag.HasSendEmail = true;
+                }
+                else
+                {
+                    ViewBag.HasSendEmail = false;
+                }
+                ViewBag.Actived = false;
+            }
+            else
+            {
+                ViewBag.Actived = true;
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult BindEmail(string email = null)
+        {
+            ViewBag.MenuItem = "email";
+            var memberID = Convert.ToInt32(CookieHelper.UID);
+            Member member = memberService.Find(memberID);
+            if (member.Status <= (int)MemberStatus.Registered)
+            {
+                int actionEmailActive = (int)MemberActionType.EmailActvie;
+                int limitMins = Convert.ToInt32(ConfigSetting.GetBindEmailTimeDiffMin);
+                ViewBag.Actived = false;
+                if (member_ActionService.HasActionByActionTypeInLimiteTime(memberID, actionEmailActive, limitMins))
+                {
+                    ViewBag.HasSendEmail = true;
+                }
+                else
+                {
+                    string emailKey = Guid.NewGuid().ToString();
+                    EmailModel em = emailService.GetActiveEmailMail(member.MemberID, member.Email,
+                        member.NickName,
+                        emailKey);
+                    emailService.SendMail(em);
+
+                    member_ActionService.Create(member, actionEmailActive, emailKey);
+
+                    ViewBag.BeforeSend = true;
+                    ViewBag.HasSendEmail = true;
+                }
+            }
+            else
+            {
+                ViewBag.Actived = true;
+            }
+            return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult ActiveEmail(string email, string emailKey)
+        {
+            if (string.IsNullOrEmpty(emailKey) || !memberService.ExistsEmail(email))
+            {
+                return Content("<script>alert('非法提交!');window.top.location='/" + Url.Action("BindEmail") + "';</script>");
+            }
+            else
+            {
+                int limitHours = Convert.ToInt32(ConfigSetting.ActiveEmailTimeDiffHour);
+                bool isFound = false;
+                int emailActived = (int)MemberStatus.EmailActived;
+                Member member = memberService.FindDescriptionMemberInLimitTime(emailKey, limitHours, out isFound);
+
+                if (isFound)
+                {
+                    if (member.Status >= emailActived)
+                    {
+                        return Content("<script>alert('您的邮箱已经绑定，请勿重复绑定!');window.top.location='/" + Url.Action("BindEmail") + "';</script>");
+                    }
+                    else
+                    {
+                        if (member.Status < emailActived)
+                        {
+                            return Content("<script>alert('您的帐号由于非法操作已经被锁定!');window.top.location='/" + Url.Action("Index", "Register") + "';</script>");
+                        }
+                        else
+                        {
+                            memberService.ActiveEmail(member, emailActived);
+                            return Content("<script>alert('恭喜您，邮箱绑定成功!');window.top.location='/" + Url.Action("BindEmail") + "';</script>");
+                        }
+                    }
+                }
+                else
+                {
+                    return Content("<script>alert('您的验证已过期或非法提交，请重新获取绑定邮件!');window.location='/" + Url.Action("BindEmail") + "';</script>");
+                }
+
+            }
+        }
+
+
     }
 }

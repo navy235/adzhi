@@ -61,6 +61,9 @@
       <HintPath>..\CoreProjec\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Helpers">
+      <HintPath>..\CoreProjec\packages\Microsoft.AspNet.Web.Helpers.Mvc.2.0.20710.0\lib\net40\Microsoft.Web.Helpers.dll</HintPath>
+    </Reference>
     <Reference Include="MiniProfiler">
       <HintPath>..\CoreProjec\packages\MiniProfiler.2.0.2\lib\net40\MiniProfiler.dll</HintPath>
     </Reference>
@@ -89,6 +92,10 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Optimization">
       <HintPath>..\CoreProjec\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\CoreProjec\packages\Microsoft.AspNet.Razor.2.0.20715.0\lib\net40\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -127,10 +134,6 @@
       <Private>True</Private>
       <HintPath>..\CoreProjec\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\CoreProjec\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\CoreProjec\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
@@ -159,34 +162,35 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\ConfigSetting.cs" />
     <Compile Include="App_Start\JobConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\NinjectBinding.cs" />
     <Compile Include="Concrete\NinjectControllerFactory.cs" />
     <Compile Include="Concrete\CodeFirstContext.cs" />
     <Compile Include="Controllers\AjaxServiceController.cs" />
-    <Compile Include="Controllers\AreasController.cs" />
-    <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\Admin\AreasController.cs" />
+    <Compile Include="Controllers\Admin\DepartmentController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\Admin\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\FormatCateController.cs" />
+    <Compile Include="Controllers\Admin\FormatCateController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\MemberController.cs" />
-    <Compile Include="Controllers\PermissionController.cs" />
+    <Compile Include="Controllers\Admin\MemberController.cs" />
+    <Compile Include="Controllers\Admin\PermissionController.cs" />
     <Compile Include="Controllers\PersonalController.cs" />
-    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\Admin\RolesController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
-    <Compile Include="Controllers\OutDoorController.cs" />
-    <Compile Include="Controllers\PeriodCateController.cs" />
-    <Compile Include="Controllers\OutDoorMediaCateController.cs" />
-    <Compile Include="Controllers\AreaAttController.cs" />
-    <Compile Include="Controllers\OwnerCateController.cs" />
+    <Compile Include="Controllers\Admin\OutDoorController.cs" />
+    <Compile Include="Controllers\Admin\PeriodCateController.cs" />
+    <Compile Include="Controllers\Admin\OutDoorMediaCateController.cs" />
+    <Compile Include="Controllers\Admin\AreaAttController.cs" />
+    <Compile Include="Controllers\Admin\OwnerCateController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\ShowController.cs" />
-    <Compile Include="Controllers\CompanyScaleController.cs" />
-    <Compile Include="Controllers\CompanyFundController.cs" />
-    <Compile Include="Controllers\CompanyBussinessController.cs" />
+    <Compile Include="Controllers\Admin\CompanyScaleController.cs" />
+    <Compile Include="Controllers\Admin\CompanyFundController.cs" />
+    <Compile Include="Controllers\Admin\CompanyBussinessController.cs" />
     <Compile Include="Filters\BaseAuthorizeAttribute.cs" />
     <Compile Include="Filters\PermissionAttributes.cs" />
     <Compile Include="Global.asax.cs">
@@ -234,6 +238,10 @@
     <Compile Include="Migrations\201303011531514_AddMember_Profile_Field.cs" />
     <Compile Include="Migrations\201303011531514_AddMember_Profile_Field.Designer.cs">
       <DependentUpon>201303011531514_AddMember_Profile_Field.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201303060255121_RemoveProfileAvtarToMember.cs" />
+    <Compile Include="Migrations\201303060255121_RemoveProfileAvtarToMember.Designer.cs">
+      <DependentUpon>201303060255121_RemoveProfileAvtarToMember.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\SqlResourceMigration.cs" />
@@ -286,6 +294,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <EmbeddedResource Include="App_Data\Elmah.SqlServer.sql" />
+    <Content Include="App_Code\ViewHelpers.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="App_Data\LuceneAnalyer\sDict.txt" />
     <Content Include="App_Data\LuceneAnalyer\sNoise.txt" />
     <Content Include="App_Readme\Elmah.SqlServer.sql" />
@@ -301,6 +312,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\EmailTemplate\getpwd.htm" />
     <Content Include="Content\EmailTemplate\reg.htm" />
+    <Content Include="Content\EmailTemplate\activeemail.htm" />
     <Content Include="Content\images\activityFlags.png" />
     <Content Include="Content\images\actTags.png" />
     <Content Include="Content\images\bind-email.jpg" />
@@ -554,6 +566,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303011531514_AddMember_Profile_Field.resx">
       <DependentUpon>201303011531514_AddMember_Profile_Field.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303060255121_RemoveProfileAvtarToMember.resx">
+      <DependentUpon>201303060255121_RemoveProfileAvtarToMember.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -1154,6 +1169,8 @@
     <Content Include="Views\Personal\Avtar.cshtml" />
     <Content Include="Views\Personal\Contact.cshtml" />
     <Content Include="Views\Personal\_PersonalLeftNav.cshtml" />
+    <Content Include="Views\Personal\ChangePwd.cshtml" />
+    <Content Include="Views\Personal\BindEmail.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />

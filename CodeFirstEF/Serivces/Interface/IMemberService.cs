@@ -20,6 +20,8 @@ namespace CodeFirstEF.Serivces
 
         bool ExistsNickNameNotMe(int MemberID, string NickName);
 
+        bool ValidatePassword(int MemberID, string Password);
+
         Member Find(int MemberID);
 
         Member FindMemberWithProfile(int MemberID);
@@ -28,9 +30,13 @@ namespace CodeFirstEF.Serivces
 
         Member FindMemberByOpenUser(OpenLoginStatus OpenUser, OpenLoginType openType);
 
-        void ChangePassword(Member member, string newpassword);
+        void ResetPassword(Member member, string newpassword);
+
+        bool ChangePassword(int MemberID, string oldpassword, string newpassword);
 
         void SetLoginCookie(Member member);
+
+        void ActiveEmail(Member member, int Status);
 
         void SaveMemberBaseInfo(int MemberID, ProfileModel model);
 
