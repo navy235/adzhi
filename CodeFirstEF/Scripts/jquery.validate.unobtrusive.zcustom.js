@@ -17,6 +17,13 @@ jQuery.validator.addMethod("dategreaterthan", function(value, element, params) {
   }
   return selfDate > compareToData;
 });
+
+/**********
+*
+*requirewith 验证某个值两者必填其一
+*
+***********/
+
 jQuery.validator.unobtrusive.adapters.add("requirewith", ['requireto'],
     function(options) {
       options.rules['requirewith'] = {
@@ -36,6 +43,70 @@ jQuery.validator.addMethod("requirewith", function(value, element, params) {
   }
   return targetValue !== '' || thisValue !== '';
 });
+
+/**********
+*
+*cascaderequire 当前值为true时，cascadeto的element必须填写
+*
+***********/
+
+jQuery.validator.unobtrusive.adapters.add("cascaderequire", ['cascadeto', 'cascadeclass'],
+    function(options) {
+      options.rules['cascaderequire'] = {
+        cascadeto: options.params.cascadeto,
+        cascadeclass: options.params.cascadeclass
+      };
+      options.messages['cascaderequire'] = options.message;
+    }
+);
+
+jQuery.validator.addMethod("cascaderequire", function(value, element, params) {
+  var thisValue, targetValue;
+  if ($(element)) {
+    thisValue = $(element).val() === 'true';
+  }
+  if (params.cascadeto) {
+    targetValue = $('#' + params.cascadeto).val();
+  }
+  if (thisValue) {
+    $('.form-field-' + params.cascadeclass).show();
+  } else {
+    $('.form-field-' + params.cascadeclass).hide();
+  }
+  return !thisValue || (targetValue !== '' && thisValue);
+});
+
+/**********
+*
+*cascadeback 当前值验证时 backto cascade
+*
+***********/
+
+jQuery.validator.unobtrusive.adapters.add("timequantum", [],
+    function(options) {
+      options.rules['timequantum'] = {
+      };
+      options.messages['timequantum'] = options.message;
+    }
+);
+
+jQuery.validator.addMethod("timequantum", function(value, element, params) {
+  var thisValue;
+  if ($(element)) {
+    thisValue = $(element).val();
+  }
+  var values = thisValue.split('|');
+  var isCheck = true;
+  $.each(values, function(index, item) {
+    if (item === '') {
+      isCheck = false;
+    }
+  })
+  return isCheck;
+});
+
+
+
 
 /**********
 *
@@ -65,6 +136,18 @@ jQuery.validator.addMethod("checkmaxlength", function(value, element, params) {
 *
 ***********/
 
+
+
+jQuery.validator.unobtrusive.adapters.add("stringchecklength", ['minlength', 'maxlength'],
+    function(options) {
+      options.rules['stringchecklength'] = {
+        minlength: options.params.minlength,
+        maxlength: options.params.maxlength
+      };
+      options.messages['stringchecklength'] = options.message;
+    }
+);
+
 jQuery.validator.addMethod('stringchecklength', function(value, element, params) {
   var stringlength = 0;
   var strArray = value.split('');
@@ -78,19 +161,35 @@ jQuery.validator.addMethod('stringchecklength', function(value, element, params)
   return stringlength <= params.maxlength && stringlength >= params.minlength;
 });
 
-jQuery.validator.unobtrusive.adapters.add("stringchecklength", ['minlength', 'maxlength'],
+
+jQuery.validator.unobtrusive.adapters.add("checkarea", [],
     function(options) {
-      options.rules['stringchecklength'] = {
-        minlength: options.params.minlength,
-        maxlength: options.params.maxlength
+      options.rules['checkarea'] = {
       };
-      options.messages['stringchecklength'] = options.message;
+      options.messages['checkarea'] = options.message;
     }
 );
 
 
 
-
+jQuery.validator.addMethod("checkarea", function(value, element, params) {
+  var thisValue;
+  if ($(element)) {
+    thisValue = $(element).val();
+  }
+  var values = thisValue.split('|');
+  if (values.length < 3) {
+    return false;
+  } else {
+    var isCheck = true;
+    $.each(values, function(index, item) {
+      if (parseFloat(item) <= 0) {
+        isCheck = false;
+      }
+    })
+    return isCheck;
+  }
+});
 
 
 jQuery.validator.unobtrusive.adapters.add("checkcontact", [],

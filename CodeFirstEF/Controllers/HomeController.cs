@@ -57,8 +57,7 @@ namespace CodeFirstEF.Controllers
                     od.Description = um.Description;
                     od.FormatCode = um.FormatCode;
                     od.HasLight = um.HasLight;
-                    od.LightStrat = um.LightStrat;
-                    od.LightEnd = um.LightEnd;
+
 
 
                     od.Integrity = 80;
@@ -79,9 +78,7 @@ namespace CodeFirstEF.Controllers
                     od.SeoDes = um.Description;
                     od.SeoTitle = um.Name;
                     od.Seokeywords = um.Name;
-                    od.TotalFaces = um.TotalFaces;
-                    od.Wdith = (decimal)um.Wdith;
-                    od.Height = (decimal)um.Height;
+        
 
                     od.TrafficAuto = um.TrafficAuto;
                     od.TrafficPerson = um.TrafficPerson;
@@ -155,15 +152,14 @@ namespace CodeFirstEF.Controllers
             odv.Description = od.Description;
             odv.EndTime = DateTime.Now;
             odv.StartTime = DateTime.Now;
-            odv.TotalFaces = od.TotalFaces;
+
             odv.TrafficAuto = od.TrafficAuto;
             odv.TrafficPerson = od.TrafficPerson;
-            odv.Wdith = Convert.ToSingle(od.Wdith);
+
             odv.FormatCode = od.FormatCode;
             odv.HasLight = od.HasLight;
-            odv.Height = Convert.ToSingle(od.Height);
-            odv.LightEnd = od.LightEnd;
-            odv.LightStrat = od.LightStrat;
+
+       
             odv.Location = od.Location;
 
             odv.MediaImg = od.MediaImg.ImgUrls;

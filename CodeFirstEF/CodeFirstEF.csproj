@@ -1190,6 +1190,8 @@
     <Content Include="Views\Show\Details.cshtml" />
     <Content Include="Views\Shared\_LayoutDetails.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Price.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TimeQuantum.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Area.cshtml" />
     <None Include="Views\Shared\_LayoutList.cshtml" />
     <Content Include="Views\Shared\_TopListMenu.cshtml" />
     <Content Include="Views\Shared\_ListMain.cshtml" />

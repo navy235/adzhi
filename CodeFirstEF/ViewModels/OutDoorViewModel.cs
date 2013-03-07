@@ -95,36 +95,27 @@ namespace CodeFirstEF.ViewModels
         [UIHint("MapMarker")]
         public string Position { get; set; }
 
-        [Display(Name = "是否有照明")]
+        [Display(Name = "照明情况")]
         [Required(ErrorMessage = "请输入照明信息")]
         [UIHint("Radio")]
-        [AdditionalMetadata("Radio", "是,否")]
+        [AdditionalMetadata("Radio", "无,有")]
+        [CascadeRequire("LightTime", "照明时间")]
         public bool HasLight { get; set; }
 
-        [Display(Name = "照明开始时间")]
-        [Required(ErrorMessage = "请选择照明开始时间")]
-        [UIHint("SingleTime")]
-        public string LightStrat { get; set; }
+        [Display(Name = "照明时间")]
+        [UIHint("TimeQuantum")]
+        [TimeQuantum]
+        [HintClass("cascade")]
+        [AdditionalMetadata("CascadeBack", "HasLight")]
+        public string LightTime { get; set; }
 
-        [Display(Name = "照明结束时间")]
-        [Required(ErrorMessage = "请选择照明结束时间")]
-        [UIHint("SingleTime")]
-        public string LightEnd { get; set; }
 
-        [Required(ErrorMessage = "请输入媒体宽度")]
-        [Display(Name = "媒体宽度")]
-        [UIHint("Number")]
-        public double Wdith { get; set; }
+        [Required(ErrorMessage = "请输入媒体面积相关参数")]
+        [Display(Name = "媒体面积")]
+        [UIHint("Area")]
+        [CheckArea]
+        public string Area { get; set; }
 
-        [Required(ErrorMessage = "请输入媒体高度")]
-        [Display(Name = "媒体高度")]
-        [UIHint("Number")]
-        public double Height { get; set; }
-
-        [Required(ErrorMessage = "请输入媒体面数")]
-        [Display(Name = "媒体面数")]
-        [UIHint("Integer")]
-        public int TotalFaces { get; set; }
 
         [Required(ErrorMessage = "请输入日交通车流量")]
         [Display(Name = "日交通车流量")]

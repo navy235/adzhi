@@ -61,7 +61,7 @@
         <p class="nav-outdoor">户外信息管理</p>
         <i></i>
     </div>
-    <ul class="menu-media" style="display: none;">
+    <ul class="menu-outdoor" style="display: none;">
         <li class="item-outdoor-list ">
             <p><a href="http://u.zhubajie.com/changepass/index">户外信息列表</a></p>
         </li>
@@ -80,10 +80,10 @@
     </div>
 </div>
 <script type="text/javascript">
-    $(function () {
+    $(function() {
 
         var currentMenuItem = '@ViewBag.MenuItem';
-        $('.nav-title').click(function () {
+        $('.nav-title').click(function() {
             var $navitem = $(this).children('p');
             if (!$navitem.children('a')[0]) {
                 var menuClass = 'menu-' + $navitem.attr('class').replace('nav-', '');

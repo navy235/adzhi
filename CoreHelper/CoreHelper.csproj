@@ -83,6 +83,9 @@
     <Compile Include="Attribute\HintLabelAttribute.cs" />
     <Compile Include="Attribute\RequireWithAttribute.cs" />
     <Compile Include="Attribute\StringCheckLengthAttribute.cs" />
+    <Compile Include="Attribute\CascadeRequireAttribute.cs" />
+    <Compile Include="Attribute\TimeQuantumAttribute.cs" />
+    <Compile Include="Attribute\CheckAreaAttribute.cs" />
     <Compile Include="BadWords\BadWordValidator.cs" />
     <Compile Include="Checking\CheckHelper.cs" />
     <Compile Include="Cookie\CookieHelper.cs" />
