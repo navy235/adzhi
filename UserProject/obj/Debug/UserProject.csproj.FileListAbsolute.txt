@@ -334,16 +334,3 @@ F:\GitProject\adzhi\UserProject\obj\Debug\UserProject.csproj.GenerateResource.Ca
 F:\GitProject\adzhi\UserProject\obj\Debug\UserProject.dll
 F:\GitProject\adzhi\UserProject\obj\Debug\UserProject.pdb
 D:\GitProject\adzhi\UserProject\bin\BundleMinifyInlineJsCss.dll
-F:\GitProject\adzhi\UserProject\bin\Kendo.Mvc.xml
-F:\GitProject\adzhi\UserProject\bin\bg-BG\Kendo.Mvc.resources.dll
-F:\GitProject\adzhi\UserProject\bin\da-DK\Kendo.Mvc.resources.dll
-F:\GitProject\adzhi\UserProject\bin\de-DE\Kendo.Mvc.resources.dll
-F:\GitProject\adzhi\UserProject\bin\es-ES\Kendo.Mvc.resources.dll
-F:\GitProject\adzhi\UserProject\bin\fr-FR\Kendo.Mvc.resources.dll
-F:\GitProject\adzhi\UserProject\bin\nl-NL\Kendo.Mvc.resources.dll
-F:\GitProject\adzhi\UserProject\bin\pl-PL\Kendo.Mvc.resources.dll
-F:\GitProject\adzhi\UserProject\bin\pt-BR\Kendo.Mvc.resources.dll
-F:\GitProject\adzhi\UserProject\bin\pt-PT\Kendo.Mvc.resources.dll
-F:\GitProject\adzhi\UserProject\bin\ru-RU\Kendo.Mvc.resources.dll
-F:\GitProject\adzhi\UserProject\bin\uk-UA\Kendo.Mvc.resources.dll
-F:\GitProject\adzhi\UserProject\bin\zh-CN\Kendo.Mvc.resources.dll

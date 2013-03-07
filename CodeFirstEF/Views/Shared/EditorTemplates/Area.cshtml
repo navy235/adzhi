@@ -7,7 +7,7 @@
     double height = string.IsNullOrEmpty(Model) ? 0.0F : Convert.ToSingle(Model.Split('|')[1]);
     int areacount = string.IsNullOrEmpty(Model) ? 1 : Convert.ToInt32(Model.Split('|')[2]);
 
-    var allAreas = width * height * areacount;
+    var allAreas = (width * height * areacount).ToString("F1");
 
 }
 <div class="form-areas">
@@ -43,7 +43,7 @@
             var width=$('#'+self.widthid).val();
             var height=$('#'+self.heightid).val();
             var areacount=$('#'+self.areacountid).val();
-            var result=parseFloat(width*height*areacount);
+            var result=parseFloat(width*height*areacount).toFixed(1);
             $('#'+self.areaid).text(result);
             $('#'+self.id).val(width+'|'+height+'|'+areacount);
             $('#'+self.id).parents('form').validate().element('#'+self.id);

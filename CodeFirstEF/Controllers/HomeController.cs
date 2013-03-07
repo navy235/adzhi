@@ -44,7 +44,7 @@ namespace CodeFirstEF.Controllers
             var AreaAttArray = new List<int>();
             if (!TryUpdateModel(um))
             {
-                ViewBag.updateError = "Update Failure";
+                ViewBag.Error = "Update Failure";
             }
             else
             {
@@ -78,7 +78,7 @@ namespace CodeFirstEF.Controllers
                     od.SeoDes = um.Description;
                     od.SeoTitle = um.Name;
                     od.Seokeywords = um.Name;
-        
+
 
                     od.TrafficAuto = um.TrafficAuto;
                     od.TrafficPerson = um.TrafficPerson;
@@ -114,11 +114,10 @@ namespace CodeFirstEF.Controllers
 
                     DB_Service.Add<OutDoor>(od);
                     DB_Service.Commit();
-                    ViewBag.updateError = "Update Success!";
                 }
                 catch (DbEntityValidationException ex)
                 {
-                    ViewBag.updateError = "Update Failure";
+                    ViewBag.Error = ex.Message;
                 }
 
             }
@@ -159,7 +158,7 @@ namespace CodeFirstEF.Controllers
             odv.FormatCode = od.FormatCode;
             odv.HasLight = od.HasLight;
 
-       
+
             odv.Location = od.Location;
 
             odv.MediaImg = od.MediaImg.ImgUrls;

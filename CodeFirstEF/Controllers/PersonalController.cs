@@ -331,6 +331,103 @@ namespace CodeFirstEF.Controllers
             return View(new OutDoorViewModel());
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddOutDoor(OutDoorViewModel um)
+        {
+            OutDoor od = new OutDoor();
+            var AreaAttArray = new List<int>();
+            if (!TryUpdateModel(um))
+            {
+                ViewBag.updateError = "Update Failure";
+            }
+            else
+            {
+                try
+                {
+                    od.AddIP = HttpHelper.IP;
+                    od.AddTime = DateTime.Now;
+                    od.AdminUser = 200001;
+                    od.CityCode = um.CityCode;
+                    od.Description = um.Description;
+                    od.FormatCode = um.FormatCode;
+                    od.HasLight = um.HasLight;
+
+
+
+                    od.Integrity = 80;
+                    od.LastIP = HttpHelper.IP;
+                    od.LastTime = DateTime.Now;
+                    od.Lat = Convert.ToDecimal(um.Position.Split('|')[0]);
+
+                    od.Lng = Convert.ToDecimal(um.Position.Split('|')[1]);
+
+                    od.Location = um.Location;
+                    od.MeberID = 200013;
+                    od.MeidaCode = um.MeidaCode;
+
+                    od.Name = um.Name;
+                    od.PeriodCode = um.PeriodCode;
+                    od.Price = um.Price;
+                    od.PriceExten = um.PriceExten;
+                    od.SeoDes = um.Description;
+                    od.SeoTitle = um.Name;
+                    od.Seokeywords = um.Name;
+
+
+                    od.TrafficAuto = um.TrafficAuto;
+                    od.TrafficPerson = um.TrafficPerson;
+                    od.Unapprovedlog = string.Empty;
+
+
+
+                    MediaImg media = new MediaImg()
+                    {
+                        FocusImgUrl = um.MediaImg.Split(',')[0],
+                        ImgUrls = um.MediaImg,
+                        MemberID = 200013
+                    };
+                    od.MediaImg = media;
+
+                    AreaAttArray = um.AreaAtt.Split(',').Select(x => Convert.ToInt32(x)).ToList();
+                    var AreaAttList = DB_Service.Set<AreaAtt>().Where(x => AreaAttArray.Contains(x.ID));
+                    od.AreaAtt.AddRange(AreaAttList);
+
+                    CredentialsImg credent = new CredentialsImg()
+                    {
+                        FocusImgUrl = um.CredentialsImg.Split(',')[0],
+                        ImgUrls = um.CredentialsImg,
+                        MemberID = 200013
+                    };
+
+
+                    Owner or = new Owner();
+                    or.CredentialsImg = credent;
+                    or.Deadline = um.Deadline;
+                    or.OwnerCate = DB_Service.Set<OwnerCate>().Single(x => x.CateCode.Equals(um.OwnerCode, StringComparison.CurrentCultureIgnoreCase));
+                    od.Owner = or;
+
+                    DB_Service.Add<OutDoor>(od);
+                    DB_Service.Commit();
+                    ViewBag.updateError = "Update Success!";
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    ViewBag.updateError = "Update Failure";
+                }
+
+            }
+
+            ViewBag.Data_AreaAtt = DB_Service.Set<AreaAtt>().ToList().Select(x => new SelectListItem()
+            {
+                Value = x.ID.ToString(),
+                Text = x.AttName,
+                Selected = AreaAttArray.Contains(x.ID)
+            }).ToList();
+            return View(um);
+        }
+
+
 
     }
 }
