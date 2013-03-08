@@ -68,7 +68,7 @@ namespace CodeFirstEF.Controllers
                     od.Lng = Convert.ToDecimal(um.Position.Split('|')[1]);
 
                     od.Location = um.Location;
-                    od.MeberID = 200013;
+                    od.MemberID = 200013;
                     od.MeidaCode = um.MeidaCode;
 
                     od.Name = um.Name;

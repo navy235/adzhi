@@ -48,7 +48,7 @@ namespace CodeFirstEF.Tests
             //od.LightEnd = new TimeSpan(6, 00, 00);
             od.Lng = 2.123434M;
             od.Location = "解放东路二坊2034户";
-            od.MeberID = 200013;
+            od.MemberID = 200013;
             od.MeidaCode = "D01008";
             od.Message = 3;
             od.Name = "解放东路二坊2034户";

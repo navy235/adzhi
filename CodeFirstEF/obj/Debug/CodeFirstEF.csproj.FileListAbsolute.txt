@@ -170,3 +170,4 @@ D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.RemoveProfileAv
 D:\GitProject\adzhi\CodeFirstEF\bin\Microsoft.Web.Helpers.dll
 F:\GitProject\adzhi\CodeFirstEF\bin\Microsoft.Web.Helpers.dll
 F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.RemoveProfileAvtarToMember.resources
+D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AlertOutDoorMemberID.resources

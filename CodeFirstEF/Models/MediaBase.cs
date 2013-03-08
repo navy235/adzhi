@@ -33,7 +33,7 @@
 
         public int Message { get; set; }
 
-        public int MeberID { get; set; }
+        public int MemberID { get; set; }
 
         [MaxLength(50)]
         public string AddIP { get; set; }

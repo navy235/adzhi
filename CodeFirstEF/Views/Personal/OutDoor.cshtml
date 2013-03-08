@@ -1,0 +1,57 @@
+﻿@model IEnumerable<CodeFirstEF.Models.OutDoor>
+@{
+    ViewBag.Title = "户外列表";
+    Layout = "~/Views/Shared/_LayoutPersonal.cshtml";
+}
+<article class="personal clearfix">
+    <div class="personal-left">
+        <div class="personal-nav">
+            @Html.Partial("_PersonalLeftNav")
+        </div>
+    </div>
+    <div class="personal-right">
+        <div class="personal-right-body">
+            <div class="personal-body-title clearfix">
+                <h5>@ViewBag.Title</h5>
+            </div>
+
+            @if (ViewBag.Error != null)
+            { 
+                @ViewHelpers.Alert("错误信息：",
+                ViewBag.Error, false, CoreHelper.Enum.AlertType.error.ToString())
+            }
+            <div class="personal-form mt20">
+                @(Html.Kendo().Grid<CodeFirstEF.Models.OutDoor>()
+    .Name("GroupsList")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.MediaID).Title("媒体ID");
+        columns.Bound(c => c.Name);
+        columns.Bound(c => c.Description);
+        columns.Template(@<text></text>)
+.ClientTemplate(@"<a class='k-button k-button-icontext ' href='"
++ Url.Action("EditOutDoor", "Personal") + "/#=MediaID#'><span class='k-icon k-edit'></span>编辑</a>").Title("编辑").Width(120);
+
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Custom().Text("添加户外").Action("AddOutDoor", "Personal");
+
+    })
+    .Editable(editable => editable.Mode(GridEditMode.InCell))
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Filterable()
+   .DataSource(dataSource => dataSource
+        .Ajax()
+        .Model(model => model.Id(c => c.MediaID))
+        .ServerOperation(false)
+     )
+
+    )
+            </div>
+        </div>
+
+    </div>
+</article>

@@ -243,6 +243,10 @@
     <Compile Include="Migrations\201303060255121_RemoveProfileAvtarToMember.Designer.cs">
       <DependentUpon>201303060255121_RemoveProfileAvtarToMember.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303080922186_AlertOutDoorMemberID.cs" />
+    <Compile Include="Migrations\201303080922186_AlertOutDoorMemberID.Designer.cs">
+      <DependentUpon>201303080922186_AlertOutDoorMemberID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\SqlResourceMigration.cs" />
     <Compile Include="Models\Area.cs" />
@@ -281,8 +285,12 @@
     <Compile Include="Serivces\Interface\IEmailService.cs" />
     <Compile Include="Serivces\Interface\IMemberService.cs" />
     <Compile Include="Serivces\Interface\IMember_ActionService.cs" />
+    <Compile Include="Serivces\Interface\IOutDoorService.cs" />
+    <Compile Include="Serivces\Interface\IOwnerCateService.cs" />
+    <Compile Include="Serivces\OutDoorService.cs" />
     <Compile Include="Serivces\MemberService.cs" />
     <Compile Include="Serivces\Member_ActionService.cs" />
+    <Compile Include="Serivces\OwnerCateService.cs" />
     <Compile Include="ViewModels\AccountModel.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
     <Compile Include="ViewModels\EmailModel.cs" />
@@ -571,6 +579,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303060255121_RemoveProfileAvtarToMember.resx">
       <DependentUpon>201303060255121_RemoveProfileAvtarToMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303080922186_AlertOutDoorMemberID.resx">
+      <DependentUpon>201303080922186_AlertOutDoorMemberID.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -1174,6 +1185,7 @@
     <Content Include="Views\Personal\ChangePwd.cshtml" />
     <Content Include="Views\Personal\BindEmail.cshtml" />
     <Content Include="Views\Personal\AddOutDoor.cshtml" />
+    <Content Include="Views\Personal\OutDoor.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />

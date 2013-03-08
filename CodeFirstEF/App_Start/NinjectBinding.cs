@@ -16,6 +16,8 @@ namespace CodeFirstEF.App_Start
             kernel.Bind<IMemberService>().To<MemberService>();
             kernel.Bind<IMember_ActionService>().To<Member_ActionService>();
             kernel.Bind<IAreaAttService>().To<AreaAttService>();
+            kernel.Bind<IOutDoorService>().To<OutDoorService>();
+            kernel.Bind<IOwnerCateService>().To<OwnerCateService>();
 
             kernel.Bind<IEmailService>().To<EmailService>();
 
