@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Data.Entity;
 namespace CoreHelper.Data.Interface
 {
     public interface IUnitOfWork : IDisposable
@@ -10,5 +11,6 @@ namespace CoreHelper.Data.Interface
         void Commit();
         TEntity Remove<TEntity>(TEntity entity) where TEntity : class;
         IQueryable<TEntity> Set<TEntity>() where TEntity : class;
+     
     }
 }

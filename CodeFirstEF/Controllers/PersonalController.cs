@@ -366,8 +366,15 @@ namespace CodeFirstEF.Controllers
         public ActionResult OutDoor()
         {
             ViewBag.MenuItem = "outdoor-list";
+            return View();
+        }
+
+
+        public ActionResult OutDoor_Read([DataSourceRequest] DataSourceRequest request)
+        {
             var memberID = Convert.ToInt32(CookieHelper.UID);
-            return View(outDoorService.GetOutDoorByMember(memberID));
+            var model = outDoorService.GetKenDoOutDoorByMember(memberID);
+            return Json(model.ToDataSourceResult(request));
         }
 
 

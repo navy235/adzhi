@@ -18,6 +18,8 @@ namespace CodeFirstEF.Concrete
         {
 
         }
+
+
         public IDbSet<WorkItem> WorkItems { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -1,5 +1,4 @@
-﻿@model IEnumerable<CodeFirstEF.Models.OutDoor>
-@{
+﻿@{
     ViewBag.Title = "户外列表";
     Layout = "~/Views/Shared/_LayoutPersonal.cshtml";
 }
@@ -21,35 +20,28 @@
                 ViewBag.Error, false, CoreHelper.Enum.AlertType.error.ToString())
             }
             <div class="personal-form mt20">
+
+
                 @(Html.Kendo().Grid<CodeFirstEF.Models.OutDoor>()
-    .Name("GroupsList")
+    .Name("Grid")
     .Columns(columns =>
     {
-        columns.Bound(c => c.MediaID).Title("媒体ID");
-        columns.Bound(c => c.Name);
-        columns.Bound(c => c.Description);
-        columns.Template(@<text></text>)
-.ClientTemplate(@"<a class='k-button k-button-icontext ' href='"
-+ Url.Action("EditOutDoor", "Personal") + "/#=MediaID#'><span class='k-icon k-edit'></span>编辑</a>").Title("编辑").Width(120);
-
+        columns.Bound(p => p.MediaID).Groupable(false);
+        columns.Bound(p => p.Name);
+        columns.Bound(p => p.Description);
     })
-    .ToolBar(toolbar =>
-    {
-        toolbar.Custom().Text("添加户外").Action("AddOutDoor", "Personal");
-
-    })
-    .Editable(editable => editable.Mode(GridEditMode.InCell))
+    .Groupable()
     .Pageable()
     .Sortable()
     .Scrollable()
     .Filterable()
-   .DataSource(dataSource => dataSource
+    .DataSource(dataSource => dataSource
         .Ajax()
-        .Model(model => model.Id(c => c.MediaID))
         .ServerOperation(false)
-     )
-
+        .Model(model => model.Id(c => c.MediaID))
+        .Read(read => read.Action("OutDoor_Read", "Personal"))
     )
+)
             </div>
         </div>
 

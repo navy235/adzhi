@@ -11,15 +11,29 @@ namespace CodeFirstEF.App_Start
 
         public static void Binding(IKernel kernel)
         {
-            kernel.Bind<IUnitOfWork>().To<CodeFirstContext>();
+            //kernel.Bind<IUnitOfWork>().To<CodeFirstContext>();
+            kernel.Bind<IUnitOfWork>()
+                .To<CodeFirstContext>()
+                .InRequestScope();
 
-            kernel.Bind<IMemberService>().To<MemberService>();
-            kernel.Bind<IMember_ActionService>().To<Member_ActionService>();
-            kernel.Bind<IAreaAttService>().To<AreaAttService>();
-            kernel.Bind<IOutDoorService>().To<OutDoorService>();
-            kernel.Bind<IOwnerCateService>().To<OwnerCateService>();
-
-            kernel.Bind<IEmailService>().To<EmailService>();
+            kernel.Bind<IMemberService>()
+                .To<MemberService>()
+                .InRequestScope();
+            kernel.Bind<IMember_ActionService>()
+                .To<Member_ActionService>()
+                .InRequestScope();
+            kernel.Bind<IAreaAttService>()
+                .To<AreaAttService>()
+                .InRequestScope();
+            kernel.Bind<IOutDoorService>()
+                .To<OutDoorService>()
+                .InRequestScope();
+            kernel.Bind<IOwnerCateService>()
+                .To<OwnerCateService>()
+                .InRequestScope();
+            kernel.Bind<IEmailService>()
+                .To<EmailService>()
+                .InRequestScope();
 
 
         }

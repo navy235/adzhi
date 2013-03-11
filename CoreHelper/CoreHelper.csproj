@@ -92,10 +92,6 @@
     <Compile Include="Data\Infrastructure\BaseEfUnitOfWork.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Data\Infrastructure\Repository.cs" />
-    <Compile Include="Data\Interface\IRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Data\Interface\IUnitOfWork.cs" />
     <Compile Include="Data\Specification\CompositeSpecification.cs" />
     <Compile Include="Data\Specification\DirectSpecification.cs" />

@@ -38,16 +38,20 @@ namespace CoreHelper.Data.Infrastructure
             return base.Set<TEntity>().Remove(entity);
         }
 
-        IQueryable<TEntity> IUnitOfWork.Set<TEntity>()
+
+        public new IQueryable<TEntity> Set<TEntity>() where TEntity : class
         {
             return base.Set<TEntity>();
         }
-
+  
 
         void IDisposable.Dispose()
         {
             base.Dispose();
         }
+
+
+
     }
 
 }

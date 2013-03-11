@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using CoreHelper.Enum;
 using CodeFirstEF.Models;
 using CodeFirstEF.ViewModels;
@@ -10,6 +11,8 @@ namespace CodeFirstEF.Serivces
     {
         OutDoor Create(OutDoorViewModel model);
 
-        IQueryable<OutDoor> GetOutDoorByMember(int MemebrID);
+        IEnumerable<OutDoor> GetOutDoorByMember(int MemebrID);
+
+        IEnumerable<OutDoor> GetKenDoOutDoorByMember(int MemebrID);
     }
 }

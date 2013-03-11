@@ -39,12 +39,12 @@ namespace CodeFirstEF.Serivces
             }).ToList();
         }
 
-        public IEnumerable<AreaAtt> GetList(IEnumerable<int> IdList)
+        public IQueryable<AreaAtt> GetList(IEnumerable<int> IdList)
         {
             return DB_Service.Set<AreaAtt>().Where(x => IdList.Contains(x.ID));
         }
 
-        public IEnumerable<AreaAtt> GetList()
+        public IQueryable<AreaAtt> GetList()
         {
             return DB_Service.Set<AreaAtt>();
         }

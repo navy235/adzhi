@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using System.Data.Entity;
 using CoreHelper.Checking;
 using CoreHelper.Http;
@@ -91,8 +92,14 @@ namespace CodeFirstEF.Serivces
         }
 
 
-        public IQueryable<OutDoor> GetOutDoorByMember(int MemebrID)
+        public IEnumerable<OutDoor> GetOutDoorByMember(int MemebrID)
         {
+            return DB_Service.Set<OutDoor>().Where(x => x.MemberID == MemebrID);
+        }
+
+        public IEnumerable<OutDoor> GetKenDoOutDoorByMember(int MemebrID)
+        {
+            DB_Service.SetProxyCreationEnabledFlase();
             return DB_Service.Set<OutDoor>().Where(x => x.MemberID == MemebrID);
         }
     }

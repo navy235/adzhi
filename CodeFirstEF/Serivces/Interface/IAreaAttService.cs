@@ -13,8 +13,8 @@ namespace CodeFirstEF.Serivces
 
         List<SelectListItem> GetSelectList(IEnumerable<int> SelectedIdList);
 
-        IEnumerable<AreaAtt> GetList(IEnumerable<int> IdList);
+        IQueryable<AreaAtt> GetList(IEnumerable<int> IdList);
 
-        IEnumerable<AreaAtt> GetList();
+        IQueryable<AreaAtt> GetList();
     }
 }
