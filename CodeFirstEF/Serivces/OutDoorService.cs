@@ -100,11 +100,14 @@ namespace CodeFirstEF.Serivces
                 MemberID = MemberID
             };
 
-            Owner or = new Owner();
-            or.CredentialsImg = credent;
-            or.Deadline = model.Deadline;
-            or.OwnerCate = OwnerCateService.Find(model.OwnerCode);
-            od.Owner = or;
+            od.OwnerCode = model.OwnerCode;
+            od.CredentialsImg = credent;
+            od.Deadline = model.Deadline;
+            //Owner or = new Owner();
+            //or.CredentialsImg = credent;
+            //or.Deadline = model.Deadline;
+            //or.OwnerCate = OwnerCateService.Find(model.OwnerCode);
+            //od.Owner = or;
 
             DB_Service.Add<OutDoor>(od);
             DB_Service.Commit();
@@ -117,7 +120,7 @@ namespace CodeFirstEF.Serivces
         {
 
             int MemberID = Convert.ToInt32(CookieHelper.UID);
-            OutDoor od = IncludeFind(model.MediaID);
+            OutDoor od = IncludeNoOwnerFind(model.MediaID);
             DB_Service.Attach<OutDoor>(od);
             od.CityCode = model.CityCode;
             od.PeriodCode = model.PeriodCode;
@@ -167,6 +170,8 @@ namespace CodeFirstEF.Serivces
             od.MediaImg.ImgUrls = model.MediaImg;
             od.MediaImg.FocusImgUrl = model.MediaImg.Split(',')[0];
 
+            od.CredentialsImg.ImgUrls = model.CredentialsImg;
+            od.CredentialsImg.FocusImgUrl = model.CredentialsImg.Split(',')[0];
             var AreaAttArray = model.AreaAtt.Split(',').Select(x => Convert.ToInt32(x)).ToList();
             if (AreaAttArray.Count == 0)
             {
@@ -195,13 +200,6 @@ namespace CodeFirstEF.Serivces
                     }
                 }
             }
-            od.Owner.OwnerCode = model.OwnerCode;
-            od.Owner.OwnerCate = OwnerCateService.Find(model.OwnerCode);
-            od.Owner.CredentialsImg.FocusImgUrl = model.CredentialsImg.Split(',')[0];
-            od.Owner.CredentialsImg.ImgUrls = model.CredentialsImg;
-            od.Owner.Deadline = model.Deadline;
-          
-
             DB_Service.Commit();
 
             return od;
@@ -212,10 +210,20 @@ namespace CodeFirstEF.Serivces
             return DB_Service.Set<OutDoor>()
                 .Include(x => x.MediaImg)
                 .Include(x => x.MapImg)
-                .Include(x => x.Owner)
+                .Include(x => x.CredentialsImg)
                 .Include(x => x.AreaAtt)
-                .Single(x => x.MediaID == MediaID);
+                .FirstOrDefault(x => x.MediaID == MediaID);
         }
+
+        public OutDoor IncludeNoOwnerFind(int MediaID)
+        {
+            return DB_Service.Set<OutDoor>()
+                .Include(x => x.MediaImg)
+                .Include(x => x.MapImg)
+                .Include(x => x.AreaAtt)
+                .FirstOrDefault(x => x.MediaID == MediaID);
+        }
+
         public bool HasOutDoorByMember(int MediaID)
         {
             int MemberID = Convert.ToInt32(CookieHelper.UID);
@@ -233,8 +241,8 @@ namespace CodeFirstEF.Serivces
             odv.MediaID = od.MediaID;
             odv.AreaAtt = String.Join(",", od.AreaAtt.Select(x => x.ID));
             odv.CityCode = od.CityCode;
-            odv.CredentialsImg = od.Owner.CredentialsImg.ImgUrls;
-            odv.Deadline = od.Owner.Deadline;
+            odv.CredentialsImg = od.CredentialsImg.ImgUrls;
+            odv.Deadline = od.Deadline;
             odv.Description = od.Description;
             odv.EndTime = DateTime.Now;
             odv.StartTime = DateTime.Now;
@@ -245,7 +253,7 @@ namespace CodeFirstEF.Serivces
             odv.MediaImg = od.MediaImg.ImgUrls;
             odv.MeidaCode = od.MeidaCode;
             odv.Name = od.Name;
-            odv.OwnerCode = od.Owner.OwnerCode;
+            odv.OwnerCode = od.OwnerCode;
             odv.PeriodCode = od.PeriodCode;
             odv.Position = od.Lat + "|" + od.Lng;
             odv.Price = od.Price;

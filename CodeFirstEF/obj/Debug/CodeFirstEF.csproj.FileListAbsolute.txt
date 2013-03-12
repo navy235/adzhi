@@ -171,3 +171,6 @@ D:\GitProject\adzhi\CodeFirstEF\bin\Microsoft.Web.Helpers.dll
 F:\GitProject\adzhi\CodeFirstEF\bin\Microsoft.Web.Helpers.dll
 F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.RemoveProfileAvtarToMember.resources
 D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AlertOutDoorMemberID.resources
+F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AlertOutDoorMemberID.resources
+F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddRelationWithOwner.resources
+F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.DeleteOwnerModel.resources

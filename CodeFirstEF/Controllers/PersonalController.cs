@@ -350,6 +350,7 @@ namespace CodeFirstEF.Controllers
                 {
                     AreaAttArray = model.AreaAtt.Split(',').Select(x => Convert.ToInt32(x)).ToList();
                     outDoorService.Create(model);
+                    return RedirectToAction("OutDoor");
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -393,6 +394,7 @@ namespace CodeFirstEF.Controllers
                 {
                     AreaAttArray = model.AreaAtt.Split(',').Select(x => Convert.ToInt32(x)).ToList();
                     outDoorService.Update(model);
+                    return RedirectToAction("OutDoor");
                 }
                 catch (DbEntityValidationException ex)
                 {

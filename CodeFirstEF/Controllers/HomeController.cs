@@ -105,12 +105,15 @@ namespace CodeFirstEF.Controllers
                         MemberID = 200013
                     };
 
+                    od.CredentialsImg = credent;
+                    od.OwnerCode = um.OwnerCode;
+                    od.Deadline = um.Deadline;
 
-                    Owner or = new Owner();
-                    or.CredentialsImg = credent;
-                    or.Deadline = um.Deadline;
-                    or.OwnerCate = DB_Service.Set<OwnerCate>().Single(x => x.CateCode.Equals(um.OwnerCode, StringComparison.CurrentCultureIgnoreCase));
-                    od.Owner = or;
+                    //Owner or = new Owner();
+                    //or.CredentialsImg = credent;
+                    //or.Deadline = um.Deadline;
+                    //or.OwnerCate = DB_Service.Set<OwnerCate>().Single(x => x.CateCode.Equals(um.OwnerCode, StringComparison.CurrentCultureIgnoreCase));
+                    //od.Owner = or;
 
                     DB_Service.Add<OutDoor>(od);
                     DB_Service.Commit();
@@ -139,15 +142,14 @@ namespace CodeFirstEF.Controllers
             od = DB_Service.Set<OutDoor>()
                 .Include(x => x.MediaImg)
                 .Include(x => x.MapImg)
-                .Include(x => x.Owner)
                 .Include(x => x.AreaAtt)
                 .Single(x => x.MediaID == id);
 
             odv.MediaID = od.MediaID;
             odv.AreaAtt = String.Join(",", od.AreaAtt.Select(x => x.ID));
             odv.CityCode = od.CityCode;
-            odv.CredentialsImg = od.Owner.CredentialsImg.ImgUrls;
-            odv.Deadline = od.Owner.Deadline;
+            odv.CredentialsImg = od.CredentialsImg.ImgUrls;
+            odv.Deadline = od.Deadline;
             odv.Description = od.Description;
             odv.EndTime = DateTime.Now;
             odv.StartTime = DateTime.Now;
@@ -164,7 +166,7 @@ namespace CodeFirstEF.Controllers
             odv.MediaImg = od.MediaImg.ImgUrls;
             odv.MeidaCode = od.MeidaCode;
             odv.Name = od.Name;
-            odv.OwnerCode = od.Owner.OwnerCode;
+            odv.OwnerCode = od.OwnerCode;
             odv.PeriodCode = od.PeriodCode;
             odv.Position = od.Lat + "|" + od.Lng;
             odv.Price = od.Price;
@@ -189,6 +191,10 @@ namespace CodeFirstEF.Controllers
 
         public ActionResult Test()
         {
+            //Owner Owner = DB_Service.Set<Owner>().Include(x => x.OwnerCate).Include(x => x.CredentialsImg).Single(x => x.MediaID == 7);
+
+            //ViewBag.Name = Owner.OwnerCate.CateName;
+
             return View();
         }
 

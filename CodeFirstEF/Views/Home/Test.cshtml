@@ -5,18 +5,9 @@
 
 <h2>添加户外信息</h2>
 
+
 <div id="menu">
+    @ViewBag.Name
 </div>
 
-<script type="text/javascript">
-    $(function() {
-        $.ajax({
-            url: '/Home/Map',
-            type: 'GET',
-            data: '',
-            success: function(res) {
-                $("#menu").html(res);
-            }
-        })
-    })
-</script>
+

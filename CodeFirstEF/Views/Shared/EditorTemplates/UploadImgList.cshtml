@@ -54,10 +54,10 @@
                     var template=$('#'+'@(name + "_template")').clone();
                     $("#"+self.id+"_imgbox")
                         .append(template.find('[name="@(name + "_imgurl")"]')
-                        .val(_imgurl[i])
+                        .val(_imgurl.split(',')[i])
                         .end()
                         .find('.@(name + "_img")')
-                        .attr('src',_imgurl[i])
+                        .attr('src',_imgurl.split(',')[i])
                         .end()
                         .show()
                         );

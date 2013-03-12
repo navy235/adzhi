@@ -9,9 +9,10 @@ namespace CodeFirstEF.Models
     {
 
         [Key]
-        public int OwnerID { get; set; }
+        public int MediaID { get; set; }
 
-        [ForeignKey("OwnerID")]
-        public virtual Owner Owner { get; set; }
+
+        [ForeignKey("MediaID")]
+        public virtual OutDoor OutDoor { get; set; }
     }
 }

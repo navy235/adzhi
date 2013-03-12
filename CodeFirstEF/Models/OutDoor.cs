@@ -74,8 +74,12 @@ namespace CodeFirstEF.Models
         public string FormatCode { get; set; }
         public string MeidaCode { get; set; }
         public string PeriodCode { get; set; }
+        public string OwnerCode { get; set; }
 
-        public virtual Owner Owner { get; set; }
+        public System.DateTime Deadline { get; set; }
+
+
+
         public virtual ICollection<AreaAtt> AreaAtt { get; set; }
 
         public virtual Area Area { get; set; }
@@ -86,6 +90,8 @@ namespace CodeFirstEF.Models
 
         public virtual FormatCate FormatCate { get; set; }
 
+        public virtual OwnerCate OwnerCate { get; set; }
+
         public virtual ICollection<TopBase> TopBase { get; set; }
 
         public virtual ICollection<SaleBase> SaleBase { get; set; }
@@ -93,6 +99,8 @@ namespace CodeFirstEF.Models
         public virtual MapImg MapImg { get; set; }
 
         public virtual MediaImg MediaImg { get; set; }
+
+        public virtual CredentialsImg CredentialsImg { get; set; }
 
     }
 }

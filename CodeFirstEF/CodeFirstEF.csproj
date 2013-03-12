@@ -247,6 +247,14 @@
     <Compile Include="Migrations\201303080922186_AlertOutDoorMemberID.Designer.cs">
       <DependentUpon>201303080922186_AlertOutDoorMemberID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303121343281_AddRelationWithOwner.cs" />
+    <Compile Include="Migrations\201303121343281_AddRelationWithOwner.Designer.cs">
+      <DependentUpon>201303121343281_AddRelationWithOwner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201303121402007_DeleteOwnerModel.cs" />
+    <Compile Include="Migrations\201303121402007_DeleteOwnerModel.Designer.cs">
+      <DependentUpon>201303121402007_DeleteOwnerModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\SqlResourceMigration.cs" />
     <Compile Include="Models\Area.cs" />
@@ -268,7 +276,6 @@
     <Compile Include="Models\Member_Profile.cs" />
     <Compile Include="Models\OutDoor.cs" />
     <Compile Include="Models\OutDoorMediaCate.cs" />
-    <Compile Include="Models\Owner.cs" />
     <Compile Include="Models\OwnerCate.cs" />
     <Compile Include="Models\PeriodCate.cs" />
     <Compile Include="Models\Permissions.cs" />
@@ -583,6 +590,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303080922186_AlertOutDoorMemberID.resx">
       <DependentUpon>201303080922186_AlertOutDoorMemberID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303121343281_AddRelationWithOwner.resx">
+      <DependentUpon>201303121343281_AddRelationWithOwner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303121402007_DeleteOwnerModel.resx">
+      <DependentUpon>201303121402007_DeleteOwnerModel.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />

@@ -16,11 +16,11 @@ namespace CodeFirstEF.Models
     {
         public OwnerCate()
         {
-            this.Owner = new HashSet<Owner>();
+            this.OutDoor = new HashSet<OutDoor>();
       
         }
-    
-    
-        public virtual ICollection<Owner> Owner { get; set; }
+
+
+        public virtual ICollection<OutDoor> OutDoor { get; set; }
     }
 }

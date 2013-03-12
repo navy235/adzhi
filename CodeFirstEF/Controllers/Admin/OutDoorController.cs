@@ -32,7 +32,6 @@ namespace CodeFirstEF.Controllers
             od = DB_Service.Set<OutDoor>()
                 .Include(x => x.MediaImg)
                 .Include(x => x.MapImg)
-                .Include(x => x.Owner)
                 .Include(x => x.AreaAtt)
                 .Single(x => x.MediaID == id);
 

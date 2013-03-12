@@ -31,6 +31,11 @@ namespace CodeFirstEF.App_Start
             kernel.Bind<IOwnerCateService>()
                 .To<OwnerCateService>()
                 .InRequestScope();
+            //kernel.Bind<IOwnerService>()
+            //    .To<OwnerService>()
+            //    .InRequestScope();
+
+
             kernel.Bind<IEmailService>()
                 .To<EmailService>()
                 .InRequestScope();

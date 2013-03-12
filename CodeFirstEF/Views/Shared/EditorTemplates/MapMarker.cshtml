@@ -20,7 +20,6 @@
         right: 0px;
         z-index: 200;
         opacity: 0.7;
-        
         background: #050505;
         width: 100%;
         text-align: right;
@@ -50,7 +49,7 @@
 <div id="@(name + "_container")" class="map-container">
 </div>
 </text>
-).Draggable(true).Width(700).Height(500).Modal(true).Visible(false)
+).Events(events => events.Open(name + ".windowOpen")).Draggable(true).Width(700).Height(500).Modal(true).Visible(false)
 <button type="button" id="@Html.Raw(name + "_select")" class="k-button" ><span class="k-icon k-add"></span>标记位置</button>
 
 
@@ -86,8 +85,12 @@
         },
         binding:function(){
             var self=@name;
+            var point=new BMap.Point(116.404, 39.915);
+            if(self.lng!==''&&self.lng!=='0'){
+                point=new BMap.Point(new Number(self.lng),new Number(self.lat));
+            }
             self.map=new BMap.Map("@(name + "_container")");
-            self.map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
+            self.map.centerAndZoom(point, 12);
             self.map.addControl(new BMap.NavigationControl());               // 添加平移缩放控件
             self.map.addControl(new BMap.ScaleControl());                    // 添加比例尺控件
             self.map.addControl(new BMap.OverviewMapControl());  
@@ -107,12 +110,20 @@
             if(self.lng===''||self.lng==='0'){
                 self.seach();
             }else{
-                var point={
-                    lat:self.lat,
-                    lng:self.lng
-                }
-                self.map.setCenter(point);
+                //var point=new BMap.Point(new Number(self.lng),new Number(self.lat));
+                //self.map.panTo(point);
+                //self.map.setCenter(point)
+                //self.addMarker(point);
             }
+        },
+        windowOpen:function(){
+            var self=@name;
+            setTimeout(function(){
+                var point=new BMap.Point(new Number(self.lng),new Number(self.lat));
+                //self.map.panTo(point);
+                self.map.setCenter(point)
+                self.addMarker(point);
+            },500)
         },
         bindingControl:function(){
             var self=@name;

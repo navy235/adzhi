@@ -132,9 +132,6 @@ namespace CodeFirstEF.Concrete
             modelBuilder.Entity<OutDoor>()
                 .HasKey(o => o.MediaID);
 
-            modelBuilder.Entity<OutDoor>()
-                .HasOptional(m => m.Owner)
-                .WithRequired(x => x.OutDoor);
 
             modelBuilder.Entity<OutDoor>()
                 .HasRequired(m => m.Area)
@@ -155,6 +152,12 @@ namespace CodeFirstEF.Concrete
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<OutDoor>()
+                 .HasRequired(o => o.OwnerCate)
+                 .WithMany(oc => oc.OutDoor)
+                 .HasForeignKey(o => o.OwnerCode)
+                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<OutDoor>()
                 .HasRequired(m => m.OutDoorMediaCate)
                 .WithMany(c => c.OutDoor)
                 .HasForeignKey(o => o.MeidaCode)
@@ -168,14 +171,11 @@ namespace CodeFirstEF.Concrete
                 .HasOptional(o => o.MapImg)
                 .WithRequired(m => m.OutDoor);
 
-            modelBuilder.Entity<Owner>()
+            modelBuilder.Entity<OutDoor>()
                 .HasOptional(o => o.CredentialsImg)
-                .WithRequired(o => o.Owner);
+                .WithRequired(o => o.OutDoor);
 
-            modelBuilder.Entity<Owner>()
-                .HasRequired(o => o.OwnerCate)
-                .WithMany(oc => oc.Owner)
-                .HasForeignKey(o => o.OwnerCode);
+     
 
 
             //多对多关系
