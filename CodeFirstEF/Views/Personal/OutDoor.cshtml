@@ -21,27 +21,50 @@
             }
             <div class="personal-form mt20">
 
-
                 @(Html.Kendo().Grid<CodeFirstEF.Models.OutDoor>()
-    .Name("Grid")
-    .Columns(columns =>
-    {
-        columns.Bound(p => p.MediaID).Groupable(false);
-        columns.Bound(p => p.Name);
-        columns.Bound(p => p.Description);
-    })
-    .Groupable()
-    .Pageable()
-    .Sortable()
-    .Scrollable()
-    .Filterable()
-    .DataSource(dataSource => dataSource
-        .Ajax()
-        .ServerOperation(false)
-        .Model(model => model.Id(c => c.MediaID))
-        .Read(read => read.Action("OutDoor_Read", "Personal"))
-    )
-)
+                    .Name("OutDoorList")
+                    .Columns(columns =>
+                    {
+                        columns.Bound(c => c.MediaID).Title("媒体ID")
+                            .Sortable(false)
+                            .ClientTemplate("<input type='checkbox' name='ID_check' id='#=MediaID#_check'  class='chkbx' />")
+                            .HeaderTemplate("<div style='text-align:center'><input type='checkbox' id='checkAll' onclick='GridList.checkAll(this)' title='全选'/></div>")
+                            .Width(60).HtmlAttributes(new { style = "text-align:center" });
+                        columns.Bound(c => c.Name);
+                        columns.Bound(c => c.AddTime).Format("{0:yyyy-MM-dd}").Width(100).Title("添加时间");
+                        columns.Template(@<text></text>)
+                .ClientTemplate(@"<a class='k-button k-button-icontext ' href='"
+                + Url.Action("EditOutDoor", "Personal") + "/#=MediaID#'><span class='k-icon k-edit'></span>编辑</a>").Title("编辑").Width(100);
+
+                    })
+                    .ToolBar(toolbar =>
+                    {
+                        toolbar.Custom().Text("添加户外").Action("AddOutDoor", "Personal");
+
+                    })
+                    .Pageable()
+                    .Sortable()
+                    .Scrollable()
+                   .DataSource(dataSource => dataSource
+                        .Ajax()
+                           .ServerOperation(false)
+                        .Model(model => model.Id(c => c.MediaID))
+                        .Read(read => read.Action("OutDoor_Read", "Personal"))
+                     )
+
+                    )
+
+                <script type="text/javascript">
+                    var GridList = {
+                        id: 'OutDoorList',
+                        checkAll: function(ele) {
+                            var self = GridList;
+                            var state = $(ele).is(':checked');
+                            $('[name="ID_check"]').attr('checked', state);
+                        }
+                    }
+
+                </script>
             </div>
         </div>
 

@@ -11,8 +11,16 @@ namespace CodeFirstEF.Serivces
     {
         OutDoor Create(OutDoorViewModel model);
 
-        IEnumerable<OutDoor> GetOutDoorByMember(int MemebrID);
+        OutDoor Update(OutDoorViewModel model);
 
-        IEnumerable<OutDoor> GetKenDoOutDoorByMember(int MemebrID);
+        OutDoor IncludeFind(int MediaID);
+
+        bool HasOutDoorByMember(int MediaID);
+
+        OutDoorViewModel GetOutDoorViewModel(int MediaID);
+
+        IEnumerable<OutDoor> GetOutDoorByMember(int MemberID);
+
+        IEnumerable<OutDoor> GetKenDoOutDoorByMember(int MemberID);
     }
 }

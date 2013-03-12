@@ -336,7 +336,7 @@ namespace CodeFirstEF.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddOutDoor(OutDoorViewModel um)
+        public ActionResult AddOutDoor(OutDoorViewModel model)
         {
             ViewBag.MenuItem = "outdoor-publish";
             var AreaAttArray = new List<int>();
@@ -348,8 +348,8 @@ namespace CodeFirstEF.Controllers
             {
                 try
                 {
-                    AreaAttArray = um.AreaAtt.Split(',').Select(x => Convert.ToInt32(x)).ToList();
-                    outDoorService.Create(um);
+                    AreaAttArray = model.AreaAtt.Split(',').Select(x => Convert.ToInt32(x)).ToList();
+                    outDoorService.Create(model);
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -358,14 +358,57 @@ namespace CodeFirstEF.Controllers
 
             }
             ViewBag.Data_AreaAtt = areaAttService.GetSelectList(AreaAttArray);
-            return View(um);
+            return View(model);
         }
 
+
+        public ActionResult EditOutDoor(int id)
+        {
+            ViewBag.MenuItem = "outdoor-list";
+            if (outDoorService.HasOutDoorByMember(id))
+            {
+                OutDoorViewModel odv = outDoorService.GetOutDoorViewModel(id);
+                ViewBag.Data_AreaAtt = areaAttService.GetSelectList(odv.AreaAtt.Split(',').Select(x => Convert.ToInt32(x)));
+                return View(odv);
+            }
+            else
+            {
+                return Content("<script>alert('非法操作！');window.history.go(-1);</script>");
+            }
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditOutDoor(OutDoorViewModel model)
+        {
+            ViewBag.MenuItem = "outdoor-list";
+            var AreaAttArray = new List<int>();
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Error = "请检查表单是否填写完整";
+            }
+            else
+            {
+                try
+                {
+                    AreaAttArray = model.AreaAtt.Split(',').Select(x => Convert.ToInt32(x)).ToList();
+                    outDoorService.Update(model);
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    ViewBag.Error = ex.Message;
+                }
+
+            }
+            ViewBag.Data_AreaAtt = areaAttService.GetSelectList(AreaAttArray);
+            return View(model);
+        }
 
 
         public ActionResult OutDoor()
         {
             ViewBag.MenuItem = "outdoor-list";
+
             return View();
         }
 
@@ -373,7 +416,7 @@ namespace CodeFirstEF.Controllers
         public ActionResult OutDoor_Read([DataSourceRequest] DataSourceRequest request)
         {
             var memberID = Convert.ToInt32(CookieHelper.UID);
-            var model = outDoorService.GetKenDoOutDoorByMember(memberID);
+            var model = outDoorService.GetKenDoOutDoorByMember(memberID).OrderByDescending(x => x.AddTime);
             return Json(model.ToDataSourceResult(request));
         }
 

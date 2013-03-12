@@ -53,8 +53,7 @@
                 for(var i=0;i<_imgurl.split(',').length;i++){
                     var template=$('#'+'@(name + "_template")').clone();
                     $("#"+self.id+"_imgbox")
-                        .append(template
-                        .find('[name="@(name + "_imgurl")"]')
+                        .append(template.find('[name="@(name + "_imgurl")"]')
                         .val(_imgurl[i])
                         .end()
                         .find('.@(name + "_img")')

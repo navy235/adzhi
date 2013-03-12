@@ -23,7 +23,7 @@ namespace CodeFirstEF.ViewModels
             this.Deadline = DateTime.Now;
         }
 
-        [ScaffoldColumn(false)]
+        [HiddenInput(DisplayValue = false)]
         public int MediaID { get; set; }
 
         [HintSeparateTitle("基本信息")]

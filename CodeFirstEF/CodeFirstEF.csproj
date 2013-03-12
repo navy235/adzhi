@@ -291,6 +291,7 @@
     <Compile Include="Serivces\MemberService.cs" />
     <Compile Include="Serivces\Member_ActionService.cs" />
     <Compile Include="Serivces\OwnerCateService.cs" />
+    <Compile Include="Serivces\ServiceResult.cs" />
     <Compile Include="ViewModels\AccountModel.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
     <Compile Include="ViewModels\EmailModel.cs" />
@@ -1186,6 +1187,7 @@
     <Content Include="Views\Personal\BindEmail.cshtml" />
     <Content Include="Views\Personal\AddOutDoor.cshtml" />
     <Content Include="Views\Personal\OutDoor.cshtml" />
+    <Content Include="Views\Personal\EditOutDoor.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />
@@ -1221,6 +1223,7 @@
   <ItemGroup>
     <Folder Include="App_Data\Lucene\" />
     <Folder Include="Upload\Normal\2013\1\28\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CoreHelper\CoreHelper.csproj">
