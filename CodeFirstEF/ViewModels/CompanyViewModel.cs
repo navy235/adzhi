@@ -16,7 +16,7 @@ namespace CodeFirstEF.ViewModels
 
         [HintSeparateTitle("基本信息")]
         [Required(ErrorMessage = "请输入公司名称")]
-        [Display(Name = "公司名称")]
+        [Display(Name = "名称")]
         [RegularExpression(@"^[\u0391-\uFFE5\w]+$", ErrorMessage = "公司名称含有非法字符.")]
         //[Remote("NickNameExists", "AjaxService", ErrorMessage = "该公司名称含有非法字符或已经注册")]
         [StringLength(25, ErrorMessage = "请输入{2}-{1}位中文公司名称", MinimumLength = 7)]
@@ -33,17 +33,17 @@ namespace CodeFirstEF.ViewModels
 
 
         [Required(ErrorMessage = "请选择公司主要业务")]
-        [Display(Name = "公司主要业务")]
+        [Display(Name = "主要业务")]
         [UIHint("SingleDropdownList")]
         public string BussinessCode { get; set; }
 
-        [Required(ErrorMessage = "请选择公司规模")]
-        [Display(Name = "公司规模")]
+        [Required(ErrorMessage = "请选择企业规模")]
+        [Display(Name = "企业规模")]
         [UIHint("SingleDropdownList")]
         public string ScaleCode { get; set; }
 
         [Required(ErrorMessage = "请选择公司注册资金")]
-        [Display(Name = "公司注册资金")]
+        [Display(Name = "注册资金")]
         [UIHint("SingleDropdownList")]
         public string FundCode { get; set; }
 
@@ -51,13 +51,15 @@ namespace CodeFirstEF.ViewModels
         [Required(ErrorMessage = "请输入公司简介.")]
         [Display(Name = "公司简介")]
         [DataType(DataType.MultilineText)]
+        [StringCheckLength(10, 500)]
+        [Hint("请输入10-500位公司简介，（中文占2个字符）。")]
         public string Description { get; set; }
 
 
         [HintSeparateTitle("联系方式")]
 
         [Required(ErrorMessage = "请输入公司联系地址")]
-        [Display(Name = "公司联系地址")]
+        [Display(Name = "联系地址")]
         [StringLength(25, ErrorMessage = "请输入{2}-{1}位公司联系地址", MinimumLength = 7)]
         [Hint("公司联系地址7-25个字，不允许填写电话和特殊符号.")]
         public string Address { get; set; }
@@ -82,7 +84,7 @@ namespace CodeFirstEF.ViewModels
 
 
         [Display(Name = "手机号码")]
-        [RegularExpression(@"^13[0-9]{9}|15[0-9]{9}|18[0-9]{9}|14[0-9]{9}$", ErrorMessage = "您输入的手机号码格式不正确.")]
+        [RegularExpression(@"^(13[0-9]|15[-9]|18[0-9])\d{8}$", ErrorMessage = "您输入的手机号码格式不正确.")]
         [Hint("请输入手机号码.")]
         public string Mobile { get; set; }
 
@@ -90,7 +92,7 @@ namespace CodeFirstEF.ViewModels
 
         [Display(Name = "电话号码")]
         [Hint("请输入电话号码,电话号码格式010-2013042-1323，区号加电话号码加分机号码，无分机可以不填")]
-        [RegularExpression(@"^\d{3}-\d{8}(-\d{3,4})?|\d{4}-\d{7}(-\d{3,4})??$", ErrorMessage = "您输入的电话号码格式不正确.")]
+        [RegularExpression(@"^0\d{2,3}(\-)?\d{7,8}$", ErrorMessage = "您输入的电话号码格式不正确.")]
         [RequireWith("Mobile", "手机号码")]
         public string Phone { get; set; }
 
@@ -101,7 +103,7 @@ namespace CodeFirstEF.ViewModels
         public string Fax { get; set; }
 
         [Display(Name = "QQ号码")]
-        [RegularExpression(@"^[1-9](\d)+$", ErrorMessage = "您输入的QQ号码格式不正确.")]
+        [RegularExpression(@"^[1-9][0-9]{4,10}$", ErrorMessage = "您输入的QQ号码格式不正确.")]
         [Hint("请输入QQ号码.")]
         public string QQ { get; set; }
 
@@ -110,6 +112,26 @@ namespace CodeFirstEF.ViewModels
         [Hint("请输入MSN.")]
         public string MSN { get; set; }
 
+
+        [HintSeparateTitle("认证信息")]
+        [Required(ErrorMessage = "请上传企业营业执照.")]
+        [Display(Name = "企业执照")]
+        [UIHint("UploadImgList")]
+        [HintClass("uploadlist")]
+        [AdditionalMetadata("UploadImgList", "")]
+        [AdditionalMetadata("UploadImgListMaxLength", "6")]
+        [HintLabel("请上传1-6张不小于800X600像素的图片,图片文件大小不小于5M")]
+        public string CompanyImg { get; set; }
+
+
+        [Required(ErrorMessage = "请上传联系人身份证照片.")]
+        [Display(Name = "身份证照片")]
+        [UIHint("UploadImgList")]
+        [HintClass("uploadlist")]
+        [AdditionalMetadata("UploadImgList", "1")]
+        [AdditionalMetadata("UploadImgListMaxLength", "6")]
+        [HintLabel("请上传1-6张不小于800X600像素的图片,图片文件大小不小于5M")]
+        public string LinManImg { get; set; }
 
 
     }

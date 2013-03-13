@@ -104,7 +104,6 @@ namespace CodeFirstEF.ViewModels
 
         [Display(Name = "照明时间")]
         [UIHint("TimeQuantum")]
-        [TimeQuantum]
         [HintClass("cascade")]
         [AdditionalMetadata("CascadeBack", "HasLight")]
         public string LightTime { get; set; }

@@ -237,15 +237,15 @@ textarea {
   display: block;
 }
 
-.form-field input:focus ~ .field-validation-error ~ .field-hint-message {
+.form-field input:focus ~ .field-validation-error  {
   display: none;
 }
 
-.form-field textare:focus ~ .field-hint-message {
+.form-field textarea:focus ~ .field-hint-message {
   display: block;
 }
 
-.form-field textare:focus ~ .field-validation-error ~ .field-hint-message {
+.form-field textarea:focus ~ .field-validation-error  {
   display: none;
 }
 

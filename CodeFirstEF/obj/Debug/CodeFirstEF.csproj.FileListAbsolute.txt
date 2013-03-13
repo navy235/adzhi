@@ -99,7 +99,6 @@ D:\GitProject\adzhi\CodeFirstEF\bin\WebBackgrounder.EntityFramework.dll
 D:\GitProject\adzhi\CodeFirstEF\bin\WebGrease.dll
 D:\GitProject\adzhi\CodeFirstEF\bin\BundleMinifyInlineJsCss.dll
 D:\GitProject\adzhi\CodeFirstEF\bin\CoreHelper.pdb
-D:\GitProject\adzhi\CodeFirstEF\bin\Lucene.Net.China.pdb
 D:\GitProject\adzhi\CodeFirstEF\bin\EntityFramework.xml
 D:\GitProject\adzhi\CodeFirstEF\bin\Kendo.Mvc.xml
 D:\GitProject\adzhi\CodeFirstEF\bin\Lucene.Net.pdb
@@ -174,3 +173,6 @@ D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AlertOutDoorMem
 F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AlertOutDoorMemberID.resources
 F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddRelationWithOwner.resources
 F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.DeleteOwnerModel.resources
+D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddRelationWithOwner.resources
+D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.DeleteOwnerModel.resources
+D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddCompanyImgAndLinkManImg.resources

@@ -60,6 +60,10 @@
     <Reference Include="Lucene.Net">
       <HintPath>..\CoreProjec\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
     </Reference>
+    <Reference Include="Lucene.Net.China, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Binaries\Lucene.Net.China.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Helpers">
       <HintPath>..\CoreProjec\packages\Microsoft.AspNet.Web.Helpers.Mvc.2.0.20710.0\lib\net40\Microsoft.Web.Helpers.dll</HintPath>
@@ -171,6 +175,7 @@
     <Compile Include="Controllers\AjaxServiceController.cs" />
     <Compile Include="Controllers\Admin\AreasController.cs" />
     <Compile Include="Controllers\Admin\DepartmentController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\Admin\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -255,6 +260,10 @@
     <Compile Include="Migrations\201303121402007_DeleteOwnerModel.Designer.cs">
       <DependentUpon>201303121402007_DeleteOwnerModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303130915335_AddCompanyImgAndLinkManImg.cs" />
+    <Compile Include="Migrations\201303130915335_AddCompanyImgAndLinkManImg.Designer.cs">
+      <DependentUpon>201303130915335_AddCompanyImgAndLinkManImg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\SqlResourceMigration.cs" />
     <Compile Include="Models\Area.cs" />
@@ -285,6 +294,8 @@
     <Compile Include="Models\TopBase.cs" />
     <Compile Include="Models\CompanyFund.cs" />
     <Compile Include="Models\CompanyBussiness.cs" />
+    <Compile Include="Models\CompanyImg.cs" />
+    <Compile Include="Models\LinkManImg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serivces\AreaAttService.cs" />
     <Compile Include="Serivces\EmailService.cs" />
@@ -596,6 +607,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303121402007_DeleteOwnerModel.resx">
       <DependentUpon>201303121402007_DeleteOwnerModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303130915335_AddCompanyImgAndLinkManImg.resx">
+      <DependentUpon>201303130915335_AddCompanyImgAndLinkManImg.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -1195,12 +1209,13 @@
     <Content Include="Views\Personal\BaseInfo.cshtml" />
     <Content Include="Views\Personal\Avtar.cshtml" />
     <Content Include="Views\Personal\Contact.cshtml" />
-    <Content Include="Views\Personal\_PersonalLeftNav.cshtml" />
+    <Content Include="Views\Shared\_PersonalLeftNav.cshtml" />
     <Content Include="Views\Personal\ChangePwd.cshtml" />
     <Content Include="Views\Personal\BindEmail.cshtml" />
     <Content Include="Views\Personal\AddOutDoor.cshtml" />
     <Content Include="Views\Personal\OutDoor.cshtml" />
     <Content Include="Views\Personal\EditOutDoor.cshtml" />
+    <Content Include="Views\Company\Index.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />
@@ -1242,10 +1257,6 @@
     <ProjectReference Include="..\CoreHelper\CoreHelper.csproj">
       <Project>{165cef26-c7bf-4f47-ba44-ca698d605eb7}</Project>
       <Name>CoreHelper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lucene.Net.China\Lucene.Net.China.csproj">
-      <Project>{0e78e9d6-ec0a-49c2-b5bb-3ab2db62447c}</Project>
-      <Name>Lucene.Net.China</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -92,11 +92,6 @@ namespace CodeFirstEF.Tests
             Service.UpdateIndex();
         }
 
-        [TestMethod]
-        public void TestMethod4()
-        {
-            var q = _IUnitOfWork.Set<Owner>().Include(x => x.CredentialsImg).Include(x => x.OwnerCate).Single(x => x.MediaID == 6);
-            Console.WriteLine(q.MediaID);
-        }
+      
     }
 }

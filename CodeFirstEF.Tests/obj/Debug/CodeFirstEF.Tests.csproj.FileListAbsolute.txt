@@ -242,7 +242,6 @@ D:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\System.Web.WebPages.Razor.xml
 D:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\Lucene.Net.pdb
 D:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\Lucene.Net.xml
 D:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\Kendo.Mvc.xml
-D:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\Lucene.Net.China.pdb
 D:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\zh-Hans\EntityFramework.resources.dll
 D:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\zh-Hans\System.Net.Http.Formatting.resources.dll
 D:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\zh-Hans\System.Web.Helpers.resources.dll

@@ -29,7 +29,7 @@
     )
 
 @(Html.Kendo().Window().Name(name + "_window").Title("�༭ͼƬ")
-    .Events(events => events.Refresh(name + ".onRefresh"))
+    .Events(events => events.Open(name + ".onOpen"))
     .Modal(true).Visible(false).Content(@<text>
 <table id="@Html.Raw(name + "_template")" >
     <tr>
@@ -85,11 +85,13 @@
             self.binding(orgUrl);
             return false;
         },
-        onRefresh:function(e){
+        onOpen:function(e){
             var self=@name;
-            var windowId=self.id+ '_window';
-            var wd = $('#'+windowId).data('kendoWindow');
-            wd.center();
+            setTimeout(function(){
+                var windowId=self.id+ '_window';
+                var wd = $('#'+windowId).data('kendoWindow');
+                wd.center();
+            },500)
         },
         onSuccess:function(e){
             var self=@name;

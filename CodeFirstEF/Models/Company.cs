@@ -88,6 +88,11 @@ namespace CodeFirstEF.Models
 
         public virtual CompanyBussiness CompanyBussiness { get; set; }
 
+        public virtual CompanyImg CompanyImg { get; set; }
+
+        public virtual LinkManImg LinkManImg { get; set; }
+
+
 
 
     }

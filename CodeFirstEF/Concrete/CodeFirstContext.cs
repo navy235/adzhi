@@ -89,6 +89,14 @@ namespace CodeFirstEF.Concrete
                .HasForeignKey(o => o.BussinessCode)
                .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Company>()
+                .HasOptional(o => o.LinkManImg)
+                .WithRequired(m => m.Company);
+
+            modelBuilder.Entity<Company>()
+                .HasOptional(o => o.CompanyImg)
+                .WithRequired(m => m.Company);
+
 
             modelBuilder.Entity<Permissions>()
                 .HasRequired(p => p.Department).WithMany(d => d.Permissions).HasForeignKey(p => p.DepartmentID);
@@ -175,7 +183,8 @@ namespace CodeFirstEF.Concrete
                 .HasOptional(o => o.CredentialsImg)
                 .WithRequired(o => o.OutDoor);
 
-     
+
+
 
 
             //多对多关系
