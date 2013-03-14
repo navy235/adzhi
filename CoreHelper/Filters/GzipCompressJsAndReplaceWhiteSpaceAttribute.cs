@@ -20,7 +20,7 @@ namespace CoreHelper.Filters
 
             HttpRequestBase request = filterContext.HttpContext.Request;
             HttpResponseBase response = filterContext.HttpContext.Response;
-         
+
             string acceptEncoding = request.Headers["Accept-Encoding"];
             if (acceptEncoding == null)
                 return;

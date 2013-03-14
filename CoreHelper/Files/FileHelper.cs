@@ -28,7 +28,8 @@ namespace CoreHelper.Files
                 string fileName = Guid.NewGuid().ToString();
                 string directory = HttpContext.Current.Server.MapPath(string.Format("~{0}",
                     folder));
-                string extension = System.IO.Path.GetExtension(file.FileName).ToLower();
+                string extension = ".JPG";
+                    //System.IO.Path.GetExtension(file.FileName).ToLower();
                 string filePath = GetImgSaveUrl(directory, fileName, extension);
                 string saveUrl = GetImgSaveUrl(folder, fileName, extension);
 

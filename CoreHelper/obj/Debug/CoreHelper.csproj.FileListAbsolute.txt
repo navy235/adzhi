@@ -17,7 +17,6 @@ D:\GitProject\adzhi\CoreHelper\bin\Debug\Newtonsoft.Json.xml
 D:\GitProject\adzhi\CoreHelper\bin\Debug\zh-Hans\EntityFramework.resources.dll
 D:\GitProject\adzhi\CoreHelper\obj\Debug\CoreHelper.dll
 D:\GitProject\adzhi\CoreHelper\obj\Debug\CoreHelper.pdb
-D:\GitProject\adzhi\CoreHelper\obj\Debug\CoreHelper.csprojResolveAssemblyReference.cache
 F:\GitProject\adzhi\CoreHelper\bin\Debug\CoreHelper.dll
 F:\GitProject\adzhi\CoreHelper\bin\Debug\CoreHelper.pdb
 F:\GitProject\adzhi\CoreHelper\bin\Debug\Antlr3.Runtime.dll

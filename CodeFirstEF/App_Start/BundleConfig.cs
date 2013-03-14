@@ -18,6 +18,20 @@ namespace CodeFirstEF
                         "~/Scripts/jquery.validate*"
                         ));
 
+
+            bundles.Add(new ScriptBundle("~/bundles/smooth").Include(
+                        "~/Scripts/smooth/jquery-ui-1.8.custom.min.js",
+                        "~/Scripts/smooth/jquery.ui.selectmenu.js",
+                        "~/Scripts/smooth/ jquery.flot.min.js",
+                        "~/Scripts/smooth/smooth.js",
+                        "~/Scripts/smooth/smooth.menu.js",
+                        "~/Scripts/smooth/smooth.table.js",
+                        "~/Scripts/smooth/smooth.form.js",
+                        "~/Scripts/smooth/smooth.dialog.js",
+                        "~/Scripts/smooth/smooth.autocomplete.js"
+                        ));
+
+
             // 使用 Modernizr 的开发版本进行开发和了解信息。然后，当你做好
             // 生产准备时，请使用 http://modernizr.com 上的生成工具来仅选择所需的测试。
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -29,6 +43,22 @@ namespace CodeFirstEF
                         "~/Content/site.css",
                         "~/Content/kendohelper.css",
                         "~/Content/bootstrap.css"));
+
+
+            bundles.Add(new StyleBundle("~/Content/back").Include(
+             "~/Content/163.base.css",
+             "~/Content/site.css",
+             "~/Content/kendohelper.css"));
+
+
+            bundles.Add(new StyleBundle("~/Content/smooth/css").Include(
+                "~/Content/smooth/css/reset.css",
+                "~/Content/smooth/css/style.css"
+               ));
+
+            bundles.Add(new StyleBundle("~/Content/smooth/css/colors").Include(
+                 "~/Content/smooth/css/colors/blue.css"
+                ));
 
             bundles.Add(new StyleBundle("~/Content/login").Include(
                        "~/Content/163.base.css",
