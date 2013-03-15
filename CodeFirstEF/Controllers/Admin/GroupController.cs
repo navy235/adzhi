@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using CodeFirstEF.Concrete;
+using CodeFirstEF.Filters;
 using CodeFirstEF.Models;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
@@ -15,6 +16,7 @@ using Kendo.Mvc.Extensions;
 
 namespace CodeFirstEF.Controllers
 {
+    [Permission]
     public class GroupController : Controller
     {
         //
@@ -105,15 +107,16 @@ namespace CodeFirstEF.Controllers
         public ActionResult Create()
         {
             var roles = GetForeignData();
-            ViewBag.Data_Roles = roles;
+            ViewBag.Data_RolesList = roles;
             return View(new GroupModel());
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(GroupModel model)
         {
             var roles = GetForeignData();
-            ViewBag.Data_Roles = roles;
+            ViewBag.Data_RolesList = roles;
 
             if (ModelState.IsValid)
             {
@@ -122,7 +125,7 @@ namespace CodeFirstEF.Controllers
                     Group gps = new Group();
                     gps.Name = model.Name;
                     gps.Description = model.Description;
-                    var rolesArray = model.Roles.Split(',').Select(x => Convert.ToInt32(x));
+                    var rolesArray = model.RolesList.Split(',').Select(x => Convert.ToInt32(x));
                     var RoleList = DB_Service.Set<Roles>().Where(x => rolesArray.Contains(x.ID));
                     gps.Roles.AddRange(RoleList);
                     DB_Service.Add<Group>(gps);
@@ -158,9 +161,10 @@ namespace CodeFirstEF.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(GroupModel model)
         {
-            var rolesArray = model.Roles.Split(',').Select(x => Convert.ToInt32(x)).ToList();
+            var rolesArray = model.RolesList.Split(',').Select(x => Convert.ToInt32(x)).ToList();
             var roles = GetForeignData(rolesArray);
             ViewBag.Data_RolesList = roles;
             if (ModelState.IsValid)

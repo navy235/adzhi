@@ -4,28 +4,29 @@
     var displayname = ViewData.ModelMetadata.DisplayName;
 
     Dictionary<string, List<SelectListItem>> renderList = new Dictionary<string, List<SelectListItem>>();
-    renderList = (Dictionary<string, List<SelectListItem>>)ViewData["Data_"+name];
+    renderList = (Dictionary<string, List<SelectListItem>>)ViewData["Data_" + name];
 }
 
 
 @Html.Kendo().Window().Name(name + "_window").Title("请选择" + displayname).Content(
     @<text>
-
-@{
-    int i = 0;
-    foreach (KeyValuePair<string, List<SelectListItem>> kvp in renderList)
-    {
-    <p>@kvp.Key</p>
-    
-        foreach (SelectListItem sli in kvp.Value)
+<div class="k-window-checklist">
+    @{
+        int i = 0;
+        foreach (KeyValuePair<string, List<SelectListItem>> kvp in renderList)
         {
-    <input type="checkbox" id="@(name + "_check" + i.ToString())" name="@Html.Raw(name + "_check")" value="@sli.Value" data-text="@sli.Text" checked="@sli.Selected" />
-    <label for="@(name + "_check" + i.ToString())" data-for="@name" >@sli.Text</label>
-            i++;
-        }
+        <p class="k-window-checklist-title">@kvp.Key</p>
+            foreach (SelectListItem sli in kvp.Value)
+            {
+        <label for="@(name + "_check" + i.ToString())" data-for="@name" >
+            <input type="checkbox" id="@(name + "_check" + i.ToString())" name="@Html.Raw(name + "_check")" value="@sli.Value" data-text="@sli.Text" checked="@sli.Selected" />
+            @sli.Text</label>
+                i++;
+            }
 
+        }
     }
-}
+</div>
 <div class="k-window-footer">
     <button type="button" id="@Html.Raw(name + "_save")" class="k-button" ><span class="k-icon k-i-tick"></span>确认</button>
 </div>

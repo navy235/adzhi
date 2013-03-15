@@ -3,7 +3,7 @@
     ViewBag.Title = "权限管理";
 }
 
-<h2>权限管理</h2>
+
 @(Html.Kendo().Grid<Permissions>()
     .Name("PermissionsList")
     .Columns(columns =>
@@ -14,7 +14,7 @@
         columns.Bound(c => c.Controller);
         columns.Bound(c => c.Action);
         columns.Bound(c => c.Namespace);
-        columns.ForeignKey(c => c.DepartmentID, (SelectList)ViewBag.DepartmentID);
+        columns.ForeignKey(c => c.DepartmentID,(SelectList)ViewBag.DepartmentID);
         columns.Command(command => command.Destroy()).Title("删除").Width(120);
     })
     .ToolBar(toolbar =>
@@ -27,6 +27,7 @@
     .Sortable()
     .Scrollable()
     .Filterable()
+    .HtmlAttributes(new { style = "height:500px;" })
     .DataSource(dataSource => dataSource
         .Ajax()
         .Batch(true)

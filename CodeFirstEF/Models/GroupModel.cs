@@ -27,7 +27,7 @@ namespace CodeFirstEF.Models
         [UIHint("ForeignKeyForCheckBox")]
         [Display(Name = "群组角色")]
         [Required(ErrorMessage = "请选择群组角色")]
-        public string Roles { get; set; }
+        public string RolesList { get; set; }
         #endregion
     }
 }

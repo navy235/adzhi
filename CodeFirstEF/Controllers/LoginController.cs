@@ -46,6 +46,7 @@ namespace CodeFirstEF.Controllers
             {
                 model.Email = username;
             }
+
             return View(model);
         }
 
@@ -62,14 +63,9 @@ namespace CodeFirstEF.Controllers
                     if (memberService.Login(model.Email, Md5Password))
                     {
                         ViewBag.Message = null;
-                        if (Url.IsLocalUrl(ReturnUrl))
-                        {
-                            return Redirect(ReturnUrl);
-                        }
-                        else
-                        {
-                            return Redirect(Url.Action("Index"));
-                        }
+
+                        return Redirect(ReturnUrl);
+
                     }
                     else
                     {

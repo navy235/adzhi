@@ -24,20 +24,26 @@ namespace CodeFirstEF.Models
         public int ID { get; set; }
 
         [MaxLength(50)]
+        [Display(Name = "权限名称")]
         public string Name { get; set; }
 
         [MaxLength(150)]
+        [Display(Name = "权限描述")]
         public string Description { get; set; }
 
         [MaxLength(50)]
+        [Display(Name = "权限控制器")]
         public string Controller { get; set; }
 
         [MaxLength(50)]
+        [Display(Name = "权限操作")]
         public string Action { get; set; }
 
         [MaxLength(50)]
+        [Display(Name = "命名空间")]
         public string Namespace { get; set; }
 
+        [Display(Name = "所属部门")]
         public int DepartmentID { get; set; }
 
         public virtual Department Department { get; set; }

@@ -1,5 +1,30 @@
 ﻿@{
-    ViewBag.Title = "站点状态一览";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "运营管理系统";
+    Layout = "~/Views/Shared/_LayoutKendo.cshtml";
 }
 
+<div class="admin-content" id="dashboard">
+    <div class="form-block">
+        <div class="form-block-title">
+            <h5>@ViewBag.Title</h5>
+        </div>
+        <div class="form-block-content">
+
+            <div class="alert alert-block alert-info">
+                <h4>您的角色!</h4>
+                <i>高级管理员</i>
+            </div>
+
+
+            <div class="alert alert-block alert-info">
+                <h4>登录情况!</h4>
+                <i>登录总数：</i>13 次<br>
+                <i>本次登录IP：</i>127.0.0.1<br>
+                <i>本次登录时间：</i>2012/6/19 9:58:33<br>
+                <i>上次登录IP：</i>127.0.0.1<br>
+                <i>上次登录时间：</i>2012/6/18 19:40:16
+            </div>
+
+        </div>
+    </div>
+</div>

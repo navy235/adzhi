@@ -73,6 +73,7 @@ namespace CodeFirstEF.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(DetailsModel model)
         {
             var groups = GetForeignData();
@@ -139,6 +140,7 @@ namespace CodeFirstEF.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(EditModel model)
         {
 

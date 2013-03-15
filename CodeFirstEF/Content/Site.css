@@ -107,10 +107,11 @@ textarea {
   position: relative;
 }
 
+
   .form-field label {
     display: inline-block;
     font-size: 12px;
-    width: 135px;
+    width: 105px;
     margin-bottom: 5px;
     text-align: right;
   }
@@ -179,12 +180,31 @@ textarea {
     padding-top: 5px;
   }
 
+.form-field-submit {
+  margin-left: 107px;
+}
+
 .form-field-cascade {
   display: none;
 }
 
 .form-field-city .k-dropdown {
   width: 125px;
+}
+
+.form-field-avtar .img-box {
+  display: inline-block;
+}
+
+  .form-field-avtar .img-box img {
+    width: 198px;
+    height: 198px;
+  }
+
+.form-field-avtar .k-upload {
+  margin-left: 107px;
+  margin-top:5px;
+  display: block;
 }
 
 .form-areas {
@@ -237,7 +257,7 @@ textarea {
   display: block;
 }
 
-.form-field input:focus ~ .field-validation-error  {
+.form-field input:focus ~ .field-validation-error {
   display: none;
 }
 
@@ -245,7 +265,7 @@ textarea {
   display: block;
 }
 
-.form-field textarea:focus ~ .field-validation-error  {
+.form-field textarea:focus ~ .field-validation-error {
   display: none;
 }
 

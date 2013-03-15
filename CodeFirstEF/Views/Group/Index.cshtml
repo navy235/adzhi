@@ -1,9 +1,7 @@
 ﻿@using CodeFirstEF.Models
 @{
-    ViewBag.Title = "角色群组管理";
+    ViewBag.Title = "用户群组管理";
 }
-
-<h2>角色群组管理</h2>
 @(Html.Kendo().Grid<CodeFirstEF.Models.Group>()
     .Name("GroupsList")
     .Columns(columns =>

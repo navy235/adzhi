@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/base")
     @Styles.Render("~/Content/kendo/2012.3.1114/css")
     @Scripts.Render("~/bundles/modernizr")
     <!--This bundle was moved by the Kendo UI VS Extensions for compatibility reasons-->
@@ -16,12 +16,21 @@
 
 </head>
 <body>
-    <div class="container">
-        @RenderBody()
+
+
+    <div class="admin-content">
+        <div class="form-block">
+            <div class="form-block-title">
+                <h5>@ViewBag.Title</h5>
+            </div>
+            <div class="form-block-content">
+                @RenderBody()
+            </div>
+        </div>
     </div>
 
     @RenderSection("scripts", required: false)
 
-    @MiniProfiler.RenderIncludes(position: RenderPosition.Left, showTrivial: false, showTimeWithChildren: false)
+    @*  @MiniProfiler.RenderIncludes(position: RenderPosition.Left, showTrivial: false, showTimeWithChildren: false)*@
 </body>
 </html>

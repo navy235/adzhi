@@ -1,14 +1,12 @@
 ﻿@using CodeFirstEF.Models
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "角色管理";
 }
-
-<h2>Index</h2>
 @(Html.Kendo().Grid<CodeFirstEF.Models.Roles>()
     .Name("RolesList")
     .Columns(columns =>
     {
-    
+
         columns.Bound(c => c.Name);
         columns.Bound(c => c.Description);
         columns.Template(@<text></text>)

@@ -70,7 +70,9 @@ namespace CodeFirstEF.Filters
 
                                        { "controller", "Error" },
 
-                                       { "id", (int)ErrorType.NoPermission}
+                                       { "id", (int)ErrorType.NoPermission},
+
+                                       {"returnurl",context.RequestContext.HttpContext.Request.Url}
                                    });
 
         }

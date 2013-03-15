@@ -6,12 +6,15 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using CodeFirstEF.Concrete;
 using CodeFirstEF.Models;
+using CodeFirstEF.Serivces;
+using CodeFirstEF.Utils;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
 using CoreHelper.Http;
 using CoreHelper.Data.Interface;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
+
 
 namespace CodeFirstEF.Controllers
 {
@@ -20,38 +23,28 @@ namespace CodeFirstEF.Controllers
         //
         // GET: /Permission/
 
-        private IUnitOfWork DB_Service;
 
-        public PermissionController(IUnitOfWork _DB_Service)
+        private IDepartmentService departmentService;
+        private IPermissionService permissionService;
+
+        public PermissionController(
+              IDepartmentService _departmentService
+            , IPermissionService _permissionService)
         {
-            DB_Service = _DB_Service;
+
+            permissionService = _permissionService;
+            departmentService = _departmentService;
         }
 
         public ActionResult Index()
         {
-            List<SelectListItem> DepartmentList = new List<SelectListItem>();
-            DepartmentList = DB_Service.Set<Department>().ToList().Select(x => new SelectListItem()
-            {
-                Value = x.DepartmentID.ToString(),
-                Text = x.Name
-            }).ToList();
-
-            SelectListItem nullItem = new SelectListItem()
-            {
-                Value = "0",
-                Text = "请选择部门"
-            };
-            DepartmentList.Insert(0, nullItem);
-
-            ViewBag.DepartmentID = new SelectList(DepartmentList, "Value", "Text");
-
+            ViewBag.DepartmentID = Utilities.CreateSelectList(departmentService.GetALL(), item => item.DepartmentID, item => item.Name, true);
             return View();
         }
 
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
-            DB_Service.SetProxyCreationEnabledFlase();
-            var Permissions = DB_Service.Set<Permissions>();
+            var Permissions = permissionService.GetKendoALL();
             return Json(Permissions.ToDataSourceResult(request));
         }
 
@@ -64,9 +57,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var permission in permissions)
                 {
-                    DB_Service.Add<Permissions>(permission);
-                    DB_Service.Commit();
-
+                    permissionService.Create(permission);
                     results.Add(permission);
                 }
             }
@@ -81,18 +72,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var permission in permissions)
                 {
-                    var target = DB_Service.Set<Permissions>().Single(x => x.ID == permission.ID);
-                    if (target != null)
-                    {
-                        DB_Service.Attach<Permissions>(target);
-                        target.Name = permission.Name;
-                        target.Action = permission.Action;
-                        target.Namespace = permission.Namespace;
-                        target.Controller = permission.Controller;
-                        target.Description = permission.Description;
-                        target.DepartmentID = permission.DepartmentID;
-                        DB_Service.Commit();
-                    }
+                    permissionService.Update(permission);
                 }
             }
 
@@ -106,9 +86,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var permission in permissions)
                 {
-                    var target = DB_Service.Set<Permissions>().Include(x => x.Roles).Single(x => x.ID == permission.ID);
-                    DB_Service.Remove<Permissions>(target);
-                    DB_Service.Commit();
+                    permissionService.Delete(permission);
                 }
             }
             return Json(ModelState.ToDataSourceResult());

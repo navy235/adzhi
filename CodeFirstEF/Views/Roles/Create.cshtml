@@ -1,11 +1,13 @@
 ﻿@{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "添加角色";
 }
 
-<h2>Create</h2>
 @using (Html.BeginForm())
 {
+    @Html.AntiForgeryToken()
     @Html.EditorFor(m => Model)
+    <div class="form-field form-field-submit">
+        <button class="btn btn-warning" type="submit">提交表单</button>
+    </div>
 
-    <button type="submit">submit</button>
 }

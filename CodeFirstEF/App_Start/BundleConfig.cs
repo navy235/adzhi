@@ -44,6 +44,13 @@ namespace CodeFirstEF
                         "~/Content/kendohelper.css",
                         "~/Content/bootstrap.css"));
 
+            bundles.Add(new StyleBundle("~/Content/base").Include(
+                      "~/Content/163.base.css",
+                      "~/Content/163.admin.css",
+                      "~/Content/site.css",
+                      "~/Content/kendohelper.css",
+                      "~/Content/bootstrap.css"));
+
 
             bundles.Add(new StyleBundle("~/Content/back").Include(
              "~/Content/163.base.css",

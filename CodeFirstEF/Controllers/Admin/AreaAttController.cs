@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using CodeFirstEF.Concrete;
 using CodeFirstEF.Models;
+using CodeFirstEF.Filters;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
 using CoreHelper.Http;
@@ -15,6 +16,7 @@ using Kendo.Mvc.Extensions;
 
 namespace CodeFirstEF.Controllers
 {
+    [Permission]
     public class AreaAttController : Controller
     {
         //

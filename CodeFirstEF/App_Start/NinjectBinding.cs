@@ -31,6 +31,12 @@ namespace CodeFirstEF.App_Start
             kernel.Bind<IOwnerCateService>()
                 .To<OwnerCateService>()
                 .InRequestScope();
+            kernel.Bind<IDepartmentService>()
+                .To<DepartmentService>()
+                .InRequestScope();
+            kernel.Bind<IPermissionService>()
+                .To<PermissionService>()
+                .InRequestScope();
             //kernel.Bind<IOwnerService>()
             //    .To<OwnerService>()
             //    .InRequestScope();

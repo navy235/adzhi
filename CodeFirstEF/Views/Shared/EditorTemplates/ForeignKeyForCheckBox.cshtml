@@ -3,17 +3,20 @@
     var name = ViewData.TemplateInfo.GetFullHtmlFieldName("");
     var displayname = ViewData.ModelMetadata.DisplayName;
     List<SelectListItem> renderList = new List<SelectListItem>();
-    renderList = (List<SelectListItem>)ViewData["Data_"+name];
+    renderList = (List<SelectListItem>)ViewData["Data_" + name];
 }
 
 
 @Html.Kendo().Window().Name(name + "_window").Title("请选择" + displayname).Content(
     @<text>
-@for (int i = 0; i < renderList.Count; i++)
-{
-    <input type="checkbox" id="@(name + "_check" + i.ToString())" name="@Html.Raw(name + "_check")" value="@renderList[i].Value" data-text="@renderList[i].Text" checked="@renderList[i].Selected" />
-    <label for="@(name + "_check" + i.ToString())" data-for="@name" >@renderList[i].Text</label>
-}
+<div class="k-window-checklist">
+    @for (int i = 0; i < renderList.Count; i++)
+    {
+        <label for="@(name + "_check" + i.ToString())" data-for="@name" >
+            <input type="checkbox" id="@(name + "_check" + i.ToString())" name="@Html.Raw(name + "_check")" value="@renderList[i].Value" data-text="@renderList[i].Text" checked="@renderList[i].Selected" />
+            @renderList[i].Text</label>
+    }
+</div>
 <div class="k-window-footer">
     <button type="button" id="@Html.Raw(name + "_save")" class="k-button" ><span class="k-icon k-i-tick"></span>确认</button>
 </div>

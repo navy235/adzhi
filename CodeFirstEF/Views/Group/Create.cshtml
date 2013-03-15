@@ -1,15 +1,18 @@
 ﻿@{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "添加用户群组";
 }
 
-<h2>Create</h2>
 @if (ViewBag.Message != null)
-{
-    <p>@ViewBag.Message</p>
+{ 
+    @ViewHelpers.Alert("错误信息：",
+                ViewBag.Message, false, CoreHelper.Enum.AlertType.error.ToString())
 }
+
 @using (Html.BeginForm())
 {
+    @Html.AntiForgeryToken()
     @Html.EditorFor(m => Model)
-
-    <button type="submit">submit</button>
+    <div class="form-field form-field-submit">
+        <button class="btn btn-warning" type="submit">提交表单</button>
+    </div>
 }

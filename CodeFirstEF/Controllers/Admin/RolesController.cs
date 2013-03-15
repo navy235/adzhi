@@ -109,6 +109,7 @@ namespace CodeFirstEF.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(RoleModel model)
         {
             var permissions = GetGroupForeignData();
@@ -157,6 +158,7 @@ namespace CodeFirstEF.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(RoleModel model)
         {
             var permissionsArray = model.Permissions.Split(',').Select(x => Convert.ToInt32(x)).ToList();

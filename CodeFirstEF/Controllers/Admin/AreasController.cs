@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using CodeFirstEF.Models;
+using CodeFirstEF.Filters;
 using CodeFirstEF.Concrete;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
@@ -15,6 +16,7 @@ using Kendo.Mvc.Extensions;
 
 namespace CodeFirstEF.Controllers
 {
+    [Permission]
     public class AreasController : Controller
     {
         //
@@ -32,7 +34,7 @@ namespace CodeFirstEF.Controllers
         {
 
             List<SelectListItem> AreasList = new List<SelectListItem>();
-            AreasList = DB_Service.Set<Area>().Where(x => x.PCateCode == "").ToList().Select(x => new SelectListItem()
+            AreasList = DB_Service.Set<Area>().Where(x => x.PCateCode.Equals(null)).ToList().Select(x => new SelectListItem()
             {
                 Value = x.CateCode,
                 Text = x.CateName
@@ -68,7 +70,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var area in areas)
                 {
-                    area.PCateCode = area.PCateCode ;
+                    area.PCateCode = area.PCateCode;
                     DB_Service.Add<Area>(area);
                     DB_Service.Commit();
                     results.Add(area);
@@ -90,7 +92,7 @@ namespace CodeFirstEF.Controllers
                         DB_Service.Attach<Area>(target);
                         target.CateCode = area.CateCode;
                         target.CateName = area.CateName;
-                        target.PCateCode = area.PCateCode ;
+                        target.PCateCode = area.PCateCode;
                         DB_Service.Commit();
                     }
                 }

@@ -300,18 +300,23 @@
     <Compile Include="Models\LinkManImg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serivces\AreaAttService.cs" />
+    <Compile Include="Serivces\DepartmentService.cs" />
     <Compile Include="Serivces\EmailService.cs" />
     <Compile Include="Serivces\Interface\IAreaAttService.cs" />
+    <Compile Include="Serivces\Interface\IDepartmentService.cs" />
     <Compile Include="Serivces\Interface\IEmailService.cs" />
     <Compile Include="Serivces\Interface\IMemberService.cs" />
     <Compile Include="Serivces\Interface\IMember_ActionService.cs" />
     <Compile Include="Serivces\Interface\IOutDoorService.cs" />
     <Compile Include="Serivces\Interface\IOwnerCateService.cs" />
+    <Compile Include="Serivces\Interface\IPermissionService.cs" />
     <Compile Include="Serivces\OutDoorService.cs" />
     <Compile Include="Serivces\MemberService.cs" />
     <Compile Include="Serivces\Member_ActionService.cs" />
     <Compile Include="Serivces\OwnerCateService.cs" />
+    <Compile Include="Serivces\PermissionService.cs" />
     <Compile Include="Serivces\ServiceResult.cs" />
+    <Compile Include="Utils\Utilities.cs" />
     <Compile Include="ViewModels\AccountModel.cs" />
     <Compile Include="ViewModels\CompanyViewModel.cs" />
     <Compile Include="ViewModels\EmailModel.cs" />
@@ -338,6 +343,10 @@
     <Content Include="Binaries\Lucene.Net.China.dll" />
     <Content Include="Binaries\Ninject.dll" />
     <Content Include="Content\163.core.css" />
+    <Content Include="Content\images\formloading.gif" />
+    <Content Include="Content\images\index-footer.gif" />
+    <Content Include="Content\images\index-header.gif" />
+    <Content Include="Content\images\logo.gif" />
     <Content Include="Content\smooth\css\colors\blue.css" />
     <Content Include="Content\smooth\css\colors\brown.css" />
     <Content Include="Content\smooth\css\colors\green.css" />
@@ -751,6 +760,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\163.admin.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\163.base.css" />
     <Content Include="App_Data\LuceneAnalyer\sNoise.txt.bak" />
@@ -1910,6 +1920,7 @@
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\Shared\_LayoutPersonal.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Shared\_LayoutKendo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Lucene\" />
@@ -1917,7 +1928,6 @@
     <Folder Include="smooth-admin-template\html\resources\scripts\tiny_mce\plugins\spellchecker\classes\utils\" />
     <Folder Include="smooth-admin-template\html\resources\scripts\tiny_mce\plugins\spellchecker\includes\" />
     <Folder Include="Upload\Normal\2013\1\28\" />
-    <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CoreHelper\CoreHelper.csproj">
