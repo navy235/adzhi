@@ -14,8 +14,6 @@ namespace CodeFirstEF.Serivces
     {
         private readonly IUnitOfWork DB_Service;
 
-
-
         public MemberService(IUnitOfWork DB_Service)
         {
             this.DB_Service = DB_Service;
@@ -43,6 +41,43 @@ namespace CodeFirstEF.Serivces
         }
 
 
+        public Member Create(DetailsModel model)
+        {
+            Member member = new Member();
+            member.Email = model.Email;
+            member.NickName = model.NickName;
+            member.AvtarUrl = model.AvtarUrl;
+            member.GroupID = model.GroupID;
+            member.Password = CheckHelper.StrToMd5(model.Password);
+            member.Status = 1;//注册未激活，0为禁用
+            member.AddTime = DateTime.Now;
+            member.LastTime = DateTime.Now;
+            member.AddIP = HttpHelper.IP;
+            member.LastIP = HttpHelper.IP;
+            member.Member_Profile = new Member_Profile();
+            member.Member_Profile.Borthday = model.Borthday;
+            member.Member_Profile.CityCode = model.CityCode;
+            member.Member_Profile.Description = model.Description;
+            member.Member_Profile.Sex = model.Sex;
+            DB_Service.Add<Member>(member);
+            DB_Service.Commit();
+            return member;
+        }
+
+        public Member Update(EditModel model)
+        {
+            Member member = FindMemberWithProfile(model.MemberID);
+            DB_Service.Attach<Member>(member);
+            member.GroupID = model.GroupID;
+            member.AvtarUrl = model.AvtarUrl;
+            member.Member_Profile.CityCode = model.CityCode;
+            member.Member_Profile.Sex = model.Sex;
+            member.Member_Profile.Borthday = model.Borthday;
+            member.Member_Profile.Description = model.Description;
+            DB_Service.Commit();
+            return member;
+        }
+
         public bool Login(string Email, string Md5Password)
         {
             bool hasMember = DB_Service.Set<Member>()
@@ -68,7 +103,6 @@ namespace CodeFirstEF.Serivces
             return hasMember;
 
         }
-
 
         public bool OpenUserLogin(OpenLoginStatus OpenUser, OpenLoginType openType)
         {
@@ -101,8 +135,6 @@ namespace CodeFirstEF.Serivces
             Member member = DB_Service.Set<Member>().Single(x => x.MemberID == MemberID);
             return member;
         }
-
-
 
         public Member FindMemberWithProfile(int MemberID)
         {
@@ -137,7 +169,6 @@ namespace CodeFirstEF.Serivces
                 member.Status.ToString(),
                 member.Password, "1");
         }
-
 
         public bool HasGetPasswordActionInLimitTime(GetPasswordModel model, int limitMin, int memberAction)
         {
@@ -200,7 +231,6 @@ namespace CodeFirstEF.Serivces
             }
             return success;
         }
-
 
         public void SaveMemberBaseInfo(int MemberID, ProfileModel model)
         {
@@ -291,6 +321,18 @@ namespace CodeFirstEF.Serivces
             member.Status = Status;
             DB_Service.Commit();
             SetLoginCookie(member);
+        }
+
+
+        public IQueryable<Member> GetAll()
+        {
+            return DB_Service.Set<Member>();
+        }
+
+        public IQueryable<Member> GetKendoAll()
+        {
+            DB_Service.SetProxyCreationEnabledFlase();
+            return DB_Service.Set<Member>();
         }
     }
 }

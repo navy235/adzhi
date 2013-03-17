@@ -4,60 +4,50 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
-using CodeFirstEF.Models;
 using CodeFirstEF.Concrete;
+using CodeFirstEF.Models;
+using CodeFirstEF.Serivces;
+using CodeFirstEF.Utils;
+using CodeFirstEF.Filters;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
 using CoreHelper.Http;
 using CoreHelper.Data.Interface;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
-using System.Web.Script.Serialization;
 
 namespace CodeFirstEF.Controllers
 {
+    [Permission]
     public class CompanyBussinessController : Controller
     {
         //
         // GET: /CompanyBussiness/
-        private IUnitOfWork DB_Service;
-
-        public CompanyBussinessController(IUnitOfWork _DB_Service)
+        private ICompanyBussinessService CompanyBussinessService;
+        public CompanyBussinessController(
+             ICompanyBussinessService _CompanyBussinessService
+          )
         {
-            DB_Service = _DB_Service;
+            CompanyBussinessService = _CompanyBussinessService;
         }
 
         #region KendoGrid Action
 
         public ActionResult Index()
         {
-
-            List<SelectListItem> CompanyBussinesssList = new List<SelectListItem>();
-            CompanyBussinesssList = DB_Service.Set<CompanyBussiness>().Where(x => x.PCateCode == null).ToList().Select(x => new SelectListItem()
-            {
-                Value = x.CateCode,
-                Text = x.CateName
-            }).ToList();
-
-            SelectListItem nullItem = new SelectListItem()
-            {
-                Value = string.Empty,
-                Text = "顶级类别"
-            };
-            CompanyBussinesssList.Insert(0, nullItem);
-
-            //ViewBag.PCateCode = new SelectList(DB_CompanyBussiness.CompanyBussinesss.Where(x => x.PCateCode == ""), "CateCode", "CateName");
-
-            ViewBag.PCateCode = new SelectList(CompanyBussinesssList, "Value", "Text");
-
+            ViewBag.PCateCode = Utilities.CreateSelectList(
+                CompanyBussinessService.GetALL()
+                .Where(x => x.PCateCode.Equals(null)).ToList()
+                , item => item.CateCode
+                , item => item.CateName, true);
             return View();
         }
 
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
-            DB_Service.SetProxyCreationEnabledFlase();
-            var FormatCates = DB_Service.Set<CompanyBussiness>().OrderBy(x => x.CateCode).ToList();
-            return Json(FormatCates.ToDataSourceResult(request));
+
+            var CompanyBussinesss = CompanyBussinessService.GetKendoALL().OrderBy(x => x.CateCode).ToList();
+            return Json(CompanyBussinesss.ToDataSourceResult(request));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -69,10 +59,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var CompanyBussiness in CompanyBussinesss)
                 {
-                    CompanyBussiness.PCateCode = CompanyBussiness.PCateCode;
-                    DB_Service.Add<CompanyBussiness>(CompanyBussiness);
-                    DB_Service.Commit();
-                    results.Add(CompanyBussiness);
+                    CompanyBussinessService.Create(CompanyBussiness);
                 }
             }
             return Json(results.ToDataSourceResult(request, ModelState));
@@ -85,15 +72,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var CompanyBussiness in CompanyBussinesss)
                 {
-                    var target = DB_Service.Set<CompanyBussiness>().Single(x => x.ID == CompanyBussiness.ID);
-                    if (target != null)
-                    {
-                        DB_Service.Attach<CompanyBussiness>(target);
-                        target.CateCode = CompanyBussiness.CateCode;
-                        target.CateName = CompanyBussiness.CateName;
-                        target.PCateCode = CompanyBussiness.PCateCode;
-                        DB_Service.Commit();
-                    }
+                    CompanyBussinessService.Update(CompanyBussiness);
                 }
             }
 
@@ -107,9 +86,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var CompanyBussiness in CompanyBussinesss)
                 {
-                    var target = DB_Service.Set<CompanyBussiness>().Single(x => x.ID == CompanyBussiness.ID);
-                    DB_Service.Remove<CompanyBussiness>(target);
-                    DB_Service.Commit();
+                    CompanyBussinessService.Delete(CompanyBussiness);
                 }
             }
             return Json(ModelState.ToDataSourceResult());

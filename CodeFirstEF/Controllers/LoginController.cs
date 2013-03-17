@@ -85,6 +85,12 @@ namespace CodeFirstEF.Controllers
             }
         }
 
+        public ActionResult LogOut()
+        {
+            CookieHelper.ClearCookie();
+            return RedirectToAction("Index");
+        }
+
 
         public ActionResult Design()
         {

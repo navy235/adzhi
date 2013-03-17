@@ -14,30 +14,44 @@
             <div class="personal-body-title clearfix">
                 <h5>@ViewBag.Title</h5>
                 <ul class="form-step clearfix">
-                    <li class="cur"><i></i><span>第一步：填写企业信息</span></li>
-                    <li><i></i><span>第二步：提交后台审核</span></li>
-                    <li><i></i><span>第三步：审核通过认证成功</span></li>
+                    <li  @if (!ViewBag.UserEmailActived)
+                         { <text>class="cur"</text>}><i></i><span>第一步：邮箱绑定</span></li>
+                    <li   @if (ViewBag.UserEmailActived)
+                          { <text>class="cur"</text>}><i></i><span>第二步：填写企业信息</span></li>
+                    <li><i></i><span>第三步：提交后台审核</span></li>
+                    <li><i></i><span>第四步：审核通过认证成功</span></li>
                 </ul>
             </div>
-            @ViewHelpers.Alert("友情提醒：",
+            @if (ViewBag.UserEmailActived)
+            {
+          
+                @ViewHelpers.Alert("友情提醒：",
                 CoreHelper.Cookie.CookieHelper.NickName + ",请填写真实企业资料,我们将在1小时候内审核您发的信息。通过企业认证您发布的信息的权重更高。", false, CoreHelper.Enum.AlertType.info.ToString())
 
-            @if (ViewBag.Error != null)
-            { 
+                if (ViewBag.Error != null)
+                { 
                 @ViewHelpers.Alert("错误信息：",
                 ViewBag.Error, false, CoreHelper.Enum.AlertType.error.ToString())
-            }
-            <div class="personal-form mt20">
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-                    @Html.EditorForModel()
-                    <div class="form-field form-field-submit c_gray">
-                        <button type="submit" class="btn btn-warning ">
-                            &nbsp;&nbsp;保&nbsp;&nbsp;存&nbsp;&nbsp;</button>
-                    </div>
                 }
-            </div>
+                <div class="personal-form mt20">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.EditorForModel()
+                        <div class="form-field form-field-submit c_gray">
+                            <button type="submit" class="btn btn-warning ">
+                                &nbsp;&nbsp;保&nbsp;&nbsp;存&nbsp;&nbsp;</button>
+                        </div>
+                    }
+                </div>
+                  
+            }
+            else
+            {
+                @ViewHelpers.Alert("友情提醒：", CoreHelper.Cookie.CookieHelper.NickName + ",请先进行邮箱绑.", Html.ActionLink("马上进行邮箱绑定", "BindEmail", "Personal")
+               , false, CoreHelper.Enum.AlertType.info.ToString())
+
+            }
         </div>
 
     </div>

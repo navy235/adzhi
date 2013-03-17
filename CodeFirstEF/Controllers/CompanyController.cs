@@ -52,6 +52,16 @@ namespace CodeFirstEF.Controllers
 
         public ActionResult Index()
         {
+            var UserStatus = Convert.ToInt32(CookieHelper.Status);
+            var UserEmailActived = (int)MemberStatus.EmailActived;
+            if (UserStatus < UserEmailActived)
+            {
+                ViewBag.UserEmailActived = false;
+            }
+            else
+            {
+                ViewBag.UserEmailActived = true;
+            }
             ViewBag.MenuItem = "company";
 
             return View(new CompanyReg());

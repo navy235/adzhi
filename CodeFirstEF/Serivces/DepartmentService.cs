@@ -21,9 +21,15 @@ namespace CodeFirstEF.Serivces
             this.DB_Service = DB_Service;
         }
 
-        public IEnumerable<Department> GetALL()
+        public IQueryable<Department> GetALL()
         {
             return DB_Service.Set<Department>();
+        }
+
+
+        public IQueryable<Department> GetIncludeALL()
+        {
+            return DB_Service.Set<Department>().Include(x => x.Permissions);
         }
     }
 }

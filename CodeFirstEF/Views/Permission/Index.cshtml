@@ -14,7 +14,7 @@
         columns.Bound(c => c.Controller);
         columns.Bound(c => c.Action);
         columns.Bound(c => c.Namespace);
-        columns.ForeignKey(c => c.DepartmentID,(SelectList)ViewBag.DepartmentID);
+        columns.ForeignKey(c => c.DepartmentID, (SelectList)ViewBag.DepartmentID);
         columns.Command(command => command.Destroy()).Title("删除").Width(120);
     })
     .ToolBar(toolbar =>
@@ -32,6 +32,7 @@
         .Ajax()
         .Batch(true)
         .ServerOperation(false)
+        .PageSize(100)
         .Model(model => model.Id(c => c.ID))
         .Create("Editing_Create", "Permission")
         .Read("Editing_Read", "Permission")

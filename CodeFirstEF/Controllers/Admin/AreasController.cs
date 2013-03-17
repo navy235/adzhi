@@ -4,9 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
-using CodeFirstEF.Models;
-using CodeFirstEF.Filters;
 using CodeFirstEF.Concrete;
+using CodeFirstEF.Models;
+using CodeFirstEF.Serivces;
+using CodeFirstEF.Utils;
+using CodeFirstEF.Filters;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
 using CoreHelper.Http;
@@ -21,43 +23,30 @@ namespace CodeFirstEF.Controllers
     {
         //
         // GET: /Area/
-        private IUnitOfWork DB_Service;
-
-        public AreasController(IUnitOfWork _DB_Service)
+        private IAreaService areaService;
+        public AreasController(
+             IAreaService _areaService
+          )
         {
-            DB_Service = _DB_Service;
+            areaService = _areaService;
         }
 
         #region KendoGrid Action
 
         public ActionResult Index()
         {
-
-            List<SelectListItem> AreasList = new List<SelectListItem>();
-            AreasList = DB_Service.Set<Area>().Where(x => x.PCateCode.Equals(null)).ToList().Select(x => new SelectListItem()
-            {
-                Value = x.CateCode,
-                Text = x.CateName
-            }).ToList();
-
-            SelectListItem nullItem = new SelectListItem()
-            {
-                Value = string.Empty,
-                Text = "省或直辖市"
-            };
-            AreasList.Insert(0, nullItem);
-
-            //ViewBag.PCateCode = new SelectList(DB_Area.Areas.Where(x => x.PCateCode == ""), "CateCode", "CateName");
-
-            ViewBag.PCateCode = new SelectList(AreasList, "Value", "Text");
-
+            ViewBag.PCateCode = Utilities.CreateSelectList(
+                areaService.GetALL()
+                .Where(x => x.PCateCode.Equals(null)).ToList()
+                , item => item.CateCode
+                , item => item.CateName, true);
             return View();
         }
 
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
-            DB_Service.SetProxyCreationEnabledFlase();
-            var Areas = DB_Service.Set<Area>().OrderBy(x => x.CateCode).ToList();
+
+            var Areas = areaService.GetKendoALL().OrderBy(x => x.CateCode);
             return Json(Areas.ToDataSourceResult(request));
         }
 
@@ -70,10 +59,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var area in areas)
                 {
-                    area.PCateCode = area.PCateCode;
-                    DB_Service.Add<Area>(area);
-                    DB_Service.Commit();
-                    results.Add(area);
+                    areaService.Create(area);
                 }
             }
             return Json(results.ToDataSourceResult(request, ModelState));
@@ -86,15 +72,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var area in areas)
                 {
-                    var target = DB_Service.Set<Area>().Single(x => x.ID == area.ID);
-                    if (target != null)
-                    {
-                        DB_Service.Attach<Area>(target);
-                        target.CateCode = area.CateCode;
-                        target.CateName = area.CateName;
-                        target.PCateCode = area.PCateCode;
-                        DB_Service.Commit();
-                    }
+                    areaService.Update(area);
                 }
             }
 
@@ -108,9 +86,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var area in areas)
                 {
-                    var target = DB_Service.Set<Area>().Single(x => x.ID == area.ID);
-                    DB_Service.Remove<Area>(target);
-                    DB_Service.Commit();
+                    areaService.Delete(area);
                 }
             }
             return Json(ModelState.ToDataSourceResult());

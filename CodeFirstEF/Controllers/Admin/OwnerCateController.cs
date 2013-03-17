@@ -4,8 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
-using CodeFirstEF.Models;
 using CodeFirstEF.Concrete;
+using CodeFirstEF.Models;
+using CodeFirstEF.Serivces;
+using CodeFirstEF.Utils;
+using CodeFirstEF.Filters;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
 using CoreHelper.Http;
@@ -15,47 +18,35 @@ using Kendo.Mvc.Extensions;
 
 namespace CodeFirstEF.Controllers
 {
+    [Permission]
     public class OwnerCateController : Controller
     {
         //
         // GET: /OwnerCate/
-        private IUnitOfWork DB_Service;
-
-        public OwnerCateController(IUnitOfWork _DB_Service)
+        private IOwnerCateService OwnerCateService;
+        public OwnerCateController(
+             IOwnerCateService _OwnerCateService
+          )
         {
-            DB_Service = _DB_Service;
+            OwnerCateService = _OwnerCateService;
         }
 
         #region KendoGrid Action
 
         public ActionResult Index()
         {
-
-            List<SelectListItem> OwnerCatesList = new List<SelectListItem>();
-            OwnerCatesList = DB_Service.Set<OwnerCate>().Where(x => x.PCateCode == "").ToList().Select(x => new SelectListItem()
-            {
-                Value = x.CateCode,
-                Text = x.CateName
-            }).ToList();
-
-            SelectListItem nullItem = new SelectListItem()
-            {
-                Value = string.Empty,
-                Text = "顶级类别"
-            };
-            OwnerCatesList.Insert(0, nullItem);
-
-            //ViewBag.PCateCode = new SelectList(DB_OwnerCate.OwnerCates.Where(x => x.PCateCode == ""), "CateCode", "CateName");
-
-            ViewBag.PCateCode = new SelectList(OwnerCatesList, "Value", "Text");
-
+            ViewBag.PCateCode = Utilities.CreateSelectList(
+                OwnerCateService.GetALL()
+                .Where(x => x.PCateCode.Equals(null)).ToList()
+                , item => item.CateCode
+                , item => item.CateName, true);
             return View();
         }
 
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
-            DB_Service.SetProxyCreationEnabledFlase();
-            var OwnerCates = DB_Service.Set<OwnerCate>().OrderBy(x => x.CateCode).ToList();
+
+            var OwnerCates = OwnerCateService.GetKendoALL().OrderBy(x => x.CateCode).ToList();
             return Json(OwnerCates.ToDataSourceResult(request));
         }
 
@@ -68,10 +59,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var OwnerCate in OwnerCates)
                 {
-                    OwnerCate.PCateCode = OwnerCate.PCateCode ;
-                    DB_Service.Add<OwnerCate>(OwnerCate);
-                    DB_Service.Commit();
-                    results.Add(OwnerCate);
+                    OwnerCateService.Create(OwnerCate);
                 }
             }
             return Json(results.ToDataSourceResult(request, ModelState));
@@ -84,15 +72,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var OwnerCate in OwnerCates)
                 {
-                    var target = DB_Service.Set<OwnerCate>().Single(x => x.ID == OwnerCate.ID);
-                    if (target != null)
-                    {
-                        DB_Service.Attach<OwnerCate>(target);
-                        target.CateCode = OwnerCate.CateCode;
-                        target.CateName = OwnerCate.CateName;
-                        target.PCateCode = OwnerCate.PCateCode ;
-                        DB_Service.Commit();
-                    }
+                    OwnerCateService.Update(OwnerCate);
                 }
             }
 
@@ -106,9 +86,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var OwnerCate in OwnerCates)
                 {
-                    var target = DB_Service.Set<OwnerCate>().Single(x => x.ID == OwnerCate.ID);
-                    DB_Service.Remove<OwnerCate>(target);
-                    DB_Service.Commit();
+                    OwnerCateService.Delete(OwnerCate);
                 }
             }
             return Json(ModelState.ToDataSourceResult());

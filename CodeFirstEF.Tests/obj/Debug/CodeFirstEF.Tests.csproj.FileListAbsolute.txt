@@ -318,7 +318,6 @@ F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\System.Web.WebPages.Deployment.x
 F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\System.Web.WebPages.Razor.xml
 F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\Lucene.Net.pdb
 F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\Lucene.Net.xml
-F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\Lucene.Net.China.pdb
 F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\zh-Hans\EntityFramework.resources.dll
 F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\zh-Hans\System.Net.Http.Formatting.resources.dll
 F:\GitProject\adzhi\CodeFirstEF.Tests\bin\Debug\zh-Hans\System.Web.Helpers.resources.dll

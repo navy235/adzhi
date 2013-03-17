@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using CodeFirstEF.Concrete;
 using CodeFirstEF.Models;
+using CodeFirstEF.Filters;
+using CodeFirstEF.Serivces;
+using CodeFirstEF.Utils;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
 using CoreHelper.Http;
@@ -13,17 +16,23 @@ using CoreHelper.Data.Interface;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 
+
 namespace CodeFirstEF.Controllers
 {
     public class RolesController : Controller
     {
-        //
-        // GET: /role/
-        private IUnitOfWork DB_Service;
 
-        public RolesController(IUnitOfWork _DB_Service)
+        private IRoleService roleService;
+        private IDepartmentService departmentService;
+        private IPermissionService permissionService;
+
+        public RolesController(IRoleService _roleService
+            , IDepartmentService _departmentService
+            , IPermissionService _permissionService)
         {
-            DB_Service = _DB_Service;
+            roleService = _roleService;
+            permissionService = _permissionService;
+            departmentService = _departmentService;
         }
 
         #region KendoGrid Action
@@ -34,8 +43,8 @@ namespace CodeFirstEF.Controllers
 
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
-            DB_Service.SetProxyCreationEnabledFlase();
-            var roles = DB_Service.Set<Roles>();
+
+            var roles = roleService.GetKendoALL().OrderBy(x => x.ID).ToList();
             return Json(roles.ToDataSourceResult(request));
         }
 
@@ -48,9 +57,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var role in roles)
                 {
-                    DB_Service.Add<Roles>(role);
-                    DB_Service.Commit();
-                    results.Add(role);
+                    roleService.Create(role);
                 }
             }
 
@@ -64,14 +71,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var role in roles)
                 {
-                    var target = DB_Service.Set<Roles>().Single(x => x.ID == role.ID);
-                    if (target != null)
-                    {
-                        DB_Service.Attach<Roles>(target);
-                        target.Name = role.Name;
-                        target.Description = role.Description;
-                        DB_Service.Commit();
-                    }
+                    roleService.Update(role);
                 }
             }
 
@@ -85,11 +85,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var role in roles)
                 {
-                    var target = DB_Service.Set<Roles>()
-                        .Include(x => x.Permissions)
-                        .Include(x => x.Group).Single(x => x.ID == role.ID);
-                    DB_Service.Remove<Roles>(target);
-                    DB_Service.Commit();
+                    roleService.Delete(role);
                 }
             }
             return Json(ModelState.ToDataSourceResult());
@@ -122,10 +118,9 @@ namespace CodeFirstEF.Controllers
                     rls.Name = model.Name;
                     rls.Description = model.Description;
                     var permissionsArray = model.Permissions.Split(',').Select(x => Convert.ToInt32(x)).ToList();
-                    var PermissionList = DB_Service.Set<Permissions>().Where(x => permissionsArray.Contains(x.ID));
+                    var PermissionList = permissionService.GetALL(permissionsArray);
                     rls.Permissions.AddRange(PermissionList);
-                    DB_Service.Add<Roles>(rls);
-                    DB_Service.Commit();
+                    roleService.Create(rls);
                     return RedirectToAction("index");
                 }
                 catch (Exception ex)
@@ -146,7 +141,7 @@ namespace CodeFirstEF.Controllers
         {
             RoleModel rml = new RoleModel();
             Roles rs = new Roles();
-            rs = DB_Service.Set<Roles>().Include(x => x.Permissions).Single(x => x.ID == id);
+            rs = roleService.IncludePermissionsFind(id);
             rml.ID = rs.ID;
             rml.Name = rs.Name;
             rml.Description = rs.Description;
@@ -168,31 +163,7 @@ namespace CodeFirstEF.Controllers
             {
                 try
                 {
-                    Roles rls = DB_Service.Set<Roles>().Include(x => x.Permissions).Single(x => x.ID == model.ID);
-                    DB_Service.Attach<Roles>(rls);
-                    rls.Name = model.Name;
-                    rls.Description = model.Description;
-                    var PermissionList = DB_Service.Set<Permissions>().Where(x => permissionsArray.Contains(x.ID));
-                    var currentPermissionArray = rls.Permissions.Select(x => x.ID).ToList();
-                    foreach (Permissions ps in DB_Service.Set<Permissions>())
-                    {
-                        if (permissionsArray.Contains(ps.ID))
-                        {
-                            if (!currentPermissionArray.Contains(ps.ID))
-                            {
-                                rls.Permissions.Add(ps);
-                            }
-                        }
-                        else
-                        {
-                            if (currentPermissionArray.Contains(ps.ID))
-                            {
-                                rls.Permissions.Remove(ps);
-                            }
-                        }
-                    }
-
-                    DB_Service.Commit();
+                    roleService.Update(model);
                     return RedirectToAction("index");
                 }
                 catch (Exception ex)
@@ -214,7 +185,7 @@ namespace CodeFirstEF.Controllers
         {
             Dictionary<string, List<SelectListItem>> data = new Dictionary<string, List<SelectListItem>>();
 
-            var parentList = DB_Service.Set<Department>().Include(x => x.Permissions);
+            var parentList = departmentService.GetIncludeALL();
 
             foreach (var p in parentList)
             {

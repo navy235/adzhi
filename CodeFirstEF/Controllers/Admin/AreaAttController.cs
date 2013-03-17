@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using CodeFirstEF.Concrete;
 using CodeFirstEF.Models;
+using CodeFirstEF.Serivces;
+using CodeFirstEF.Utils;
 using CodeFirstEF.Filters;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
@@ -19,14 +21,13 @@ namespace CodeFirstEF.Controllers
     [Permission]
     public class AreaAttController : Controller
     {
-        //
-        // GET: /areaatt/
 
-        private IUnitOfWork DB_Service;
-
-        public AreaAttController(IUnitOfWork _DB_Service)
+        private IAreaAttService areaAttService;
+        public AreaAttController(
+              IAreaAttService _areaAttService
+           )
         {
-            DB_Service = _DB_Service;
+            areaAttService = _areaAttService;
         }
 
         public ActionResult Index()
@@ -36,8 +37,8 @@ namespace CodeFirstEF.Controllers
 
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
-            DB_Service.SetProxyCreationEnabledFlase();
-            var AreaAtt = DB_Service.Set<AreaAtt>();
+
+            var AreaAtt = areaAttService.GetKendoALL().OrderByDescending(x => x.ID).ToList();
             return Json(AreaAtt.ToDataSourceResult(request));
         }
 
@@ -45,17 +46,14 @@ namespace CodeFirstEF.Controllers
         public ActionResult Editing_Create([DataSourceRequest] DataSourceRequest request, [Bind(Prefix = "models")]IEnumerable<AreaAtt> AreaAtt)
         {
             var results = new List<AreaAtt>();
-
             if (AreaAtt != null && ModelState.IsValid)
             {
                 foreach (var areaatt in AreaAtt)
                 {
-                    DB_Service.Add<AreaAtt>(areaatt);
-                    DB_Service.Commit();
+                    areaAttService.Create(areaatt);
                     results.Add(areaatt);
                 }
             }
-
             return Json(results.ToDataSourceResult(request, ModelState));
         }
 
@@ -66,13 +64,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var areaatt in AreaAtt)
                 {
-                    var target = DB_Service.Set<AreaAtt>().Single(x => x.ID == areaatt.ID);
-                    if (target != null)
-                    {
-                        DB_Service.Attach<AreaAtt>(target);
-                        target.AttName = areaatt.AttName;
-                        DB_Service.Commit();
-                    }
+                    areaAttService.Update(areaatt);
                 }
             }
 
@@ -86,9 +78,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var areaatt in AreaAtt)
                 {
-                    var target = DB_Service.Set<AreaAtt>().Single(x => x.ID == areaatt.ID);
-                    DB_Service.Remove<AreaAtt>(target);
-                    DB_Service.Commit();
+                    areaAttService.Delete(areaatt);
                 }
             }
             return Json(ModelState.ToDataSourceResult());

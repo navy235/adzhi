@@ -27,9 +27,11 @@
     .Sortable()
     .Scrollable()
     .Filterable()
+    .HtmlAttributes(new { style = "height:500px;" })
     .DataSource(dataSource => dataSource
         .Ajax()
         .Batch(true)
+        .PageSize(100)
         .ServerOperation(false)
         .Model(model => model.Id(c => c.GroupID))
         .Read("Editing_Read", "Group")

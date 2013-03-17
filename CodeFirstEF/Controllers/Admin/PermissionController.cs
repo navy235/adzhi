@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using CodeFirstEF.Concrete;
 using CodeFirstEF.Models;
+using CodeFirstEF.Filters;
 using CodeFirstEF.Serivces;
 using CodeFirstEF.Utils;
 using CoreHelper.Checking;
@@ -18,12 +19,11 @@ using Kendo.Mvc.Extensions;
 
 namespace CodeFirstEF.Controllers
 {
+    [Permission]
     public class PermissionController : Controller
     {
         //
         // GET: /Permission/
-
-
         private IDepartmentService departmentService;
         private IPermissionService permissionService;
 
@@ -38,13 +38,13 @@ namespace CodeFirstEF.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.DepartmentID = Utilities.CreateSelectList(departmentService.GetALL(), item => item.DepartmentID, item => item.Name, true);
+            ViewBag.DepartmentID = Utilities.CreateSelectList(departmentService.GetALL().ToList(), item => item.DepartmentID, item => item.Name, true);
             return View();
         }
 
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
-            var Permissions = permissionService.GetKendoALL();
+            var Permissions = permissionService.GetKendoALL().OrderByDescending(x => x.ID).ToList();
             return Json(Permissions.ToDataSourceResult(request));
         }
 

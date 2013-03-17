@@ -16,5 +16,17 @@ namespace CodeFirstEF.Serivces
         IQueryable<AreaAtt> GetList(IEnumerable<int> IdList);
 
         IQueryable<AreaAtt> GetList();
+
+        IQueryable<AreaAtt> GetALL();
+
+        IQueryable<AreaAtt> GetKendoALL();
+
+        void Create(AreaAtt model);
+
+        void Update(AreaAtt model);
+
+        void Delete(AreaAtt model);
+
+        AreaAtt Find(int ID);
     }
 }

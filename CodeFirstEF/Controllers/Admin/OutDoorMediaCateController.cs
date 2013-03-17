@@ -4,60 +4,50 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
-using CodeFirstEF.Models;
 using CodeFirstEF.Concrete;
+using CodeFirstEF.Models;
+using CodeFirstEF.Serivces;
+using CodeFirstEF.Utils;
+using CodeFirstEF.Filters;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
 using CoreHelper.Http;
 using CoreHelper.Data.Interface;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
-using System.Web.Script.Serialization;
 
 namespace CodeFirstEF.Controllers
 {
+    [Permission]
     public class OutDoorMediaCateController : Controller
     {
         //
         // GET: /OutDoorMediaCate/
-        private IUnitOfWork DB_Service;
-
-        public OutDoorMediaCateController(IUnitOfWork _DB_Service)
+        private IOutDoorMediaCateService OutDoorMediaCateService;
+        public OutDoorMediaCateController(
+             IOutDoorMediaCateService _OutDoorMediaCateService
+          )
         {
-            DB_Service = _DB_Service;
+            OutDoorMediaCateService = _OutDoorMediaCateService;
         }
 
         #region KendoGrid Action
 
         public ActionResult Index()
         {
-
-            List<SelectListItem> OutDoorMediaCatesList = new List<SelectListItem>();
-            OutDoorMediaCatesList = DB_Service.Set<OutDoorMediaCate>().Where(x => x.PCateCode == null).ToList().Select(x => new SelectListItem()
-            {
-                Value = x.CateCode,
-                Text = x.CateName
-            }).ToList();
-
-            SelectListItem nullItem = new SelectListItem()
-            {
-                Value = string.Empty,
-                Text = "顶级类别"
-            };
-            OutDoorMediaCatesList.Insert(0, nullItem);
-
-            //ViewBag.PCateCode = new SelectList(DB_OutDoorMediaCate.OutDoorMediaCates.Where(x => x.PCateCode == ""), "CateCode", "CateName");
-
-            ViewBag.PCateCode = new SelectList(OutDoorMediaCatesList, "Value", "Text");
-
+            ViewBag.PCateCode = Utilities.CreateSelectList(
+                OutDoorMediaCateService.GetALL()
+                .Where(x => x.PCateCode.Equals(null)).ToList()
+                , item => item.CateCode
+                , item => item.CateName, true);
             return View();
         }
 
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
-            DB_Service.SetProxyCreationEnabledFlase();
-            var FormatCates = DB_Service.Set<OutDoorMediaCate>().OrderBy(x => x.CateCode).ToList();
-            return Json(FormatCates.ToDataSourceResult(request));
+
+            var OutDoorMediaCates = OutDoorMediaCateService.GetKendoALL().OrderBy(x => x.CateCode).ToList();
+            return Json(OutDoorMediaCates.ToDataSourceResult(request));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -69,10 +59,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var OutDoorMediaCate in OutDoorMediaCates)
                 {
-                    OutDoorMediaCate.PCateCode = OutDoorMediaCate.PCateCode ;
-                    DB_Service.Add<OutDoorMediaCate>(OutDoorMediaCate);
-                    DB_Service.Commit();
-                    results.Add(OutDoorMediaCate);
+                    OutDoorMediaCateService.Create(OutDoorMediaCate);
                 }
             }
             return Json(results.ToDataSourceResult(request, ModelState));
@@ -85,15 +72,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var OutDoorMediaCate in OutDoorMediaCates)
                 {
-                    var target = DB_Service.Set<OutDoorMediaCate>().Single(x => x.ID == OutDoorMediaCate.ID);
-                    if (target != null)
-                    {
-                        DB_Service.Attach<OutDoorMediaCate>(target);
-                        target.CateCode = OutDoorMediaCate.CateCode;
-                        target.CateName = OutDoorMediaCate.CateName;
-                        target.PCateCode = OutDoorMediaCate.PCateCode;
-                        DB_Service.Commit();
-                    }
+                    OutDoorMediaCateService.Update(OutDoorMediaCate);
                 }
             }
 
@@ -107,9 +86,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var OutDoorMediaCate in OutDoorMediaCates)
                 {
-                    var target = DB_Service.Set<OutDoorMediaCate>().Single(x => x.ID == OutDoorMediaCate.ID);
-                    DB_Service.Remove<OutDoorMediaCate>(target);
-                    DB_Service.Commit();
+                    OutDoorMediaCateService.Delete(OutDoorMediaCate);
                 }
             }
             return Json(ModelState.ToDataSourceResult());

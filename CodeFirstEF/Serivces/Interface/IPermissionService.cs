@@ -8,9 +8,12 @@ namespace CodeFirstEF.Serivces
 {
     public interface IPermissionService
     {
-        IEnumerable<Permissions> GetALL();
+        IQueryable<Permissions> GetALL();
 
-        IEnumerable<Permissions> GetKendoALL();
+        IQueryable<Permissions> GetKendoALL();
+
+        IQueryable<Permissions> GetALL(IEnumerable<int> IDs);
+
 
         void Create(Permissions model);
 

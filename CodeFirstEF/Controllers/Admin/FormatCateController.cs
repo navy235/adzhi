@@ -4,8 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
-using CodeFirstEF.Models;
 using CodeFirstEF.Concrete;
+using CodeFirstEF.Models;
+using CodeFirstEF.Serivces;
+using CodeFirstEF.Utils;
+using CodeFirstEF.Filters;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
 using CoreHelper.Http;
@@ -15,47 +18,35 @@ using Kendo.Mvc.Extensions;
 
 namespace CodeFirstEF.Controllers
 {
+    [Permission]
     public class FormatCateController : Controller
     {
         //
         // GET: /FormatCate/
-        private IUnitOfWork DB_Service;
-
-        public FormatCateController(IUnitOfWork _DB_Service)
+        private IFormatCateService FormatCateService;
+        public FormatCateController(
+             IFormatCateService _FormatCateService
+          )
         {
-            DB_Service = _DB_Service;
+            FormatCateService = _FormatCateService;
         }
 
         #region KendoGrid Action
 
         public ActionResult Index()
         {
-
-            List<SelectListItem> FormatCatesList = new List<SelectListItem>();
-            FormatCatesList = DB_Service.Set<FormatCate>().Where(x => x.PCateCode == "").ToList().Select(x => new SelectListItem()
-            {
-                Value = x.CateCode,
-                Text = x.CateName
-            }).ToList();
-
-            SelectListItem nullItem = new SelectListItem()
-            {
-                Value = string.Empty,
-                Text = "顶级类别"
-            };
-            FormatCatesList.Insert(0, nullItem);
-
-            //ViewBag.PCateCode = new SelectList(DB_FormatCate.FormatCates.Where(x => x.PCateCode == ""), "CateCode", "CateName");
-
-            ViewBag.PCateCode = new SelectList(FormatCatesList, "Value", "Text");
-
+            ViewBag.PCateCode = Utilities.CreateSelectList(
+                FormatCateService.GetALL()
+                .Where(x => x.PCateCode.Equals(null)).ToList()
+                , item => item.CateCode
+                , item => item.CateName, true);
             return View();
         }
 
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
-            DB_Service.SetProxyCreationEnabledFlase();
-            var FormatCates = DB_Service.Set<FormatCate>().OrderBy(x => x.CateCode).ToList();
+
+            var FormatCates = FormatCateService.GetKendoALL().OrderBy(x => x.CateCode).ToList();
             return Json(FormatCates.ToDataSourceResult(request));
         }
 
@@ -68,10 +59,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var FormatCate in FormatCates)
                 {
-                    FormatCate.PCateCode = FormatCate.PCateCode;
-                    DB_Service.Add<FormatCate>(FormatCate);
-                    DB_Service.Commit();
-                    results.Add(FormatCate);
+                    FormatCateService.Create(FormatCate);
                 }
             }
             return Json(results.ToDataSourceResult(request, ModelState));
@@ -84,15 +72,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var FormatCate in FormatCates)
                 {
-                    var target = DB_Service.Set<FormatCate>().Single(x => x.ID == FormatCate.ID);
-                    if (target != null)
-                    {
-                        DB_Service.Attach<FormatCate>(target);
-                        target.CateCode = FormatCate.CateCode;
-                        target.CateName = FormatCate.CateName;
-                        target.PCateCode = FormatCate.PCateCode;
-                        DB_Service.Commit();
-                    }
+                    FormatCateService.Update(FormatCate);
                 }
             }
 
@@ -106,9 +86,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var FormatCate in FormatCates)
                 {
-                    var target = DB_Service.Set<FormatCate>().Single(x => x.ID == FormatCate.ID);
-                    DB_Service.Remove<FormatCate>(target);
-                    DB_Service.Commit();
+                    FormatCateService.Delete(FormatCate);
                 }
             }
             return Json(ModelState.ToDataSourceResult());

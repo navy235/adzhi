@@ -17,7 +17,7 @@ namespace CodeFirstEF.Controllers
             ViewBag.Message = id;
             if ((int)ErrorType.NoPermission == id)
             {
-                return Redirect(Url.Action("Index", "Login", new { ReturnUrl = returnurl }));
+                return Content(string.Format("<script>window.top.location.href='{0}'</script>", Url.Action("Index", "Login", new { ReturnUrl = returnurl })));
             }
             return View();
         }

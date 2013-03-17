@@ -5,8 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using CodeFirstEF.Concrete;
-using CodeFirstEF.Filters;
 using CodeFirstEF.Models;
+using CodeFirstEF.ViewModels;
+using CodeFirstEF.Filters;
+using CodeFirstEF.Serivces;
+using CodeFirstEF.Utils;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
 using CoreHelper.Http;
@@ -22,11 +25,16 @@ namespace CodeFirstEF.Controllers
         //
         // GET: /Group/
 
-        private IUnitOfWork DB_Service;
+        private IRoleService roleService;
 
-        public GroupController(IUnitOfWork _DB_Service)
+        private IGroupService groupService;
+
+        public GroupController(IRoleService _roleService
+            , IGroupService _groupService
+         )
         {
-            DB_Service = _DB_Service;
+            roleService = _roleService;
+            groupService = _groupService;
         }
 
 
@@ -38,8 +46,7 @@ namespace CodeFirstEF.Controllers
 
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
-            DB_Service.SetProxyCreationEnabledFlase();
-            var groups = DB_Service.Set<Group>();
+            var groups = groupService.GetKendoALL().OrderBy(x => x.GroupID).ToList();
             return Json(groups.ToDataSourceResult(request));
         }
 
@@ -52,9 +59,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var group in groups)
                 {
-                    DB_Service.Add<Group>(group);
-                    DB_Service.Commit();
-                    results.Add(group);
+                    groupService.Create(group);
                 }
             }
 
@@ -68,15 +73,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var group in groups)
                 {
-                    var target = DB_Service.Set<Group>().Single(x => x.GroupID == group.GroupID);
-                    if (target != null)
-                    {
-                        DB_Service.Attach<Group>(target);
-                        target.Name = group.Name;
-                        target.Description = group.Description;
-                        DB_Service.Commit();
-
-                    }
+                    groupService.Update(group);
                 }
             }
 
@@ -90,9 +87,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var group in groups)
                 {
-                    var target = DB_Service.Set<Group>().Include(x => x.Roles).Single(x => x.GroupID == group.GroupID);
-                    DB_Service.Remove<Group>(target);
-                    DB_Service.Commit();
+                    groupService.Delete(group);
                 }
             }
             return Json(ModelState.ToDataSourceResult());
@@ -126,10 +121,9 @@ namespace CodeFirstEF.Controllers
                     gps.Name = model.Name;
                     gps.Description = model.Description;
                     var rolesArray = model.RolesList.Split(',').Select(x => Convert.ToInt32(x));
-                    var RoleList = DB_Service.Set<Roles>().Where(x => rolesArray.Contains(x.ID));
+                    var RoleList = roleService.GetALL(rolesArray);
                     gps.Roles.AddRange(RoleList);
-                    DB_Service.Add<Group>(gps);
-                    DB_Service.Commit();
+                    groupService.Create(gps);
                     return RedirectToAction("index");
                 }
                 catch (Exception ex)
@@ -149,7 +143,7 @@ namespace CodeFirstEF.Controllers
 
             GroupModel gpm = new GroupModel();
             Group gps = new Group();
-            gps = DB_Service.Set<Group>().Include(x => x.Roles).Single(x => x.GroupID == id);
+            gps = groupService.IncludeFind(id);
             gpm.ID = gps.GroupID;
             gpm.Name = gps.Name;
             gpm.Description = gps.Description;
@@ -171,31 +165,7 @@ namespace CodeFirstEF.Controllers
             {
                 try
                 {
-                    Group gps = DB_Service.Set<Group>().Include(x => x.Roles).Single(x => x.GroupID == model.ID);
-                    DB_Service.Attach<Group>(gps);
-                    gps.Name = model.Name;
-                    gps.Description = model.Description;
-                    var RoleList = DB_Service.Set<Roles>().Where(x => rolesArray.Contains(x.ID));
-                    var currentroleArray = gps.Roles.Select(x => x.ID).ToList();
-                    foreach (Roles rl in DB_Service.Set<Roles>())
-                    {
-                        if (rolesArray.Contains(rl.ID))
-                        {
-                            if (!currentroleArray.Contains(rl.ID))
-                            {
-                                gps.Roles.Add(rl);
-                            }
-                        }
-                        else
-                        {
-                            if (currentroleArray.Contains(rl.ID))
-                            {
-                                gps.Roles.Remove(rl);
-                            }
-                        }
-                    }
-
-                    DB_Service.Commit();
+                    groupService.Update(model);
                     return RedirectToAction("index");
                 }
                 catch (Exception ex)
@@ -214,7 +184,7 @@ namespace CodeFirstEF.Controllers
         public List<SelectListItem> GetForeignData(List<int> selectIdList)
         {
             List<SelectListItem> data = new List<SelectListItem>();
-            data = DB_Service.Set<Roles>().ToList().Select(x => new SelectListItem
+            data = roleService.GetALL().ToList().Select(x => new SelectListItem
             {
                 Text = x.Name,
                 Value = x.ID.ToString(),

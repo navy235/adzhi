@@ -15,6 +15,10 @@
     @Scripts.Render("~/bundles/jqueryval")
 </head>
 <body class="admin">
+    @{
+        var DashModel = (CodeFirstEF.ViewModels.DashBoardViewModel)ViewBag.DashModel;
+        
+    }
 
 
 
@@ -23,12 +27,12 @@
             <div class="admin-top-logo">
                 <img src="~/Content/images/logo.gif" alt="logo" width="59" height="64" border="0">
             </div>
-            <div class="admin-top-title">运营管理系统</div>
+            <div class="admin-top-title">@DashModel.Name</div>
             <div class="admin-top-info">
-                <span class="admin-top-group" style="margin-right: 50px; color: #fff;">管理员：<b>kudy</b> 您好，欢迎登陆使用！</span>
-                <span class="admin-top-version" style="margin-right: 50px; color: #fff;">当前版本：1.0</span>
-                <a class="admin-top-link">后台首页</a>
-                <a class="admin-top-link">安全退出</a>
+                <span class="admin-top-group" style="margin-right: 50px; color: #fff;">@DashModel.GroupName：<b>@DashModel.NickName</b> 您好，欢迎登陆使用！</span>
+                <span class="admin-top-version" style="margin-right: 50px; color: #fff;">当前版本：@DashModel.Version</span>
+                <a class="admin-top-link" href="@Url.Action("Index")">后台首页</a>
+                <a class="admin-top-link"  href="@Url.Action("LoginOut", "Login")">安全退出</a>
             </div>
         </div>
         <div class="admin-main">
@@ -52,7 +56,7 @@
             @RenderBody()
 
             <div id="loading" style="display: none;">
-                <img src="~/Content/images/formloading.gif"  alt="loading" border="0" />
+                <img src="~/Content/images/formloading.gif" alt="loading" border="0" />
             </div>
             <iframe id="content" name="content" width="100%" height="100%" style="display: none;" marginwidth="0" marginheight="0" frameborder="0" src=""></iframe>
             </text>
@@ -64,7 +68,7 @@
 
         </div>
         <div class="admin-bottom">
-            <div class="admin-bottom-msg">建议使用 IE7 以上版本或其它主流浏览器，分辨率 1024x768 或更高。 | Copyright © 2005-2012 www.kudystudio.com All Rights Reserved.</div>
+            <div class="admin-bottom-msg">建议使用 IE8 以上版本或其它主流浏览器，分辨率 1024x768 或更高。 | Copyright © 2005-2015 www.dotaeye.com All Rights Reserved.</div>
         </div>
     </div>
 
@@ -134,7 +138,7 @@
 
     <script type="text/javascript">
         var LeftMenu = {
-            onSelect: function(e) {
+            onSelect: function (e) {
                 var $link = $(e.item);
                 if (!$link.find('ul').length > 0) {
                     $('#loading').show();
@@ -143,8 +147,8 @@
                 }
             }
         };
-        $(function() {
-            $('#content').load(function() {
+        $(function () {
+            $('#content').load(function () {
                 $('#loading').hide();
                 $(this).show();
             })

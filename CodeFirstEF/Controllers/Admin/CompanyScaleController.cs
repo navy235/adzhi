@@ -4,60 +4,50 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
-using CodeFirstEF.Models;
 using CodeFirstEF.Concrete;
+using CodeFirstEF.Models;
+using CodeFirstEF.Serivces;
+using CodeFirstEF.Utils;
+using CodeFirstEF.Filters;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
 using CoreHelper.Http;
 using CoreHelper.Data.Interface;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
-using System.Web.Script.Serialization;
 
 namespace CodeFirstEF.Controllers
 {
+    [Permission]
     public class CompanyScaleController : Controller
     {
         //
         // GET: /CompanyScale/
-        private IUnitOfWork DB_Service;
-
-        public CompanyScaleController(IUnitOfWork _DB_Service)
+        private ICompanyScaleService CompanyScaleService;
+        public CompanyScaleController(
+             ICompanyScaleService _CompanyScaleService
+          )
         {
-            DB_Service = _DB_Service;
+            CompanyScaleService = _CompanyScaleService;
         }
 
         #region KendoGrid Action
 
         public ActionResult Index()
         {
-
-            List<SelectListItem> CompanyScalesList = new List<SelectListItem>();
-            CompanyScalesList = DB_Service.Set<CompanyScale>().Where(x => x.PCateCode == null).ToList().Select(x => new SelectListItem()
-            {
-                Value = x.CateCode,
-                Text = x.CateName
-            }).ToList();
-
-            SelectListItem nullItem = new SelectListItem()
-            {
-                Value = string.Empty,
-                Text = "顶级类别"
-            };
-            CompanyScalesList.Insert(0, nullItem);
-
-            //ViewBag.PCateCode = new SelectList(DB_CompanyScale.CompanyScales.Where(x => x.PCateCode == ""), "CateCode", "CateName");
-
-            ViewBag.PCateCode = new SelectList(CompanyScalesList, "Value", "Text");
-
+            ViewBag.PCateCode = Utilities.CreateSelectList(
+                CompanyScaleService.GetALL()
+                .Where(x => x.PCateCode.Equals(null)).ToList()
+                , item => item.CateCode
+                , item => item.CateName, true);
             return View();
         }
 
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
-            DB_Service.SetProxyCreationEnabledFlase();
-            var FormatCates = DB_Service.Set<CompanyScale>().OrderBy(x => x.CateCode).ToList();
-            return Json(FormatCates.ToDataSourceResult(request));
+
+            var CompanyScales = CompanyScaleService.GetKendoALL().OrderBy(x => x.CateCode).ToList();
+            return Json(CompanyScales.ToDataSourceResult(request));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -69,10 +59,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var CompanyScale in CompanyScales)
                 {
-                    CompanyScale.PCateCode = CompanyScale.PCateCode;
-                    DB_Service.Add<CompanyScale>(CompanyScale);
-                    DB_Service.Commit();
-                    results.Add(CompanyScale);
+                    CompanyScaleService.Create(CompanyScale);
                 }
             }
             return Json(results.ToDataSourceResult(request, ModelState));
@@ -85,15 +72,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var CompanyScale in CompanyScales)
                 {
-                    var target = DB_Service.Set<CompanyScale>().Single(x => x.ID == CompanyScale.ID);
-                    if (target != null)
-                    {
-                        DB_Service.Attach<CompanyScale>(target);
-                        target.CateCode = CompanyScale.CateCode;
-                        target.CateName = CompanyScale.CateName;
-                        target.PCateCode = CompanyScale.PCateCode;
-                        DB_Service.Commit();
-                    }
+                    CompanyScaleService.Update(CompanyScale);
                 }
             }
 
@@ -107,9 +86,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var CompanyScale in CompanyScales)
                 {
-                    var target = DB_Service.Set<CompanyScale>().Single(x => x.ID == CompanyScale.ID);
-                    DB_Service.Remove<CompanyScale>(target);
-                    DB_Service.Commit();
+                    CompanyScaleService.Delete(CompanyScale);
                 }
             }
             return Json(ModelState.ToDataSourceResult());

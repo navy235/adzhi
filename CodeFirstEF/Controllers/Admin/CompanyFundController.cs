@@ -4,60 +4,50 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
-using CodeFirstEF.Models;
 using CodeFirstEF.Concrete;
+using CodeFirstEF.Models;
+using CodeFirstEF.Serivces;
+using CodeFirstEF.Utils;
+using CodeFirstEF.Filters;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
 using CoreHelper.Http;
 using CoreHelper.Data.Interface;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
-using System.Web.Script.Serialization;
 
 namespace CodeFirstEF.Controllers
 {
+    [Permission]
     public class CompanyFundController : Controller
     {
         //
         // GET: /CompanyFund/
-        private IUnitOfWork DB_Service;
-
-        public CompanyFundController(IUnitOfWork _DB_Service)
+        private ICompanyFundService CompanyFundService;
+        public CompanyFundController(
+             ICompanyFundService _CompanyFundService
+          )
         {
-            DB_Service = _DB_Service;
+            CompanyFundService = _CompanyFundService;
         }
 
         #region KendoGrid Action
 
         public ActionResult Index()
         {
-
-            List<SelectListItem> CompanyFundsList = new List<SelectListItem>();
-            CompanyFundsList = DB_Service.Set<CompanyFund>().Where(x => x.PCateCode == null).ToList().Select(x => new SelectListItem()
-            {
-                Value = x.CateCode,
-                Text = x.CateName
-            }).ToList();
-
-            SelectListItem nullItem = new SelectListItem()
-            {
-                Value = string.Empty,
-                Text = "顶级类别"
-            };
-            CompanyFundsList.Insert(0, nullItem);
-
-            //ViewBag.PCateCode = new SelectList(DB_CompanyFund.CompanyFunds.Where(x => x.PCateCode == ""), "CateCode", "CateName");
-
-            ViewBag.PCateCode = new SelectList(CompanyFundsList, "Value", "Text");
-
+            ViewBag.PCateCode = Utilities.CreateSelectList(
+                CompanyFundService.GetALL()
+                .Where(x => x.PCateCode.Equals(null)).ToList()
+                , item => item.CateCode
+                , item => item.CateName, true);
             return View();
         }
 
         public ActionResult Editing_Read([DataSourceRequest] DataSourceRequest request)
         {
-            DB_Service.SetProxyCreationEnabledFlase();
-            var FormatCates = DB_Service.Set<CompanyFund>().OrderBy(x => x.CateCode).ToList();
-            return Json(FormatCates.ToDataSourceResult(request));
+
+            var CompanyFunds = CompanyFundService.GetKendoALL().OrderBy(x => x.CateCode).ToList();
+            return Json(CompanyFunds.ToDataSourceResult(request));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -69,10 +59,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var CompanyFund in CompanyFunds)
                 {
-                    CompanyFund.PCateCode = CompanyFund.PCateCode ;
-                    DB_Service.Add<CompanyFund>(CompanyFund);
-                    DB_Service.Commit();
-                    results.Add(CompanyFund);
+                    CompanyFundService.Create(CompanyFund);
                 }
             }
             return Json(results.ToDataSourceResult(request, ModelState));
@@ -85,15 +72,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var CompanyFund in CompanyFunds)
                 {
-                    var target = DB_Service.Set<CompanyFund>().Single(x => x.ID == CompanyFund.ID);
-                    if (target != null)
-                    {
-                        DB_Service.Attach<CompanyFund>(target);
-                        target.CateCode = CompanyFund.CateCode;
-                        target.CateName = CompanyFund.CateName;
-                        target.PCateCode = CompanyFund.PCateCode ;
-                        DB_Service.Commit();
-                    }
+                    CompanyFundService.Update(CompanyFund);
                 }
             }
 
@@ -107,9 +86,7 @@ namespace CodeFirstEF.Controllers
             {
                 foreach (var CompanyFund in CompanyFunds)
                 {
-                    var target = DB_Service.Set<CompanyFund>().Single(x => x.ID == CompanyFund.ID);
-                    DB_Service.Remove<CompanyFund>(target);
-                    DB_Service.Commit();
+                    CompanyFundService.Delete(CompanyFund);
                 }
             }
             return Json(ModelState.ToDataSourceResult());

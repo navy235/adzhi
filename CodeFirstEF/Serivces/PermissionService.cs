@@ -21,12 +21,17 @@ namespace CodeFirstEF.Serivces
             this.DB_Service = DB_Service;
         }
 
-        public IEnumerable<Permissions> GetALL()
+        public IQueryable<Permissions> GetALL()
         {
             return DB_Service.Set<Permissions>();
         }
 
-        public IEnumerable<Permissions> GetKendoALL()
+        public IQueryable<Permissions> GetALL(IEnumerable<int> IDs)
+        {
+            return DB_Service.Set<Permissions>().Where(x => IDs.Contains(x.ID));
+        }
+
+        public IQueryable<Permissions> GetKendoALL()
         {
             DB_Service.SetProxyCreationEnabledFlase();
             return DB_Service.Set<Permissions>();
@@ -72,5 +77,7 @@ namespace CodeFirstEF.Serivces
             DB_Service.Remove<Permissions>(target);
             DB_Service.Commit();
         }
+
+
     }
 }

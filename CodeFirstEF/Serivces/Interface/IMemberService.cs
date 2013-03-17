@@ -1,12 +1,23 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using CoreHelper.Enum;
 using CodeFirstEF.Models;
 using CodeFirstEF.ViewModels;
+
 namespace CodeFirstEF.Serivces
 {
     public interface IMemberService
     {
         Member Create(RegisterModel model);
+
+        Member Create(DetailsModel model);
+
+        Member Update(EditModel model);
+
+        IQueryable<Member> GetAll();
+
+        IQueryable<Member> GetKendoAll();
 
         bool Login(string Email, string Md5Password);
 

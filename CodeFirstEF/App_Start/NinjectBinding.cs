@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Web;
+using System.Web.Mvc;
 using Ninject;
 using Ninject.Web.Common;
 using CoreHelper.Data.Interface;
+using CodeFirstEF.Filters;
 using CodeFirstEF.Concrete;
 using CodeFirstEF.Serivces;
 namespace CodeFirstEF.App_Start
@@ -25,17 +28,52 @@ namespace CodeFirstEF.App_Start
             kernel.Bind<IAreaAttService>()
                 .To<AreaAttService>()
                 .InRequestScope();
+
+
             kernel.Bind<IOutDoorService>()
                 .To<OutDoorService>()
                 .InRequestScope();
-            kernel.Bind<IOwnerCateService>()
-                .To<OwnerCateService>()
-                .InRequestScope();
+
+
+
             kernel.Bind<IDepartmentService>()
                 .To<DepartmentService>()
                 .InRequestScope();
             kernel.Bind<IPermissionService>()
                 .To<PermissionService>()
+                .InRequestScope();
+            kernel.Bind<IRoleService>()
+                .To<RoleService>()
+                .InRequestScope();
+            kernel.Bind<IGroupService>()
+                .To<Groupervice>()
+                .InRequestScope();
+
+
+
+            kernel.Bind<IOwnerCateService>()
+                .To<OwnerCateService>()
+                .InRequestScope();
+            kernel.Bind<IAreaService>()
+                .To<AreaService>()
+                .InRequestScope();
+            kernel.Bind<ICompanyBussinessService>()
+                .To<CompanyBussinessService>()
+                .InRequestScope();
+            kernel.Bind<ICompanyFundService>()
+                .To<CompanyFundService>()
+                .InRequestScope();
+            kernel.Bind<ICompanyScaleService>()
+                .To<CompanyScaleService>()
+                .InRequestScope();
+            kernel.Bind<IFormatCateService>()
+                .To<FormatCateService>()
+                .InRequestScope();
+            kernel.Bind<IPeriodCateService>()
+                .To<PeriodCateService>()
+                .InRequestScope();
+            kernel.Bind<IOutDoorMediaCateService>()
+                .To<OutDoorMediaCateService>()
                 .InRequestScope();
             //kernel.Bind<IOwnerService>()
             //    .To<OwnerService>()

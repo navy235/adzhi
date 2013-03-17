@@ -19,8 +19,8 @@ namespace CodeFirstEF.Serivces
 
         OutDoorViewModel GetOutDoorViewModel(int MediaID);
 
-        IEnumerable<OutDoor> GetOutDoorByMember(int MemberID);
+        IQueryable<OutDoor> GetOutDoorByMember(int MemberID);
 
-        IEnumerable<OutDoor> GetKenDoOutDoorByMember(int MemberID);
+        IQueryable<OutDoor> GetKenDoOutDoorByMember(int MemberID);
     }
 }

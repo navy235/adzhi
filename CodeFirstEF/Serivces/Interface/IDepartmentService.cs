@@ -7,6 +7,8 @@ namespace CodeFirstEF.Serivces
 {
     public interface IDepartmentService
     {
-        IEnumerable<Department> GetALL();
+        IQueryable<Department> GetALL();
+
+        IQueryable<Department> GetIncludeALL();
     }
 }

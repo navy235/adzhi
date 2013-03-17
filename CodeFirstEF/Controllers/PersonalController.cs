@@ -418,7 +418,7 @@ namespace CodeFirstEF.Controllers
         public ActionResult OutDoor_Read([DataSourceRequest] DataSourceRequest request)
         {
             var memberID = Convert.ToInt32(CookieHelper.UID);
-            var model = outDoorService.GetKenDoOutDoorByMember(memberID).OrderByDescending(x => x.AddTime);
+            var model = outDoorService.GetKenDoOutDoorByMember(memberID).OrderByDescending(x => x.AddTime).ToList();
             return Json(model.ToDataSourceResult(request));
         }
 

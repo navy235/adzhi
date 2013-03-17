@@ -268,12 +268,12 @@ namespace CodeFirstEF.Serivces
             return odv;
         }
 
-        public IEnumerable<OutDoor> GetOutDoorByMember(int MemberID)
+        public IQueryable<OutDoor> GetOutDoorByMember(int MemberID)
         {
             return DB_Service.Set<OutDoor>().Where(x => x.MemberID == MemberID);
         }
 
-        public IEnumerable<OutDoor> GetKenDoOutDoorByMember(int MemberID)
+        public IQueryable<OutDoor> GetKenDoOutDoorByMember(int MemberID)
         {
             DB_Service.SetProxyCreationEnabledFlase();
             return DB_Service.Set<OutDoor>().Where(x => x.MemberID == MemberID);
