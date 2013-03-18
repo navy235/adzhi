@@ -31,7 +31,6 @@
     .DataSource(dataSource => dataSource
         .Ajax()
         .PageSize(120)
-        .ServerOperation(false)
         .Model(model => model.Id(c => c.MemberID))
         .Read("Editing_Read", "Member")
     ).HtmlAttributes(new { style = "height:500px" })

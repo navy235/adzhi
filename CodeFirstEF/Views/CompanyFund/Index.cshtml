@@ -28,7 +28,6 @@
         .Ajax()
         .Batch(true)
         .PageSize(120)
-        .ServerOperation(false)
         .Model(model => model.Id(c => c.ID))
         .Create("Editing_Create", "CompanyFund")
         .Read("Editing_Read", "CompanyFund")

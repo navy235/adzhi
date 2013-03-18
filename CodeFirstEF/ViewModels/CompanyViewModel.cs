@@ -16,11 +16,11 @@ namespace CodeFirstEF.ViewModels
 
         [HintSeparateTitle("基本信息")]
         [Required(ErrorMessage = "请输入公司名称")]
-        [Display(Name = "名称")]
-        [RegularExpression(@"^[\u0391-\uFFE5\w]+$", ErrorMessage = "公司名称含有非法字符.")]
+        [Display(Name = "公司名称")]
+        [RegularExpression(@"^[\u4e00-\u9fa5A|Za-z|0-9|_]+$", ErrorMessage = "公司名称含有非法字符.")]
         //[Remote("NickNameExists", "AjaxService", ErrorMessage = "该公司名称含有非法字符或已经注册")]
-        [StringLength(25, ErrorMessage = "请输入{2}-{1}位中文公司名称", MinimumLength = 7)]
-        [Hint("请输入昵称7-25位中文.")]
+        [StringCheckLength(7, 25)]
+        [Hint("请输入7-25位公司名称，英文、数字或中文均可（中文占2个字符）。")]
         public string Name { get; set; }
 
 
@@ -57,12 +57,12 @@ namespace CodeFirstEF.ViewModels
 
 
         [HintSeparateTitle("联系方式")]
-
         [Required(ErrorMessage = "请输入公司联系地址")]
         [Display(Name = "联系地址")]
         [StringLength(25, ErrorMessage = "请输入{2}-{1}位公司联系地址", MinimumLength = 7)]
         [Hint("公司联系地址7-25个字，不允许填写电话和特殊符号.")]
         public string Address { get; set; }
+
 
         [Display(Name = "地图位置")]
         [Required(ErrorMessage = "请标记公司所在地图坐标.")]
@@ -72,8 +72,8 @@ namespace CodeFirstEF.ViewModels
 
         [Required(ErrorMessage = "请输入联系人")]
         [Display(Name = "联系人")]
-        [StringLength(5, ErrorMessage = "请输入{2}-{1}位中文联系人", MinimumLength = 2)]
-        [Hint("请输入联系人名字.")]
+        [StringCheckLength(4, 10)]
+        [Hint("请输入4-10位联系人姓名，（中文占2个字符）。")]
         public string LinkMan { get; set; }
 
         [Required(ErrorMessage = "请选择联系人性别")]
@@ -128,11 +128,37 @@ namespace CodeFirstEF.ViewModels
         [Display(Name = "身份证照片")]
         [UIHint("UploadImgList")]
         [HintClass("uploadlist")]
-        [AdditionalMetadata("UploadImgList", "1")]
+        [AdditionalMetadata("UploadImgList", "2")]
         [AdditionalMetadata("UploadImgListMaxLength", "6")]
         [HintLabel("请上传1-6张不小于800X600像素的图片,图片文件大小不小于5M")]
         public string LinManImg { get; set; }
 
+
+    }
+
+
+    public class CompanyVerifyViewModel
+    {
+        [Display(Name = "公司ID")]
+        public int CompanyID { get; set; }
+
+        [Display(Name = "公司名称")]
+        public string Name { get; set; }
+
+        [Display(Name = "公司描述")]
+        public string Description { get; set; }
+
+        [Display(Name = "公司联系人")]
+        public string LinkMan { get; set; }
+
+        [Display(Name = "审核状态")]
+        public int Status { get; set; }
+
+        [Display(Name = "添加时间")]
+        public DateTime AddTime { get; set; }
+
+        [Display(Name = "最后时间")]
+        public DateTime LastTime { get; set; }
 
     }
 }

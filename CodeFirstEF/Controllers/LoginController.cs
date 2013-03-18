@@ -52,7 +52,7 @@ namespace CodeFirstEF.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(LogOnModel model, string ReturnUrl, bool Remember = false)
+        public ActionResult Index(LogOnModel model, string ReturnUrl = null, bool Remember = false)
         {
 
             if (ModelState.IsValid)
@@ -64,8 +64,10 @@ namespace CodeFirstEF.Controllers
                     {
                         ViewBag.Message = null;
 
-                        return Redirect(ReturnUrl);
-
+                        if (!string.IsNullOrEmpty(ReturnUrl))
+                            return Redirect(ReturnUrl);
+                        else
+                            return RedirectToAction("Index", "Home");
                     }
                     else
                     {

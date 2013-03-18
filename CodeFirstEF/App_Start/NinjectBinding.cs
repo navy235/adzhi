@@ -25,6 +25,9 @@ namespace CodeFirstEF.App_Start
             kernel.Bind<IMember_ActionService>()
                 .To<Member_ActionService>()
                 .InRequestScope();
+            kernel.Bind<ICompanyService>()
+                 .To<CompanyService>()
+                 .InRequestScope();
             kernel.Bind<IAreaAttService>()
                 .To<AreaAttService>()
                 .InRequestScope();

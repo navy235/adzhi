@@ -53,7 +53,11 @@ namespace CodeFirstEF.Serivces
 
         void SaveMemberAvtar(int MemberID, AvtarModel model);
 
+        void SaveMemberStatus(int MemberID, MemberStatus MemberStatus);
+
         void SaveMemberContact(int MemberID, ContactModel model);
+
+
 
         bool HasGetPasswordActionInLimitTime(GetPasswordModel model, int limitMin, int memberAction);
 

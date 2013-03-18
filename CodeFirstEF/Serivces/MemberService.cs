@@ -262,6 +262,16 @@ namespace CodeFirstEF.Serivces
             SetLoginCookie(member);
         }
 
+        public void SaveMemberStatus(int MemberID, MemberStatus MemberStatus)
+        {
+            Member member = Find(MemberID);
+            DB_Service.Attach<Member>(member);
+            member.Status = (int)MemberStatus;
+            DB_Service.Commit();
+            SetLoginCookie(member);
+        }
+
+
         public void SaveMemberContact(int MemberID, ContactModel model)
         {
             Member member = FindMemberWithProfile(MemberID);

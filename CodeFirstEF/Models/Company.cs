@@ -71,6 +71,9 @@ namespace CodeFirstEF.Models
         public string AddIP { get; set; }
 
         [MaxLength(500)]
+        public string Description { get; set; }
+
+        [MaxLength(500)]
         public string Unapprovedlog { get; set; }
 
         public int Status { get; set; }

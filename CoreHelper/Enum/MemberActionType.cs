@@ -10,6 +10,8 @@ namespace CoreHelper.Enum
     {
         Registered = 1,
         EmailActived = 2,
+        CompanyApply = 3,
+        CompanyAuth = 4
     }
 
     public enum MemberActionType
@@ -18,6 +20,14 @@ namespace CoreHelper.Enum
         LogOut = 4,
         GetPassword = 5,
         EmailActvie = 6,
+        CompanyApply = 7,
+        CompanyReApply = 8
+    }
+
+    public enum CompanyStatus
+    {
+        CompanyApply = 0,
+        CompanyAuth = 1
     }
 
     public enum OpenLoginType

@@ -9,6 +9,7 @@ using System.Drawing.Imaging;
 using System.Drawing.Drawing2D;
 using System.Data.Entity;
 using CodeFirstEF.Models;
+using CodeFirstEF.Utils;
 using CodeFirstEF.Serivces;
 using CoreHelper;
 using CoreHelper.Data.Interface;
@@ -23,18 +24,45 @@ namespace CodeFirstEF.Controllers
     {
         private IUnitOfWork DB_Service;
         private IMemberService memberService;
-
+        private IAreaAttService areaAttService;
+        private IAreaService areaService;
+        private IOutDoorMediaCateService outDoorMediaCateService;
+        private IFormatCateService formatCateService;
+        private ICompanyBussinessService companyBussinessService;
+        private ICompanyFundService companyFundService;
+        private ICompanyScaleService companyScaleService;
+        private IPeriodCateService periodCateService;
+        private IOwnerCateService ownerCateService;
         public AjaxServiceController(IUnitOfWork _DB_Service
-            , IMemberService _memberService)
+            , IMemberService _memberService
+            , IAreaAttService _areaAttService
+            , IAreaService _areaService
+            , IOutDoorMediaCateService _outDoorMediaCateService
+            , IFormatCateService _formatCateService
+            , ICompanyBussinessService _companyBussinessService
+            , ICompanyFundService _companyFundService
+            , ICompanyScaleService _companyScaleService
+            , IPeriodCateService _periodCateService
+            , IOwnerCateService _ownerCateService
+            )
         {
             DB_Service = _DB_Service;
+            areaAttService = _areaAttService;
+            areaService = _areaService;
             memberService = _memberService;
+            outDoorMediaCateService = _outDoorMediaCateService;
+            formatCateService = _formatCateService;
+            companyBussinessService = _companyBussinessService;
+            companyFundService = _companyFundService;
+            companyScaleService = _companyScaleService;
+            periodCateService = _periodCateService;
+            ownerCateService = _ownerCateService;
         }
 
         #region  Control
         public ActionResult CityCode(string key, string pid = null)
         {
-            var renderRadioList = DB_Service.Set<Area>();
+            var renderRadioList = areaService.GetALL();
             if (string.IsNullOrEmpty(pid))
             {
                 renderRadioList = renderRadioList.Where(x => x.PCateCode.Equals(null));
@@ -49,64 +77,70 @@ namespace CodeFirstEF.Controllers
                 Value = x.CateCode
 
             }).ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult CityCodeName(string key)
+        {
+            return Content(areaService.Find(key).CateName);
         }
 
         public ActionResult FormatCode()
         {
-            List<SelectListItem> renderRadioList = new List<SelectListItem>();
 
-            renderRadioList = DB_Service.Set<FormatCate>().Where(x => x.PCateCode.Equals(null)).ToList().Select(x => new SelectListItem()
-            {
-                Text = x.CateName,
-                Value = x.CateCode
-
-            }).ToList();
+            var renderRadioList = Utilities.GetSelectListData(formatCateService.GetALL().Where(x => x.PCateCode.Equals(null)).ToList(),
+                x => x.CateCode,
+                x => x.CateName, false);
             return Json(renderRadioList, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult FormatCodeName(string key)
+        {
+            return Content(formatCateService.Find(key).CateName);
         }
 
         public ActionResult ScaleCode()
         {
-            List<SelectListItem> renderRadioList = new List<SelectListItem>();
 
-            renderRadioList = DB_Service.Set<CompanyScale>().Where(x => x.PCateCode.Equals(null)).ToList().Select(x => new SelectListItem()
-            {
-                Text = x.CateName,
-                Value = x.CateCode
-
-            }).ToList();
+            var renderRadioList = Utilities.GetSelectListData(companyScaleService.GetALL().Where(x => x.PCateCode.Equals(null)).ToList(),
+             x => x.CateCode,
+             x => x.CateName, false);
             return Json(renderRadioList, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ScaleCodeName(string key)
+        {
+            return Content(companyScaleService.Find(key).CateName);
         }
 
         public ActionResult FundCode()
         {
-            List<SelectListItem> renderRadioList = new List<SelectListItem>();
-
-            renderRadioList = DB_Service.Set<CompanyFund>().Where(x => x.PCateCode.Equals(null)).ToList().Select(x => new SelectListItem()
-            {
-                Text = x.CateName,
-                Value = x.CateCode
-
-            }).ToList();
+            var renderRadioList = Utilities.GetSelectListData(companyFundService.GetALL().Where(x => x.PCateCode.Equals(null)).ToList(),
+             x => x.CateCode,
+             x => x.CateName, false);
             return Json(renderRadioList, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult FundCodeName(string key)
+        {
+            return Content(companyFundService.Find(key).CateName);
         }
 
         public ActionResult BussinessCode()
         {
-            List<SelectListItem> renderRadioList = new List<SelectListItem>();
-
-            renderRadioList = DB_Service.Set<CompanyBussiness>().Where(x => x.PCateCode.Equals(null)).ToList().Select(x => new SelectListItem()
-            {
-                Text = x.CateName,
-                Value = x.CateCode
-
-            }).ToList();
+            var renderRadioList = Utilities.GetSelectListData(companyBussinessService.GetALL().Where(x => x.PCateCode.Equals(null)).ToList(),
+             x => x.CateCode,
+             x => x.CateName, false);
             return Json(renderRadioList, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult BussinessCodeName(string key)
+        {
+            return Content(companyBussinessService.Find(key).CateName);
+        }
 
         public ActionResult MeidaCode(string key, string pid = null)
         {
-            var renderRadioList = DB_Service.Set<OutDoorMediaCate>();
+            var renderRadioList = outDoorMediaCateService.GetALL();
             if (string.IsNullOrEmpty(pid))
             {
                 renderRadioList = renderRadioList.Where(x => x.PCateCode.Equals(null));
@@ -123,31 +157,45 @@ namespace CodeFirstEF.Controllers
             }).ToList(), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult MeidaCodeName(string key)
+        {
+            return Content(outDoorMediaCateService.Find(key).CateName);
+        }
+
         public ActionResult PeriodCode()
         {
-            List<SelectListItem> renderRadioList = new List<SelectListItem>();
-
-            renderRadioList = DB_Service.Set<PeriodCate>().Where(x => x.PCateCode.Equals(null)).ToList().Select(x => new SelectListItem()
-            {
-                Text = x.CateName,
-                Value = x.CateCode
-
-            }).ToList();
+            var renderRadioList = Utilities.GetSelectListData(periodCateService.GetALL().Where(x => x.PCateCode.Equals(null)).ToList(),
+               x => x.CateCode,
+               x => x.CateName, false);
             return Json(renderRadioList, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult PeriodCodeName(string key)
+        {
+            return Content(periodCateService.Find(key).CateName);
         }
 
         public ActionResult OwnerCode()
         {
-            List<SelectListItem> renderRadioList = new List<SelectListItem>();
-
-            renderRadioList = DB_Service.Set<OwnerCate>().Where(x => x.PCateCode.Equals(null)).ToList().Select(x => new SelectListItem()
-            {
-                Text = x.CateName,
-                Value = x.CateCode
-
-            }).ToList();
+            var renderRadioList = Utilities.GetSelectListData(ownerCateService.GetALL().Where(x => x.PCateCode.Equals(null)).ToList(),
+              x => x.CateCode,
+              x => x.CateName, false);
             return Json(renderRadioList, JsonRequestBehavior.AllowGet);
+
         }
+
+        public ActionResult OwnerCodeName(string key)
+        {
+            return Content(ownerCateService.Find(key).CateName);
+        }
+
+        public ActionResult AreaAttName(string key)
+        {
+            var keyArray = key.Split(',').Select(x => Convert.ToInt32(x));
+            return Json(areaAttService.GetList(keyArray).Select(x => x.AttName).ToList(), JsonRequestBehavior.AllowGet);
+
+        }
+
         #endregion
 
 

@@ -64,6 +64,10 @@ textarea {
       margin: 5px 0 15px 0;
     }
 
+    .form-step li.pass i {
+      background-color: #ffd05e;
+    }
+
     .form-step li.cur i {
       background-color: #ff9c00;
     }
@@ -203,7 +207,7 @@ textarea {
 
 .form-field-avtar .k-upload {
   margin-left: 107px;
-  margin-top:5px;
+  margin-top: 5px;
   display: block;
 }
 
@@ -324,4 +328,61 @@ textarea {
   text-indent: -9999px;
   top: 0;
   width: 220px;
+}
+
+
+/* Display */
+.display-container {
+}
+
+.display-item {
+  margin: 10px 0 0 0;
+  line-height: 20px;
+  position: relative;
+}
+
+
+.display-label {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 12px;
+  width: 105px;
+  text-align: right;
+}
+
+.display-field {
+  margin-left: 5px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.display-title {
+  color: #333;
+  border-bottom: 1px solid #dfdfdf;
+  font-size: 14px;
+  font-weight: bold;
+  padding-bottom: 4px;
+  margin: 15px 0 20px 0;
+}
+
+.display-required .display-label:before {
+  content: "*";
+  color: red;
+  margin: 0px 5px;
+  font-weight: bold;
+}
+
+.display-label:after {
+  content: " : ";
+  margin: 0px 5px;
+  font-weight: bold;
+}
+
+.display-item .img-box-list {
+  margin-left: 0px;
+}
+
+.display-item .map-container {
+  width: 250px;
+  height: 150px;
 }

@@ -173,6 +173,7 @@
     <Compile Include="App_Start\NinjectBinding.cs" />
     <Compile Include="Concrete\NinjectControllerFactory.cs" />
     <Compile Include="Concrete\CodeFirstContext.cs" />
+    <Compile Include="Controllers\Admin\CompanyVerifyController.cs" />
     <Compile Include="Controllers\Admin\DashboardController.cs" />
     <Compile Include="Controllers\AjaxServiceController.cs" />
     <Compile Include="Controllers\Admin\AreasController.cs" />
@@ -266,6 +267,10 @@
     <Compile Include="Migrations\201303130915335_AddCompanyImgAndLinkManImg.Designer.cs">
       <DependentUpon>201303130915335_AddCompanyImgAndLinkManImg.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303180656153_AddCompanyDescription.cs" />
+    <Compile Include="Migrations\201303180656153_AddCompanyDescription.Designer.cs">
+      <DependentUpon>201303180656153_AddCompanyDescription.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\SqlResourceMigration.cs" />
     <Compile Include="Models\Area.cs" />
@@ -300,12 +305,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serivces\AreaAttService.cs" />
     <Compile Include="Serivces\AreaService.cs" />
+    <Compile Include="Serivces\CompanyService.cs" />
     <Compile Include="Serivces\DepartmentService.cs" />
     <Compile Include="Serivces\EmailService.cs" />
     <Compile Include="Serivces\FormatCateService.cs" />
     <Compile Include="Serivces\GroupService.cs" />
     <Compile Include="Serivces\Interface\IAreaAttService.cs" />
     <Compile Include="Serivces\Interface\IAreaService.cs" />
+    <Compile Include="Serivces\Interface\ICompanyService.cs" />
     <Compile Include="Serivces\Interface\IDepartmentService.cs" />
     <Compile Include="Serivces\Interface\IEmailService.cs" />
     <Compile Include="Serivces\Interface\IFormatCateService.cs" />
@@ -815,6 +822,9 @@
       <DependentUpon>201303130915335_AddCompanyImgAndLinkManImg.cs</DependentUpon>
     </EmbeddedResource>
     <Content Include="Content\smooth\images\images.zip" />
+    <EmbeddedResource Include="Migrations\201303180656153_AddCompanyDescription.resx">
+      <DependentUpon>201303180656153_AddCompanyDescription.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -1906,6 +1916,17 @@
     <Content Include="smooth-admin-template\psds\smoothadmin_icons.psd" />
     <Content Include="smooth-admin-template\smooth-admin_wch.rar" />
     <Content Include="smooth-admin-template\Warchain.url" />
+    <Content Include="Views\Shared\DisplayTemplates\Object.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CascadingDropDownList.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SingleDropdownList.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MapMarker.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CheckList.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Radio.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\TimeQuantum.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Area.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\UploadImgList.cshtml" />
+    <Content Include="Views\CompanyVerify\Index.cshtml" />
+    <Content Include="Views\CompanyVerify\Details.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using CoreHelper.Http;
+using CoreHelper.Cookie;
 using CoreHelper.Data.Interface;
 using CodeFirstEF.ViewModels;
 using CodeFirstEF.Models;
+using CoreHelper.Enum;
 
 namespace CodeFirstEF.Serivces
 {
@@ -51,6 +53,36 @@ namespace CodeFirstEF.Serivces
                   && x.AddTime > LimitDate
                   );
             return query.Count() > 0;
+        }
+
+
+        public Member_Action Create(CoreHelper.Enum.MemberActionType MemberActionType, string description)
+        {
+            var MemberID = Convert.ToInt32(CookieHelper.UID);
+            Member_Action member_Action = new Member_Action()
+            {
+                MemberID = MemberID,
+                ActionType = (int)MemberActionType,
+                AddTime = DateTime.Now,
+                Description = description,
+                IP = HttpHelper.IP
+            };
+            DB_Service.Add<Member_Action>(member_Action);
+            DB_Service.Commit();
+            return member_Action;
+        }
+
+        public Member_Action Create(CoreHelper.Enum.MemberActionType MemberActionType)
+        {
+            return Create(MemberActionType, string.Empty);
+        }
+
+
+        public bool HasAction(MemberActionType MemberActionType)
+        {
+            var MemberID = Convert.ToInt32(CookieHelper.UID);
+            var type = (int)MemberActionType;
+            return DB_Service.Set<Member_Action>().Any(x => x.MemberID == MemberID && x.ActionType == type);
         }
     }
 }

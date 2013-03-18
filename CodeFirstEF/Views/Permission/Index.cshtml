@@ -31,7 +31,6 @@
     .DataSource(dataSource => dataSource
         .Ajax()
         .Batch(true)
-        .ServerOperation(false)
         .PageSize(100)
         .Model(model => model.Id(c => c.ID))
         .Create("Editing_Create", "Permission")

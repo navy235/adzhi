@@ -27,9 +27,7 @@
     .DataSource(dataSource => dataSource
         .Ajax()
         .Batch(true)
-        .PageSize(120)
-        
-        .ServerOperation(false)
+        .PageSize(20)
         .Model(model => model.Id(c => c.ID))
         .Create("Editing_Create", "Areas")
         .Read("Editing_Read", "Areas")

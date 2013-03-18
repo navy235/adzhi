@@ -195,7 +195,60 @@ namespace CodeFirstEF.Controllers
 
             //ViewBag.Name = Owner.OwnerCate.CateName;
 
-            return View();
+            //EmailModel model = new EmailModel()
+            //{
+            //    Title = "您在招聘网订阅的最新职位信息",
+            //    Content = "符合该条件的职位共8个，以下为最新的8个职位。",
+            //    Email = "shenhaijunmail@163.com"
+            //};
+
+            OutDoorViewModel odv = new OutDoorViewModel();
+            OutDoor od = new OutDoor();
+            od = DB_Service.Set<OutDoor>()
+                .Include(x => x.MediaImg)
+                .Include(x => x.MapImg)
+                .Include(x => x.AreaAtt)
+                .Single(x => x.MediaID == 1);
+
+            odv.MediaID = od.MediaID;
+            odv.AreaAtt = String.Join(",", od.AreaAtt.Select(x => x.ID));
+            odv.CityCode = od.CityCode;
+            odv.CredentialsImg = od.CredentialsImg.ImgUrls;
+            odv.Deadline = od.Deadline;
+            odv.Description = od.Description;
+            odv.EndTime = DateTime.Now;
+            odv.StartTime = DateTime.Now;
+
+            odv.TrafficAuto = od.TrafficAuto;
+            odv.TrafficPerson = od.TrafficPerson;
+
+            odv.FormatCode = od.FormatCode;
+            odv.HasLight = od.HasLight;
+            if (od.HasLight)
+            {
+                odv.LightTime = od.LightStrat + "|" + od.LightEnd;
+            }
+
+            odv.Location = od.Location;
+
+            odv.MediaImg = od.MediaImg.ImgUrls;
+            odv.MeidaCode = od.MeidaCode;
+            odv.Name = od.Name;
+            odv.OwnerCode = od.OwnerCode;
+            odv.PeriodCode = od.PeriodCode;
+            odv.Position = od.Lat + "|" + od.Lng;
+            odv.Price = od.Price;
+            odv.PriceExten = od.PriceExten;
+            odv.Area = od.Wdith + "|" + od.Height + "|" + od.TotalFaces;
+
+            ViewBag.Data_AreaAtt = DB_Service.Set<AreaAtt>().ToList().Select(x => new SelectListItem()
+            {
+                Value = x.ID.ToString(),
+                Text = x.AttName,
+                Selected = od.AreaAtt.Select(a => a.ID).Contains(x.ID)
+
+            }).ToList();
+            return View(odv);
         }
 
 
