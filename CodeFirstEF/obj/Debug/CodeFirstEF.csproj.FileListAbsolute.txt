@@ -177,3 +177,5 @@ F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.csproj.GenerateResource.Ca
 F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.dll
 F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.pdb
 D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddCompanyDescription.resources
+F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddCompanyDescription.resources
+F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddOutDoorStatus.resources

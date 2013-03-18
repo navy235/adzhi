@@ -43,15 +43,17 @@ namespace CoreHelper.Data.Infrastructure
         {
             return base.Set<TEntity>();
         }
-  
+
 
         void IDisposable.Dispose()
         {
             base.Dispose();
         }
 
-
-
+        public int ExecuteSqlCommand(string sql, params object[] parameters)
+        {
+            return base.Database.ExecuteSqlCommand(sql, parameters);
+        }
     }
 
 }

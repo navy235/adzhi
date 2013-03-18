@@ -126,6 +126,8 @@
            {
                items.Add().Text("企业认证审核").Action("index", "companyverify")
                     .LinkHtmlAttributes(new { target = "content" });
+               items.Add().Text("已审核企业").Action("authed", "companyverify")
+                   .LinkHtmlAttributes(new { target = "content" });
 
            });
 
@@ -143,7 +145,7 @@
 
     <script type="text/javascript">
         var LeftMenu = {
-            onSelect: function(e) {
+            onSelect: function (e) {
                 var $link = $(e.item);
                 if (!$link.find('ul').length > 0) {
                     $('#loading').show();
@@ -152,8 +154,8 @@
                 }
             }
         };
-        $(function() {
-            $('#content').load(function() {
+        $(function () {
+            $('#content').load(function () {
                 $('#loading').hide();
                 $(this).show();
             })

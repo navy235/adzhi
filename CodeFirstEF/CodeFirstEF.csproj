@@ -175,6 +175,7 @@
     <Compile Include="Concrete\CodeFirstContext.cs" />
     <Compile Include="Controllers\Admin\CompanyVerifyController.cs" />
     <Compile Include="Controllers\Admin\DashboardController.cs" />
+    <Compile Include="Controllers\Admin\OutDoorVerifyController.cs" />
     <Compile Include="Controllers\AjaxServiceController.cs" />
     <Compile Include="Controllers\Admin\AreasController.cs" />
     <Compile Include="Controllers\Admin\DepartmentController.cs" />
@@ -270,6 +271,10 @@
     <Compile Include="Migrations\201303180656153_AddCompanyDescription.cs" />
     <Compile Include="Migrations\201303180656153_AddCompanyDescription.Designer.cs">
       <DependentUpon>201303180656153_AddCompanyDescription.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201303181309031_AddOutDoorStatus.cs" />
+    <Compile Include="Migrations\201303181309031_AddOutDoorStatus.Designer.cs">
+      <DependentUpon>201303181309031_AddOutDoorStatus.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\SqlResourceMigration.cs" />
@@ -824,6 +829,9 @@
     <Content Include="Content\smooth\images\images.zip" />
     <EmbeddedResource Include="Migrations\201303180656153_AddCompanyDescription.resx">
       <DependentUpon>201303180656153_AddCompanyDescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303181309031_AddOutDoorStatus.resx">
+      <DependentUpon>201303181309031_AddOutDoorStatus.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -1927,6 +1935,7 @@
     <Content Include="Views\Shared\DisplayTemplates\UploadImgList.cshtml" />
     <Content Include="Views\CompanyVerify\Index.cshtml" />
     <Content Include="Views\CompanyVerify\Details.cshtml" />
+    <Content Include="Views\CompanyVerify\Authed.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />

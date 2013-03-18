@@ -15,7 +15,7 @@
         columns.Bound(p => p.CompanyID).Title("媒体ID")
                          .Sortable(false)
                          .Filterable(false)
-                         .ClientTemplate("<input type='checkbox' name='ID_check' id='#=CompanyID#_check'  class='chkbx' value='#=CompanyID#' />")
+                         .ClientTemplate("<input type='checkbox' name='ID_check' id='#=CompanyID#_check'  class='chkbx' />")
                          .HeaderTemplate("<div style='text-align:center'><input type='checkbox' id='checkAll' onclick='CompanyVerify.checkAll(this)' title='全选'/></div>")
                          .Width(40).HtmlAttributes(new { style = "text-align:center" });
 
@@ -29,20 +29,13 @@
         columns.Command(command => command.Custom("查看详情").Click("CompanyVerify.showDetails")).Title("操作");
 
     })
-        .ToolBar(config =>
-        {
-            config.Custom().Text("批量通过").HtmlAttributes(new { onclick = "CompanyVerify.verifyPassAll(this);", href = "javascript:void(0);" });
-
-            config.Custom().Text("批量不通过").HtmlAttributes(new { onclick = "CompanyVerify.verifyFailedAll(this);", href = "javascript:void(0);" });
-
-        })
     .Pageable()
     .Sortable()
     .Scrollable()
     .Filterable()
     .DataSource(dataSource => dataSource
         .Ajax()
-        .Read(read => read.Action("Company_Read", "CompanyVerify"))
+        .Read(read => read.Action("Company_ReadAuthed", "CompanyVerify"))
     ).HtmlAttributes(new { style = "height:500px" })
 )
 
@@ -70,9 +63,6 @@
             var state = $(ele).is(':checked');
             $('[name="ID_check"]').attr('checked', state);
         },
-        getCheckIds: function () {
-            return $.map($('[name="ID_check"]:checked'), function (item) { return $(item).val() }).join(',');
-        },
         showDetails: function (e) {
             e.preventDefault();
             $('#verifyContent').hide();
@@ -81,52 +71,6 @@
             var url = '@Url.Action("Details", "CompanyVerify")';
             $('#verifyContent').attr('src', url + '/' + dataItem.CompanyID);
             var wnd = $("#CompanyDetails").data("kendoWindow").center().open();
-        },
-        addSpinner: function (element) {
-            var $spinner = $('<img class="ajax-working" src="@Url.Content("~/Content/images/min-loading.gif")" title="work...." />').appendTo($(element));
-            $(element).addClass('disabled');
-        },
-        removeSpinner: function (element) {
-            $(element).find('.ajax-working').remove();
-            $(element).removeClass('disabled');
-        },
-        verifyCompany: function (element, url, Ids) {
-            if ($(element).hasClass('disabled'))
-                return false;
-            var self = CompanyVerify;
-            if (Ids) {
-                self.addSpinner(element);
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: { ids: Ids },
-                    success: function (res) {
-                        if (res) {
-                            var grid = $("#CompanyVerify").data("kendoGrid");
-                            grid.dataSource.read();
-                            grid.refresh();
-                        }
-                    },
-                    complete: function () {
-                        self.removeSpinner(element);
-                    }
-                })
-            } else {
-                alert('请选择要审核的公司');
-                return false;
-            }
-        },
-        verifyFailedAll: function (element) {
-            var self = CompanyVerify;
-            var url = '@Url.Action("VerifyFailed", "CompanyVerify")';
-            var Ids = self.getCheckIds();
-            self.verifyCompany(element, url, Ids);
-        },
-        verifyPassAll: function (element) {
-            var self = CompanyVerify;
-            var url = '@Url.Action("VerifyPass", "CompanyVerify")';
-            var Ids = self.getCheckIds();
-            self.verifyCompany(element, url, Ids);
         }
     };
     $(function () {

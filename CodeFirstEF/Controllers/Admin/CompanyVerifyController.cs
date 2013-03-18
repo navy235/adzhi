@@ -13,6 +13,7 @@ using CodeFirstEF.Filters;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
 using CoreHelper.Http;
+using CoreHelper.Enum;
 using CoreHelper.UI;
 using CoreHelper.Data.Interface;
 using Kendo.Mvc.UI;
@@ -20,7 +21,7 @@ using Kendo.Mvc.Extensions;
 
 namespace CodeFirstEF.Controllers
 {
-
+    [Permission]
     public class CompanyVerifyController : Controller
     {
         private IMemberService memberService;
@@ -46,12 +47,35 @@ namespace CodeFirstEF.Controllers
             return View();
         }
 
+        public ActionResult Authed()
+        {
+            ViewBag.CompanyStatus = UIHelper.CompanyStatusList;
+            return View();
+        }
 
         public ActionResult Company_Read([DataSourceRequest] DataSourceRequest request)
         {
-            return Json(companyService.GetVerifyList().ToDataSourceResult(request));
+            return Json(companyService.GetVerifyList(CompanyStatus.CompanyApply).ToDataSourceResult(request));
         }
 
+        public ActionResult Company_ReadAuthed([DataSourceRequest] DataSourceRequest request)
+        {
+            return Json(companyService.GetVerifyList(CompanyStatus.CompanyAuth).ToDataSourceResult(request));
+        }
+
+        public ActionResult VerifyPass(string ids)
+        {
+            var success = companyService.VerifyCompany(ids,
+                CompanyStatus.CompanyAuth);
+            return Json(success);
+        }
+
+        public ActionResult VerifyFailed(string ids)
+        {
+            var success = companyService.VerifyCompany(ids,
+             CompanyStatus.CompanyFailed);
+            return Json(success);
+        }
 
         public ActionResult Details(int id)
         {

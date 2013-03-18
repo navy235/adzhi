@@ -111,6 +111,12 @@ a {
     padding-top: 200px;
 }
 
+#verifyLoading {
+    height: auto;
+    text-align: center;
+    padding-top: 200px;
+}
+
 .form-block {
 }
 

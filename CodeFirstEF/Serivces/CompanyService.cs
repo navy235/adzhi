@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+
+using System.Data.SqlClient;
 using System.Data.Entity;
 using CoreHelper.Checking;
 using CoreHelper.Http;
@@ -91,21 +93,27 @@ namespace CodeFirstEF.Serivces
         }
 
 
-        public IEnumerable<CompanyVerifyViewModel> GetVerifyList()
+        public IQueryable<CompanyVerifyViewModel> GetVerifyList()
         {
+
             return DB_Service.Set<Company>().Select(x => new CompanyVerifyViewModel()
             {
                 CompanyID = x.CompanyID,
                 Name = x.Name,
                 Description = x.Description,
                 LinkMan = x.LinkMan,
+                Contact = (string.IsNullOrEmpty(x.Mobile) ? "" : "手机:" + x.Mobile) + (string.IsNullOrEmpty(x.Phone) ? "" : "电话:" + x.Phone),
                 Status = x.Status,
                 AddTime = x.AddTime,
                 LastTime = x.LastTime
             });
 
         }
-
+        public IQueryable<CompanyVerifyViewModel> GetVerifyList(CompanyStatus CompanyStatus)
+        {
+            int CompanyStatusValue = (int)CompanyStatus;
+            return GetVerifyList().Where(x => x.Status == CompanyStatusValue);
+        }
 
         public Company FindByCompanyID(int CompanyID)
         {
@@ -117,6 +125,14 @@ namespace CodeFirstEF.Serivces
         {
             return DB_Service.Set<Company>().Include(x => x.CompanyImg)
                .Include(x => x.LinkManImg).Single(x => x.CompanyID == CompanyID);
+        }
+
+
+        public bool VerifyCompany(string CompangIds, CompanyStatus CompanyStatus)
+        {
+            return DB_Service.ExecuteSqlCommand("Update Company set Status=@Status where CompanyID in (@Ids)",
+                new SqlParameter("Status", (int)CompanyStatus),
+                new SqlParameter("Ids", CompangIds)) > 0;
         }
     }
 }

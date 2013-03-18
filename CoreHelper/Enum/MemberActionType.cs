@@ -26,8 +26,20 @@ namespace CoreHelper.Enum
 
     public enum CompanyStatus
     {
-        CompanyApply = 0,
-        CompanyAuth = 1
+        CompanyFailed = 0,
+        CompanyApply = 1,
+        CompanyAuth = 2
+    }
+
+    public enum OutDoorStatus
+    {
+        Deleted = -1,
+        VerifyFailed = 0,
+        PreVerify = 1,
+        Verified = 2,
+        NoShow = 3,
+        ShowOnline = 4,
+        Top = 9
     }
 
     public enum OpenLoginType

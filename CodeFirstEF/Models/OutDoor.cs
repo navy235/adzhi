@@ -78,7 +78,7 @@ namespace CodeFirstEF.Models
 
         public System.DateTime Deadline { get; set; }
 
-
+        public int Status { get; set; }
 
         public virtual ICollection<AreaAtt> AreaAtt { get; set; }
 

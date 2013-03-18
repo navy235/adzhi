@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using CodeFirstEF.ViewModels;
 using CodeFirstEF.Models;
+using CoreHelper.Enum;
 
 namespace CodeFirstEF.Serivces
 {
@@ -18,6 +19,10 @@ namespace CodeFirstEF.Serivces
 
         Company IncludeFind(int MemberID);
 
-        IEnumerable<CompanyVerifyViewModel> GetVerifyList();
+        IQueryable<CompanyVerifyViewModel> GetVerifyList();
+
+        IQueryable<CompanyVerifyViewModel> GetVerifyList(CompanyStatus CompanyStatus);
+
+        bool VerifyCompany(string CompangIds, CompanyStatus CompanyStatus);
     }
 }

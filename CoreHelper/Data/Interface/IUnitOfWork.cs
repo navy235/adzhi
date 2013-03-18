@@ -7,10 +7,11 @@ namespace CoreHelper.Data.Interface
     {
         TEntity Add<TEntity>(TEntity entity) where TEntity : class;
         TEntity Attach<TEntity>(TEntity entity) where TEntity : class;
+        int ExecuteSqlCommand(string sql, params object[] parameters);
         void SetProxyCreationEnabledFlase();
         void Commit();
         TEntity Remove<TEntity>(TEntity entity) where TEntity : class;
         IQueryable<TEntity> Set<TEntity>() where TEntity : class;
-     
+
     }
 }

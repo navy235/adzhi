@@ -47,7 +47,7 @@
                     .Scrollable()
                    .DataSource(dataSource => dataSource
                         .Ajax()
-                           .ServerOperation(false)
+                        .PageSize(20)
                         .Model(model => model.Id(c => c.MediaID))
                         .Read(read => read.Action("OutDoor_Read", "Personal"))
                      )
@@ -57,7 +57,7 @@
                 <script type="text/javascript">
                     var GridList = {
                         id: 'OutDoorList',
-                        checkAll: function(ele) {
+                        checkAll: function (ele) {
                             var self = GridList;
                             var state = $(ele).is(':checked');
                             $('[name="ID_check"]').attr('checked', state);
