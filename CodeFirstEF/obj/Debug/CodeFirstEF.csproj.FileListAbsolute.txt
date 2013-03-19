@@ -182,3 +182,5 @@ F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddOutDoorStatu
 D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddOutDoorStatus.resources
 D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddOutAuctionCalendar.resources
 D:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AlertAuctionCanlendarStartTime.resources
+F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AddOutAuctionCalendar.resources
+F:\GitProject\adzhi\CodeFirstEF\obj\Debug\CodeFirstEF.Migrations.AlertAuctionCanlendarStartTime.resources

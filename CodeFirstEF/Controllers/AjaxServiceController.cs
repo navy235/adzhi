@@ -33,6 +33,7 @@ namespace CodeFirstEF.Controllers
         private ICompanyScaleService companyScaleService;
         private IPeriodCateService periodCateService;
         private IOwnerCateService ownerCateService;
+        private IAuctionCalendarService auctionCalendarService;
         public AjaxServiceController(IUnitOfWork _DB_Service
             , IMemberService _memberService
             , IAreaAttService _areaAttService
@@ -44,6 +45,7 @@ namespace CodeFirstEF.Controllers
             , ICompanyScaleService _companyScaleService
             , IPeriodCateService _periodCateService
             , IOwnerCateService _ownerCateService
+            , IAuctionCalendarService _auctionCalendarService
             )
         {
             DB_Service = _DB_Service;
@@ -57,6 +59,7 @@ namespace CodeFirstEF.Controllers
             companyScaleService = _companyScaleService;
             periodCateService = _periodCateService;
             ownerCateService = _ownerCateService;
+            auctionCalendarService = _auctionCalendarService;
         }
 
         #region  Control
@@ -276,9 +279,6 @@ namespace CodeFirstEF.Controllers
             }
         }
 
-
-
-
         public JsonResult NickNameExistsNotMe(string nickName)
         {
             int uid = Convert.ToInt32(CookieHelper.UID);
@@ -315,6 +315,14 @@ namespace CodeFirstEF.Controllers
             {
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public JsonResult ValidateAuction(int id, string startTime, string endTime)
+        {
+            DateTime _startTime = Convert.ToDateTime(startTime);
+            DateTime _endtime = Convert.ToDateTime(endTime);
+            var result = auctionCalendarService.ValidateAuction(id, _startTime, _endtime);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

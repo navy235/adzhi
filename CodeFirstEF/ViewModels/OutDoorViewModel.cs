@@ -214,16 +214,28 @@ namespace CodeFirstEF.ViewModels
 
     public class AuctionCalendarViewModel
     {
-        [ScaffoldColumn(false)]
+
         public int MediaID { get; set; }
 
-        [HiddenInput(DisplayValue = false)]
         public int ID { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public string StartTime { get; set; }
 
-        public DateTime EndTime { get; set; }
+        public string EndTime { get; set; }
 
+        public string StartDate { get; set; }
+
+        public string EndDate { get; set; }
+
+        public bool Top { get; set; }
+
+        public bool ShowLeft { get; set; }
+
+        public bool HasTwo { get; set; }
+
+        public int Left { get; set; }
+
+        public int Width { get; set; }
 
     }
 

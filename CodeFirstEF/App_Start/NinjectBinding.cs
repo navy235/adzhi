@@ -36,7 +36,9 @@ namespace CodeFirstEF.App_Start
             kernel.Bind<IOutDoorService>()
                 .To<OutDoorService>()
                 .InRequestScope();
-
+            kernel.Bind<IAuctionCalendarService>()
+                 .To<AuctionCalendarService>()
+                 .InRequestScope();
 
 
             kernel.Bind<IDepartmentService>()

@@ -39,12 +39,15 @@ namespace CodeFirstEF.Controllers
         private IMember_ActionService member_ActionService;
         private IAreaAttService areaAttService;
         private IOutDoorService outDoorService;
+        private IAuctionCalendarService auctionCalendarService;
         public OutDoorController(IUnitOfWork _DB_Service
             , IMemberService _memberService
             , IEmailService _emailService
             , IMember_ActionService _member_ActionService
             , IAreaAttService _areaAttService
-            , IOutDoorService _outDoorService)
+            , IOutDoorService _outDoorService
+            , IAuctionCalendarService _auctionCalendarService
+            )
         {
             DB_Service = _DB_Service;
             memberService = _memberService;
@@ -52,6 +55,7 @@ namespace CodeFirstEF.Controllers
             member_ActionService = _member_ActionService;
             areaAttService = _areaAttService;
             outDoorService = _outDoorService;
+            auctionCalendarService = _auctionCalendarService;
         }
 
         public ActionResult Index()
@@ -219,6 +223,117 @@ namespace CodeFirstEF.Controllers
             {
                 return Content("<script>alert('非法操作！');window.history.go(-1);</script>");
             }
+
+        }
+        public ActionResult GetAuctionCalendar(int id)
+        {
+            List<AuctionCalendarViewModel> data = new List<AuctionCalendarViewModel>();
+            var query = auctionCalendarService.GetALL(id).ToList();
+            foreach (var item in query)
+            {
+                data.AddRange(GetAuctionCalendarViewModel(item));
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult AddAuctionCalendar(int id, string startTime, string endTime)
+        {
+            List<AuctionCalendarViewModel> data = new List<AuctionCalendarViewModel>();
+            DateTime _startTime = Convert.ToDateTime(startTime);
+            DateTime _endtime = Convert.ToDateTime(endTime);
+            AuctionCalendar model = new AuctionCalendar();
+            if (auctionCalendarService.ValidateAuction(id, _startTime, _endtime))
+            {
+                model = new AuctionCalendar()
+                  {
+                      MediaID = id,
+                      StartTime = _startTime,
+                      EndTime = _endtime
+                  };
+                auctionCalendarService.Create(model);
+            }
+            data.AddRange(GetAuctionCalendarViewModel(model));
+            return Json(data);
+        }
+
+        public List<AuctionCalendarViewModel> GetAuctionCalendarViewModel(AuctionCalendar model)
+        {
+            List<AuctionCalendarViewModel> data = new List<AuctionCalendarViewModel>();
+            bool hasTwo = false;
+            var CurrentYear = DateTime.Now.Year;
+            var currentYearFirtDay = new DateTime(CurrentYear, 1, 1);
+            var NextYear = DateTime.Now.Year + 1;
+            var nextYearFirtDay = new DateTime(NextYear, 1, 1);
+            if (model.StartTime < currentYearFirtDay)
+            {
+                model.StartTime = currentYearFirtDay;
+            }
+            if (model.StartTime.Year != model.EndTime.Year)
+            {
+                hasTwo = true;
+            }
+            if (!hasTwo)
+            {
+                AuctionCalendarViewModel item = new AuctionCalendarViewModel()
+                {
+                    ID = model.ID,
+                    EndTime = model.EndTime.ToString("yyyy-MM-dd"),
+                    EndDate = model.EndTime.ToString("MM-dd"),
+                    MediaID = model.MediaID,
+                    StartTime = model.StartTime.ToString("yyyy-MM-dd"),
+                    StartDate = model.StartTime.ToString("MM-dd"),
+                    Top = (model.EndTime < nextYearFirtDay)
+                };
+                if (item.Top)
+                {
+                    item.Left = (model.StartTime - currentYearFirtDay).Days;
+                    item.Width = (model.EndTime - model.StartTime).Days;
+                }
+                else
+                {
+                    item.Left = (model.StartTime - nextYearFirtDay).Days;
+                    item.Width = (model.EndTime - model.StartTime).Days;
+                }
+                data.Add(item);
+            }
+            else
+            {
+
+                AuctionCalendarViewModel item1 = new AuctionCalendarViewModel()
+                {
+                    ID = model.ID,
+                    EndTime = model.EndTime.ToString("yyyy-MM-dd"),
+                    EndDate = model.EndTime.ToString("MM-dd"),
+                    MediaID = model.MediaID,
+                    StartTime = model.StartTime.ToString("yyyy-MM-dd"),
+                    StartDate = model.StartTime.ToString("MM-dd"),
+                    Top = true,
+                    HasTwo = true,
+                    Left = (model.StartTime - currentYearFirtDay).Days,
+                    ShowLeft = true,
+                    Width = (new DateTime(CurrentYear, 12, 30) - model.StartTime).Days
+                };
+
+                AuctionCalendarViewModel item2 = new AuctionCalendarViewModel()
+                {
+                    ID = model.ID,
+                    EndTime = model.EndTime.ToString("yyyy-MM-dd"),
+                    EndDate = model.EndTime.ToString("MM-dd"),
+                    MediaID = model.MediaID,
+                    StartTime = model.StartTime.ToString("yyyy-MM-dd"),
+                    StartDate = model.StartTime.ToString("MM-dd"),
+                    Top = false,
+                    HasTwo = true,
+                    ShowLeft = false,
+                    Left = 0,
+                    Width = (model.EndTime - new DateTime(NextYear, 1, 1)).Days
+                };
+                data.Add(item1);
+                data.Add(item2);
+            }
+
+            return data;
 
         }
 

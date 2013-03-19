@@ -319,6 +319,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serivces\AreaAttService.cs" />
     <Compile Include="Serivces\AreaService.cs" />
+    <Compile Include="Serivces\AuctionCalendarService.cs" />
     <Compile Include="Serivces\CompanyService.cs" />
     <Compile Include="Serivces\DepartmentService.cs" />
     <Compile Include="Serivces\EmailService.cs" />
@@ -326,6 +327,7 @@
     <Compile Include="Serivces\GroupService.cs" />
     <Compile Include="Serivces\Interface\IAreaAttService.cs" />
     <Compile Include="Serivces\Interface\IAreaService.cs" />
+    <Compile Include="Serivces\Interface\IAuctionCalendarService.cs" />
     <Compile Include="Serivces\Interface\ICompanyService.cs" />
     <Compile Include="Serivces\Interface\IDepartmentService.cs" />
     <Compile Include="Serivces\Interface\IEmailService.cs" />
