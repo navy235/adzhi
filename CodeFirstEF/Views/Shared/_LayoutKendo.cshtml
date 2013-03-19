@@ -134,10 +134,10 @@
         panelbar.Add().Text("户外信息管理")
             .Items(items =>
             {
-                items.Add().Text("Sub Item 1");
-                items.Add().Text("Sub Item 2");
-                items.Add().Text("Sub Item 3");
-                items.Add().Text("Sub Item 4");
+                items.Add().Text("户外信息审核").Action("index", "outdoorverify")
+                      .LinkHtmlAttributes(new { target = "content" });
+                items.Add().Text("审核通过信息").Action("authed", "outdoorverify")
+                    .LinkHtmlAttributes(new { target = "content" });
             });
     })
 )
@@ -145,7 +145,7 @@
 
     <script type="text/javascript">
         var LeftMenu = {
-            onSelect: function (e) {
+            onSelect: function(e) {
                 var $link = $(e.item);
                 if (!$link.find('ul').length > 0) {
                     $('#loading').show();
@@ -154,8 +154,8 @@
                 }
             }
         };
-        $(function () {
-            $('#content').load(function () {
+        $(function() {
+            $('#content').load(function() {
                 $('#loading').hide();
                 $(this).show();
             })

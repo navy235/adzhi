@@ -1,0 +1,117 @@
+@using CodeFirstEF.ViewModels
+@model string
+@{
+    string name = ViewData.TemplateInfo.GetFullHtmlFieldId(null);
+    List<AuctionCalendarViewModel> renderList = new List<AuctionCalendarViewModel>();
+    renderList = (List<AuctionCalendarViewModel>)ViewData["Data_" + name];
+    var CurrenYear = DateTime.Now.Year;
+    var NexYear = DateTime.Now.Year + 1;
+}
+
+
+<div class="form-auctioncalendar clearfix">
+    <div class="form-auctioncalendar-year">
+        <p>@CurrenYear</p>
+        <p>@NexYear</p>
+    </div>
+    <div class="form-auctioncalendar-month">
+        <ul>
+            <li class="form-auctioncalendar-top">
+                <span style="width: 258px; left: 120px; cursor: pointer" onclick="delSchedule(48)" title="2013年03月19日-2013年08月30日不可售，点击可删除">
+                    <strong class="form-auctioncalendar-left">03/19</strong>
+                    <strong class="form-auctioncalendar-right">08/30</strong>
+                </span>
+            </li>
+            <li class="form-auctioncalendar-list">
+                <ul>
+                    <li>1月</li>
+                    <li>2月</li>
+                    <li>3月</li>
+                    <li>4月</li>
+                    <li>5月</li>
+                    <li>6月</li>
+                    <li>7月</li>
+                    <li>8月</li>
+                    <li>9月</li>
+                    <li>10月</li>
+                    <li>11月</li>
+                    <li>12月</li>
+                </ul>
+            </li>
+            <li class="form-auctioncalendar-bottom"></li>
+        </ul>
+    </div>
+</div>
+
+<div class="form-filed">
+    <label>媒体排期：</label>
+    <div class="filed-auction">
+        @(Html.Kendo().DatePicker()
+            .Name(name + "_startpicker")
+            .Min(DateTime.Today)
+            .Value(DateTime.Today)
+            .Max(DateTime.Today.AddYears(2))
+            .Events(e =>
+            {
+                e.Change(name + ".startChange");
+            })
+         )
+        至
+        @(Html.Kendo().DatePicker()
+            .Name(name + "_endpicker")
+            .Min(DateTime.Today)
+            .Value(DateTime.Today)
+            .Max(DateTime.Today.AddYears(2))
+            .Events(e =>
+            {
+                e.Change(name + ".endChange");
+            })
+         )
+        <button type="button" class="k-button k-button-icontext " id="@(name + "_submit")" >
+            <span class="k-icon k-i-plus"></span>
+            添加</button>
+    </div>
+</div>
+
+<div class="field-validation-error" id="@(name + "_error")" style="display:none;">
+</div>
+
+
+<script type="text/javascript">
+    var @name={
+        id:'@name',
+        mediaId:@Model,
+        submitId:'@(name + "_submit")',
+        errorId:'@(name + "_error")',
+        startpickerId:'@(name + "_startpicker")',
+        endpickerId:'@(name + "_endpicker")',
+        startChange:function(e){
+            var self=@name;
+            var startPicker=$('#'+self.startpickerId).data("kendoDatePicker");
+            var endpicker=$('#'+self.endpickerId).data("kendoDatePicker");
+            endpicker.min(startPicker.value());
+        },
+        endChange:function(e){
+            var self=@name;
+            var startPicker=$('#'+self.startpickerId).data("kendoDatePicker");
+            var endpicker=$('#'+self.endpickerId).data("kendoDatePicker");
+
+            if(startPicker.value() >= endpicker.value()){
+                $('#'+self.errorId).html('起始时间大于结束时间').show();
+                $('#'+self.submitId).addClass('disabled');
+            }else{
+                $('#'+self.errorId).html('').hide();
+                $('#'+self.submitId).removeClass('disabled');
+            }
+
+        },
+        removeAuction:function(id){
+            
+        },
+        addAuction:function(){
+        
+        }
+    }
+
+
+</script>

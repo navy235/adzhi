@@ -3596,7 +3596,8 @@ goods-pack .goods-desc {
     height: 198px;
   }
 
-  .personal-form-avtar .form-field-submit {
+  .personal-form-avtar .form-field-submit,
+  .personal-form-setauction .form-field-submit {
     margin-left: 0px;
   }
 

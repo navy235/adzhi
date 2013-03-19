@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "显示中户外列表";
+    ViewBag.Title = "已删除户外信息列表";
     Layout = "~/Views/Shared/_LayoutPersonal.cshtml";
 }
 <article class="personal clearfix">
@@ -13,10 +13,6 @@
             <div class="personal-body-title clearfix">
                 <h5>@ViewBag.Title</h5>
             </div>
-
-            @ViewHelpers.Alert("友情提醒：",
-                CoreHelper.Cookie.CookieHelper.NickName + ",。",
-                false, CoreHelper.Enum.AlertType.info.ToString())
 
             @if (ViewBag.Error != null)
             { 
@@ -34,18 +30,12 @@
                             .ClientTemplate("<input type='checkbox' name='ID_check' id='#=MediaID#_check'  class='chkbx' value='#=MediaID#' />")
                             .HeaderTemplate("<div style='text-align:center'><input type='checkbox' id='checkAll' onclick='GridList.checkAll(this)' title='全选'/></div>")
                             .Width(40).HtmlAttributes(new { style = "text-align:center" });
-
-                        columns.Bound(c => c.FocusImg).Width(76).ClientTemplate("<img class='table-list-img' src='#=FocusImg#' alt='#=Name#' />");
+                        columns.Bound(c => c.FocusImg).ClientTemplate("<img class='table-list-img' src='#=FocusImg#' alt='#=Name#' />").Width(76);
                         columns.Bound(c => c.Name);
-                        columns.Bound(c => c.AddTime).Format("{0:yyyy-MM-dd}").Width(80).Title("添加时间");
+                        columns.Bound(c => c.AddTime).Format("{0:yyyy-MM-dd}").Width(100).Title("添加时间");
                         columns.Template(@<text></text>)
                 .ClientTemplate(@"<a class='k-button k-button-icontext ' href='"
-                + Url.Action("edit", "outdoor") + "/#=MediaID#'><span class='k-icon k-edit'></span>编辑</a>"
-                + "<a class='k-button k-button-icontext ' href='" + Url.Action("setauctioncalendar", "outdoor") + "/#=MediaID#' ><span class='k-icon k-i-calendar'></span>排期</a>"
-                + "<a class='k-button k-button-icontext ' href='javascript:void(0);' ><span class='k-icon k-i-close'></span>删除</a>")
-                .Title("操作")
-                .Width(240);
-
+                + Url.Action("edit", "outdoor") + "/#=MediaID#'><span class='k-icon k-edit'></span>编辑</a>").Title("编辑").Width(100);
 
                     })
                     .ToolBar(toolbar =>
@@ -60,29 +50,18 @@
                         .Ajax()
                         .PageSize(20)
                         .Model(model => model.Id(c => c.MediaID))
-                        .Read(read => read.Action("OutDoor_Read", "outdoor"))
+                        .Read(read => read.Action("outdoor_delete", "outdoor"))
                      )
                      .HtmlAttributes(new { style = "height:500px;" })
                     )
 
                 <script type="text/javascript">
-                    var Grid = {
+                    var GridList = {
                         id: 'OutDoorList',
-                        checkAll: function(element) {
-                            var self = Grid;
-                            var state = $(element).is(':checked');
+                        checkAll: function(ele) {
+                            var self = GridList;
+                            var state = $(ele).is(':checked');
                             $('[name="ID_check"]').attr('checked', state);
-                        },
-                        getCheckIds: function() {
-                            return $.map($('[name="ID_check"]:checked'), function(item) { return $(item).val() }).join(',');
-                        },
-                        addSpinner: function(element) {
-                            var $spinner = $('<img class="ajax-working" src="@Url.Content("~/Content/images/min-loading.gif")" title="work...." />').appendTo($(element));
-                            $(element).addClass('disabled');
-                        },
-                        removeSpinner: function(element) {
-                            $(element).find('.ajax-working').remove();
-                            $(element).removeClass('disabled');
                         }
                     }
 

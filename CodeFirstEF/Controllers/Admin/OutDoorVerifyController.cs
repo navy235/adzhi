@@ -14,12 +14,14 @@ using CoreHelper.Checking;
 using CoreHelper.Cookie;
 using CoreHelper.Http;
 using CoreHelper.UI;
+using CoreHelper.Enum;
 using CoreHelper.Data.Interface;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 
 namespace CodeFirstEF.Controllers.Admin
 {
+    [Permission]
     public class OutDoorVerifyController : Controller
     {
         private IMemberService memberService;
@@ -40,8 +42,46 @@ namespace CodeFirstEF.Controllers.Admin
 
         public ActionResult Index()
         {
+            ViewBag.OutDoorStatus = UIHelper.OutDoorStatusList;
             return View();
         }
+
+        public ActionResult Authed()
+        {
+            ViewBag.OutDoorStatus = UIHelper.OutDoorStatusList;
+            return View();
+        }
+
+        public ActionResult OutDoor_Read([DataSourceRequest] DataSourceRequest request)
+        {
+            return Json(outDoorService.GetVerifyList(OutDoorStatus.PreVerify).ToDataSourceResult(request));
+        }
+
+        public ActionResult OutDoor_ReadAuthed([DataSourceRequest] DataSourceRequest request)
+        {
+            return Json(outDoorService.GetVerifyList(OutDoorStatus.Verified, true).ToDataSourceResult(request));
+        }
+
+        public ActionResult VerifyPass(string ids)
+        {
+            var success = outDoorService.ChangeStatus(ids,
+                OutDoorStatus.ShowOnline);
+            return Json(success);
+        }
+
+        public ActionResult VerifyFailed(string ids)
+        {
+            var success = outDoorService.ChangeStatus(ids,
+             OutDoorStatus.VerifyFailed);
+            return Json(success);
+        }
+
+        public ActionResult Details(int id)
+        {
+            var model = outDoorService.GetOutDoorViewModel(id);
+            return View(model);
+        }
+
 
     }
 }

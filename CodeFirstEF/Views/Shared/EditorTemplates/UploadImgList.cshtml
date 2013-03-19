@@ -91,7 +91,7 @@
                 $("#"+self.id+"_imgbox").find('.img-list-box-close').on('click',self.deleteImg);
                 $("#"+self.id+"_imgbox").find('.img-list-box-sorter').on('click',self.sorter);
                 var inputVal=$input.val()===''?'':$input.val()+',';
-                inputVal+=resData.imgurl_800;
+                inputVal+=resData.imgurl_120;
                 $input.val(inputVal);
                 self.validate();
                 self.hideUploadSuccess();

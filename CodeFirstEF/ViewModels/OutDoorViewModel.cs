@@ -172,19 +172,60 @@ namespace CodeFirstEF.ViewModels
 
 
         [Required(ErrorMessage = "请输入所有权截至")]
-        [Display(Name = "所有权截至时间")]
+        [Display(Name = "所有权截至")]
         [DataType(DataType.DateTime)]
         public DateTime Deadline { get; set; }
 
 
+    }
 
 
+    public class OutDoorListItem
+    {
+        public int MediaID { get; set; }
 
+        [Display(Name = "媒体名称")]
+        public string Name { get; set; }
 
+        [Display(Name = "媒体图片")]
+        public string FocusImg { get; set; }
 
+        [Display(Name = "审核信息")]
+        public string Unapprovedlog { get; set; }
 
+        [Display(Name = "审核状态")]
+        public int Status { get; set; }
 
+        [Display(Name = "添加时间")]
+        public DateTime AddTime { get; set; }
+    }
+
+    public class OutDoorSetAuctionCalendarViewModel
+    {
+        [ScaffoldColumn(false)]
+        public int MediaID { get; set; }
+        [Display(Name = "媒体排期")]
+
+        [HintClass("hide")]
+        [UIHint("AuctionCalendar")]
+        public string AuctionCalendar { get; set; }
+
+    }
+
+    public class AuctionCalendarViewModel
+    {
+        [ScaffoldColumn(false)]
+        public int MediaID { get; set; }
+
+        [HiddenInput(DisplayValue = false)]
+        public int ID { get; set; }
+
+        public DateTime StartTime { get; set; }
+
+        public DateTime EndTime { get; set; }
 
 
     }
+
+
 }

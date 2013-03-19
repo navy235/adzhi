@@ -65,14 +65,14 @@ namespace CodeFirstEF.Controllers
 
         public ActionResult VerifyPass(string ids)
         {
-            var success = companyService.VerifyCompany(ids,
+            var success = companyService.ChangeStatus(ids,
                 CompanyStatus.CompanyAuth);
             return Json(success);
         }
 
         public ActionResult VerifyFailed(string ids)
         {
-            var success = companyService.VerifyCompany(ids,
+            var success = companyService.ChangeStatus(ids,
              CompanyStatus.CompanyFailed);
             return Json(success);
         }

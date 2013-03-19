@@ -187,10 +187,10 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\Admin\MemberController.cs" />
     <Compile Include="Controllers\Admin\PermissionController.cs" />
+    <Compile Include="Controllers\OutDoorController.cs" />
     <Compile Include="Controllers\PersonalController.cs" />
     <Compile Include="Controllers\Admin\RolesController.cs" />
     <Compile Include="Controllers\ServerController.cs" />
-    <Compile Include="Controllers\Admin\OutDoorController.cs" />
     <Compile Include="Controllers\Admin\PeriodCateController.cs" />
     <Compile Include="Controllers\Admin\OutDoorMediaCateController.cs" />
     <Compile Include="Controllers\Admin\AreaAttController.cs" />
@@ -276,10 +276,19 @@
     <Compile Include="Migrations\201303181309031_AddOutDoorStatus.Designer.cs">
       <DependentUpon>201303181309031_AddOutDoorStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303190810213_AddOutAuctionCalendar.cs" />
+    <Compile Include="Migrations\201303190810213_AddOutAuctionCalendar.Designer.cs">
+      <DependentUpon>201303190810213_AddOutAuctionCalendar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201303190830515_AlertAuctionCanlendarStartTime.cs" />
+    <Compile Include="Migrations\201303190830515_AlertAuctionCanlendarStartTime.Designer.cs">
+      <DependentUpon>201303190830515_AlertAuctionCanlendarStartTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\SqlResourceMigration.cs" />
     <Compile Include="Models\Area.cs" />
     <Compile Include="Models\AreaAtt.cs" />
+    <Compile Include="Models\AuctionCalendar.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\CompanyScale.cs" />
@@ -832,6 +841,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303181309031_AddOutDoorStatus.resx">
       <DependentUpon>201303181309031_AddOutDoorStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303190810213_AddOutAuctionCalendar.resx">
+      <DependentUpon>201303190810213_AddOutAuctionCalendar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303190830515_AlertAuctionCanlendarStartTime.resx">
+      <DependentUpon>201303190830515_AlertAuctionCanlendarStartTime.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -1914,9 +1929,8 @@
     <Content Include="Views\Shared\_PersonalLeftNav.cshtml" />
     <Content Include="Views\Personal\ChangePwd.cshtml" />
     <Content Include="Views\Personal\BindEmail.cshtml" />
-    <Content Include="Views\Personal\AddOutDoor.cshtml" />
-    <Content Include="Views\Personal\OutDoor.cshtml" />
-    <Content Include="Views\Personal\EditOutDoor.cshtml" />
+    <Content Include="Views\OutDoor\Add.cshtml" />
+    <Content Include="Views\OutDoor\Edit.cshtml" />
     <Content Include="Views\Company\Index.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="smooth-admin-template\html\resources\images\images.zip" />
@@ -1936,6 +1950,14 @@
     <Content Include="Views\CompanyVerify\Index.cshtml" />
     <Content Include="Views\CompanyVerify\Details.cshtml" />
     <Content Include="Views\CompanyVerify\Authed.cshtml" />
+    <Content Include="Views\OutDoor\Preverify.cshtml" />
+    <Content Include="Views\OutDoor\Delete.cshtml" />
+    <Content Include="Views\OutDoor\NoShow.cshtml" />
+    <Content Include="Views\OutDoor\VerifyFailed.cshtml" />
+    <Content Include="Views\OutDoorVerify\Index.cshtml" />
+    <Content Include="Views\OutDoorVerify\Authed.cshtml" />
+    <Content Include="Views\OutDoorVerify\Details.cshtml" />
+    <Content Include="Views\OutDoor\SetAuctionCalendar.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />
@@ -1954,6 +1976,7 @@
     <Content Include="Views\Shared\EditorTemplates\Price.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TimeQuantum.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Area.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AuctionCalendar.cshtml" />
     <None Include="Views\Shared\_LayoutList.cshtml" />
     <Content Include="Views\Shared\_TopListMenu.cshtml" />
     <Content Include="Views\Shared\_ListMain.cshtml" />

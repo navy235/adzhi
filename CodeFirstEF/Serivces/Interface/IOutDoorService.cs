@@ -21,6 +21,10 @@ namespace CodeFirstEF.Serivces
 
         IQueryable<OutDoor> GetOutDoorByMember(int MemberID);
 
-        IQueryable<OutDoor> GetKenDoOutDoorByMember(int MemberID);
+        IQueryable<OutDoorListItem> GetMemberOutDoor(int MemberID, OutDoorStatus OutDoorStatus, bool includeUpLevel = false);
+
+        IQueryable<OutDoorListItem> GetVerifyList(OutDoorStatus OutDoorStatus, bool includeUpLevel = false);
+
+        bool ChangeStatus(string Ids, OutDoorStatus OutDoorStatus);
     }
 }

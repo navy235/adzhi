@@ -183,7 +183,10 @@ namespace CodeFirstEF.Concrete
                 .HasOptional(o => o.CredentialsImg)
                 .WithRequired(o => o.OutDoor);
 
-
+            modelBuilder.Entity<OutDoor>()
+                .HasMany(o => o.AuctionCalendar)
+                .WithRequired(a => a.OutDoor)
+                .HasForeignKey(a => a.MediaID);
 
 
 

@@ -63,13 +63,25 @@
     </div>
     <ul class="menu-outdoor" style="display: none;">
         <li class="item-outdoor-list ">
-            <p><a href="@Url.Action("OutDoor", "Personal")">户外信息列表</a></p>
+            <p><a href="@Url.Action("index", "outdoor")">显示中信息</a></p>
+        </li>
+        <li class="item-outdoor-noshow ">
+            <p><a href="@Url.Action("noshow", "outdoor")">未显示信息</a></p>
+        </li>
+        <li class="item-outdoor-preverify ">
+            <p><a href="@Url.Action("preverify", "outdoor")">待审核信息</a></p>
+        </li>
+        <li class="item-outdoor-verifyfailed ">
+            <p><a href="@Url.Action("verifyfailed", "outdoor")">审核失败信息</a></p>
+        </li>
+        <li class="item-outdoor-delete ">
+            <p><a href="@Url.Action("delete", "outdoor")">已删除信息</a></p>
         </li>
         <li class="item-outdoor-publish ">
-            <p><a href="@Url.Action("AddOutDoor", "Personal")">发布户外信息</a></p>
+            <p><a href="@Url.Action("add", "outdoor")">发布户外信息</a></p>
         </li>
         <li class="item-outdoor-top ">
-            <p><a href="http://u.zhubajie.com/changepass/index">户外置顶</a></p>
+            <p><a href="http://u.zhubajie.com/changepass/index">户外置顶管理</a></p>
         </li>
 
     </ul>

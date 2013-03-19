@@ -13,13 +13,7 @@ namespace CodeFirstEF.Models
             this.AreaAtt = new HashSet<AreaAtt>();
             this.TopBase = new HashSet<TopBase>();
             this.SaleBase = new HashSet<SaleBase>();
-            //this.Owner = new Owner();
-            //this.PeriodCate = new PeriodCate();
-            //this.FormatCate = new FormatCate();
-            //this.Area = new Area();
-            //this.OutDoorMediaCate = new OutDoorMediaCate();
-            //this.MapImg = new MapImg();
-            //this.MediaImg = new MediaImg();
+            this.AuctionCalendar = new HashSet<AuctionCalendar>();
             this.Hit = 0;
             this.Message = 0;
             this.Favorite = 0;
@@ -49,6 +43,7 @@ namespace CodeFirstEF.Models
         [Required(ErrorMessage = "请在地图上标注具体坐标")]
         [Display(Name = "具体坐标")]
         public decimal Lat { get; set; }
+
 
         [Display(Name = "具体坐标")]
         public bool HasLight { get; set; }
@@ -91,6 +86,8 @@ namespace CodeFirstEF.Models
         public virtual FormatCate FormatCate { get; set; }
 
         public virtual OwnerCate OwnerCate { get; set; }
+
+        public virtual ICollection<AuctionCalendar> AuctionCalendar { get; set; }
 
         public virtual ICollection<TopBase> TopBase { get; set; }
 

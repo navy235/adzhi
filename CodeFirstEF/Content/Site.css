@@ -279,6 +279,10 @@ textarea {
   color: #999;
 }
 
+.form-field-hide label {
+  display: none;
+}
+
 .form a.cancel {
   font-size: 1.25em;
 }
@@ -386,3 +390,129 @@ textarea {
   width: 250px;
   height: 150px;
 }
+
+
+/***admin-item***/
+.table-list-img {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #bbb;
+  padding: 3px;
+  margin: 2px;
+}
+
+.filed-auction {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.form-auctioncalendar {
+  padding: 30px 0 10px 0;
+  margin: 0 0 10px 0;
+  height: 95px;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.form-auctioncalendar-year {
+  width: 72px;
+  float: left;
+  height: 74px;
+  overflow: hidden;
+}
+
+  .form-auctioncalendar-year p {
+    width: 100%;
+    float: left;
+    height: 12px;
+    line-height: 12px;
+    padding: 0;
+    color: #262626;
+    font-weight: bold;
+    margin-bottom: 49px;
+    text-align: center;
+  }
+
+.form-auctioncalendar-month {
+  width: 570px;
+  float: left;
+  height: 95px;
+}
+
+  .form-auctioncalendar-month ul {
+    width: 100%;
+    float: left;
+    height: 64px;
+  }
+
+  .form-auctioncalendar-month li {
+    font-size: 7px;
+    height: 7px;
+    width: 100%;
+    float: left;
+    background-color: #f67615;
+    position: relative;
+  }
+
+    .form-auctioncalendar-month li span {
+      font-size: 12px;
+      float: left;
+      height: 7px;
+      background-color: #c7c7c7;
+      position: absolute;
+    }
+
+    .form-auctioncalendar-month li.form-auctioncalendar-list {
+      width: 100%;
+      float: left;
+      height: 60px;
+      background: none;
+      z-index: -1;
+    }
+
+      .form-auctioncalendar-month li.form-auctioncalendar-list ul {
+        width: 100%;
+        height: 60px;
+        line-height: 60px;
+        float: left;
+        overflow: hidden;
+        z-index: 0;
+      }
+
+        .form-auctioncalendar-month li.form-auctioncalendar-list ul li {
+          font-size: 12px;
+          width: 47.5px;
+          float: left;
+          height: 60px;
+          line-height: 60px;
+          background: none;
+          text-align: center;
+          color: #c0c0c0;
+          font-weight: bold;
+        }
+
+    .form-auctioncalendar-month li strong.form-auctioncalendar-left {
+      position: absolute;
+      left: -20px;
+    }
+
+    .form-auctioncalendar-month li strong.form-auctioncalendar-right {
+      position: absolute;
+      right: -20px;
+      color: #F67615;
+      top: 7px;
+      line-height: 16px;
+      z-index: 50;
+    }
+
+    .form-auctioncalendar-month li strong {
+      height: 26px;
+      line-height: 26px;
+      top: -25px;
+      display: inline-block;
+      color: #901482;
+      font-size: 14px;
+      position: absolute;
+      font-size: 12px;
+    }

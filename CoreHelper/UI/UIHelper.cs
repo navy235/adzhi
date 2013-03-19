@@ -17,6 +17,7 @@ namespace CoreHelper.UI
 
         public static List<SelectListItem> CompanyStatusList { get; set; }
 
+        public static List<SelectListItem> OutDoorStatusList { get; set; }
 
 
         static UIHelper()
@@ -24,6 +25,7 @@ namespace CoreHelper.UI
             singleStone = new UIHelper();
             InitSexList();
             InitCompanyStatusList();
+            InitOutDoorStatusList();
 
         }
         private static void InitSexList()
@@ -38,6 +40,18 @@ namespace CoreHelper.UI
             CompanyStatusList = new List<SelectListItem>();
             CompanyStatusList.Add(new SelectListItem() { Text = "待审核", Value = ((int)CompanyStatus.CompanyApply).ToString() });
             CompanyStatusList.Add(new SelectListItem() { Text = "审核通过", Value = ((int)CompanyStatus.CompanyAuth).ToString() });
+        }
+
+        private static void InitOutDoorStatusList()
+        {
+            OutDoorStatusList = new List<SelectListItem>();
+            OutDoorStatusList.Add(new SelectListItem() { Text = "已删除", Value = ((int)OutDoorStatus.Deleted).ToString() });
+            OutDoorStatusList.Add(new SelectListItem() { Text = "审核失败", Value = ((int)OutDoorStatus.VerifyFailed).ToString() });
+            OutDoorStatusList.Add(new SelectListItem() { Text = "待审核", Value = ((int)OutDoorStatus.PreVerify).ToString() });
+            OutDoorStatusList.Add(new SelectListItem() { Text = "审核通过", Value = ((int)OutDoorStatus.Verified).ToString() });
+            OutDoorStatusList.Add(new SelectListItem() { Text = "未显示", Value = ((int)OutDoorStatus.NoShow).ToString() });
+            OutDoorStatusList.Add(new SelectListItem() { Text = "显示中", Value = ((int)OutDoorStatus.ShowOnline).ToString() });
+            OutDoorStatusList.Add(new SelectListItem() { Text = "置顶中", Value = ((int)OutDoorStatus.Top).ToString() });
         }
 
 

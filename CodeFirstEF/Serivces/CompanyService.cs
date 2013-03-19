@@ -128,7 +128,7 @@ namespace CodeFirstEF.Serivces
         }
 
 
-        public bool VerifyCompany(string CompangIds, CompanyStatus CompanyStatus)
+        public bool ChangeStatus(string CompangIds, CompanyStatus CompanyStatus)
         {
             return DB_Service.ExecuteSqlCommand("Update Company set Status=@Status where CompanyID in (@Ids)",
                 new SqlParameter("Status", (int)CompanyStatus),

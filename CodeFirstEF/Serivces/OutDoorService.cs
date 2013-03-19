@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using CoreHelper.Checking;
 using CoreHelper.Http;
 using CoreHelper.Enum;
@@ -103,11 +104,10 @@ namespace CodeFirstEF.Serivces
             od.OwnerCode = model.OwnerCode;
             od.CredentialsImg = credent;
             od.Deadline = model.Deadline;
-            //Owner or = new Owner();
-            //or.CredentialsImg = credent;
-            //or.Deadline = model.Deadline;
-            //or.OwnerCate = OwnerCateService.Find(model.OwnerCode);
-            //od.Owner = or;
+
+
+            //set OutDoor Status 待审核状态
+            od.Status = (int)OutDoorStatus.PreVerify;
 
             DB_Service.Add<OutDoor>(od);
             DB_Service.Commit();
@@ -200,6 +200,10 @@ namespace CodeFirstEF.Serivces
                     }
                 }
             }
+
+            //set OutDoor Status 待审核状态
+            od.Status = (int)OutDoorStatus.PreVerify;
+
             DB_Service.Commit();
 
             return od;
@@ -273,13 +277,57 @@ namespace CodeFirstEF.Serivces
             return DB_Service.Set<OutDoor>().Where(x => x.MemberID == MemberID);
         }
 
-        public IQueryable<OutDoor> GetKenDoOutDoorByMember(int MemberID)
+        public IQueryable<OutDoorListItem> GetMemberOutDoor(int MemberID, OutDoorStatus OutDoorStatus, bool includeUpLevel = false)
         {
-            DB_Service.SetProxyCreationEnabledFlase();
-            return DB_Service.Set<OutDoor>().Where(x => x.MemberID == MemberID);
+            int OutDoorStatusValue = (int)OutDoorStatus;
+            var query = DB_Service.Set<OutDoor>().Include(x => x.MediaImg).Where(x => x.MemberID == MemberID);
+            if (includeUpLevel)
+            {
+                query = query.Where(x => x.Status >= OutDoorStatusValue);
+            }
+            else
+            {
+                query = query.Where(x => x.Status == OutDoorStatusValue);
+            }
+            return query.Select(x => new OutDoorListItem()
+                {
+                    MediaID = x.MediaID,
+                    AddTime = x.AddTime,
+                    FocusImg = x.MediaImg.FocusImgUrl,
+                    Status = x.Status,
+                    Unapprovedlog = x.Unapprovedlog,
+                    Name = x.Name
+                });
+        }
+
+        public bool ChangeStatus(string Ids, OutDoorStatus OutDoorStatus)
+        {
+            return DB_Service.ExecuteSqlCommand("Update OutDoor set Status=@Status where MediaID in (@Ids)",
+               new SqlParameter("Status", (int)OutDoorStatus),
+               new SqlParameter("Ids", Ids)) > 0;
         }
 
 
-
+        public IQueryable<OutDoorListItem> GetVerifyList(OutDoorStatus OutDoorStatus, bool includeUpLevel = false)
+        {
+            int OutDoorStatusValue = (int)OutDoorStatus;
+            var query = DB_Service.Set<OutDoor>();
+            if (includeUpLevel)
+            {
+                query = query.Where(x => x.Status >= OutDoorStatusValue);
+            }
+            else
+            {
+                query = query.Where(x => x.Status == OutDoorStatusValue);
+            }
+            return query.Select(x => new OutDoorListItem()
+            {
+                MediaID = x.MediaID,
+                AddTime = x.AddTime,
+                Status = x.Status,
+                Unapprovedlog = x.Unapprovedlog,
+                Name = x.Name
+            });
+        }
     }
 }

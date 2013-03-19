@@ -23,6 +23,6 @@ namespace CodeFirstEF.Serivces
 
         IQueryable<CompanyVerifyViewModel> GetVerifyList(CompanyStatus CompanyStatus);
 
-        bool VerifyCompany(string CompangIds, CompanyStatus CompanyStatus);
+        bool ChangeStatus(string CompangIds, CompanyStatus CompanyStatus);
     }
 }
