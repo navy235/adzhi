@@ -12,6 +12,8 @@ namespace CodeFirstEF.Serivces
 
         IQueryable<AuctionCalendar> GetALL(int MediaID);
 
+        void Delete(int ID);
+
         bool ValidateAuction(int MediaID, DateTime startTime, DateTime endTime);
     }
 }

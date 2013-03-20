@@ -28,7 +28,7 @@ namespace CodeFirstEF.ViewModels
 
         [HintSeparateTitle("基本信息")]
         [Required(ErrorMessage = "请输入媒体名称")]
-        [Display(Name = "媒体名称")]
+        [Display(Name = "媒体名称", Order = 1)]
         [CheckContact]
         [StringLength(25, ErrorMessage = "请输入{2}-{1}位{0}", MinimumLength = 6)]
         [Hint("6-25个字，不允许填写电话和特殊符号。例：新华书店附近户外大牌")]
@@ -38,7 +38,7 @@ namespace CodeFirstEF.ViewModels
 
 
         [Required(ErrorMessage = "请选择媒体类别")]
-        [Display(Name = "媒体类别")]
+        [Display(Name = "媒体类别", Order = 2)]
         [HintClass("city")]
         [UIHint("CascadingDropDownList")]
         [AdditionalMetadata("CascadingDropDownList", "ParentDropdownList")]
@@ -46,31 +46,31 @@ namespace CodeFirstEF.ViewModels
 
 
         [Required(ErrorMessage = "请选择媒体区域属性")]
-        [Display(Name = "媒体区域属性")]
+        [Display(Name = "媒体区域属性", Order = 3)]
         [UIHint("CheckList")]
         [CheckMaxLength(5)]
         public string AreaAtt { get; set; }
 
 
         [Required(ErrorMessage = "请选择媒体展现形式")]
-        [Display(Name = "媒体展现形式")]
+        [Display(Name = "媒体展现形式", Order = 4)]
         [UIHint("SingleDropdownList")]
         public string FormatCode { get; set; }
 
         [Required(ErrorMessage = "请输入价格")]
-        [Display(Name = "价格")]
+        [Display(Name = "价格", Order = 5)]
         [Range(0F, 1000000F, ErrorMessage = "{0}必须位于{1}-{2}之间")]
         [UIHint("Price")]
         [HintClass("price")]
         public decimal Price { get; set; }
 
-        [Display(Name = "价格说明")]
+        [Display(Name = "价格说明", Order = 6)]
         [DataType(DataType.MultilineText)]
         [Required(ErrorMessage = "请输入价格说明")]
         public string PriceExten { get; set; }
 
         [Required(ErrorMessage = "请选择最短购买周期")]
-        [Display(Name = "最短购买周期")]
+        [Display(Name = "最短购买周期", Order = 7)]
         [UIHint("SingleDropdownList")]
         public string PeriodCode { get; set; }
 
@@ -78,31 +78,31 @@ namespace CodeFirstEF.ViewModels
         [HintSeparateTitle("位置信息")]
 
         [Required(ErrorMessage = "请选择媒体城市")]
-        [Display(Name = "媒体城市")]
+        [Display(Name = "媒体城市", Order = 8)]
         [HintClass("city")]
         [UIHint("CascadingDropDownList")]
         [AdditionalMetadata("CascadingDropDownList", "ParentDropdownList")]
         public string CityCode { get; set; }
 
         [Required(ErrorMessage = "请输入具体位置")]
-        [Display(Name = "具体位置")]
+        [Display(Name = "具体位置", Order = 9)]
         [CheckContact]
         [Hint("请输入具体位置")]
         public string Location { get; set; }
 
-        [Display(Name = "地图坐标")]
+        [Display(Name = "地图坐标", Order = 10)]
         [Required(ErrorMessage = "请标记媒体地图坐标.")]
         [UIHint("MapMarker")]
         public string Position { get; set; }
 
-        [Display(Name = "照明情况")]
+        [Display(Name = "照明情况", Order = 11)]
         [Required(ErrorMessage = "请输入照明信息")]
         [UIHint("Radio")]
         [AdditionalMetadata("Radio", "无,有")]
         [CascadeRequire("LightTime", "照明时间")]
         public bool HasLight { get; set; }
 
-        [Display(Name = "照明时间")]
+        [Display(Name = "照明时间", Order = 12)]
         [UIHint("TimeQuantum")]
         [HintClass("cascade")]
         [AdditionalMetadata("CascadeBack", "HasLight")]
@@ -110,43 +110,43 @@ namespace CodeFirstEF.ViewModels
 
 
         [Required(ErrorMessage = "请输入媒体面积相关参数")]
-        [Display(Name = "媒体面积")]
+        [Display(Name = "媒体面积", Order = 13)]
         [UIHint("Area")]
         [CheckArea]
         public string Area { get; set; }
 
 
         [Required(ErrorMessage = "请输入日交通车流量")]
-        [Display(Name = "日交通车流量")]
+        [Display(Name = "日交通车流量", Order = 14)]
         [UIHint("Integer")]
         public int TrafficAuto { get; set; }
 
         [Required(ErrorMessage = "请输入日交通人流量")]
-        [Display(Name = "日交通人流量")]
+        [Display(Name = "日交通人流量", Order = 15)]
         [UIHint("Integer")]
         public int TrafficPerson { get; set; }
 
         [Required(ErrorMessage = "请输入开始时间")]
-        [Display(Name = "开始时间")]
+        [Display(Name = "开始时间", Order = 16)]
         [DataType(DataType.DateTime)]
         public DateTime StartTime { get; set; }
 
         [Required(ErrorMessage = "请输入结束时间")]
-        [Display(Name = "结束时间")]
+        [Display(Name = "结束时间", Order = 17)]
         [DataType(DataType.DateTime)]
         [DateGreaterThan("StartTime", "开始时间")]
         public DateTime EndTime { get; set; }
 
 
         [Required(ErrorMessage = "请输入媒体补充说明.")]
-        [Display(Name = "媒体补充说明")]
+        [Display(Name = "媒体补充说明", Order = 18)]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
 
         [HintSeparateTitle("图片信息")]
         [Required(ErrorMessage = "请上传媒体图片.")]
-        [Display(Name = "媒体图片")]
+        [Display(Name = "媒体图片", Order = 19)]
         [UIHint("UploadImgList")]
         [HintClass("uploadlist")]
         [AdditionalMetadata("UploadImgList", "")]
@@ -156,13 +156,13 @@ namespace CodeFirstEF.ViewModels
 
         [HintSeparateTitle("规格所有权信息")]
         [Required(ErrorMessage = "请选择所有权类别")]
-        [Display(Name = "所有权类别")]
+        [Display(Name = "所有权类别", Order = 20)]
         [UIHint("SingleDropdownList")]
         public string OwnerCode { get; set; }
 
 
         [Required(ErrorMessage = "请上传相关证书")]
-        [Display(Name = "相关证书图片")]
+        [Display(Name = "相关证书图片", Order = 21)]
         [UIHint("UploadImgList")]
         [HintClass("uploadlist")]
         [AdditionalMetadata("UploadImgList", "3")]
@@ -172,13 +172,20 @@ namespace CodeFirstEF.ViewModels
 
 
         [Required(ErrorMessage = "请输入所有权截至")]
-        [Display(Name = "所有权截至")]
+        [Display(Name = "所有权截至", Order = 22)]
         [DataType(DataType.DateTime)]
         public DateTime Deadline { get; set; }
 
-
     }
 
+    public class OutDoorDetailsViewModel : OutDoorViewModel
+    {
+        [HintSeparateTitle("媒体排期")]
+        [Display(Name = "媒体排期：", Order = 99)]
+        [HintClass("hide")]
+        [UIHint("AuctionCalendar")]
+        public int AuctionCalendar { get; set; }
+    }
 
     public class OutDoorListItem
     {
@@ -202,13 +209,16 @@ namespace CodeFirstEF.ViewModels
 
     public class OutDoorSetAuctionCalendarViewModel
     {
-        [ScaffoldColumn(false)]
         public int MediaID { get; set; }
-        [Display(Name = "媒体排期")]
 
+        [Display(Name = "媒体名称：")]
+        [HiddenInput(DisplayValue = true)]
+        public string Name { get; set; }
+
+        [Display(Name = "媒体排期：")]
         [HintClass("hide")]
         [UIHint("AuctionCalendar")]
-        public string AuctionCalendar { get; set; }
+        public int AuctionCalendar { get; set; }
 
     }
 

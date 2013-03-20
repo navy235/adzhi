@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using System.Data.SqlClient;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using CoreHelper.Checking;
 using CoreHelper.Http;
 using CoreHelper.Enum;
@@ -130,9 +131,20 @@ namespace CodeFirstEF.Serivces
 
         public bool ChangeStatus(string CompangIds, CompanyStatus CompanyStatus)
         {
-            return DB_Service.ExecuteSqlCommand("Update Company set Status=@Status where CompanyID in (@Ids)",
-                new SqlParameter("Status", (int)CompanyStatus),
-                new SqlParameter("Ids", CompangIds)) > 0;
+            var result = true;
+            try
+            {
+                var IdsArray = CompangIds.Split(',').Select(x => Convert.ToInt32(x));
+                var CompanyStatusValue = (int)CompanyStatus;
+                DB_Service.Set<Company>().Where(x => IdsArray.Contains(x.CompanyID)).ToList().ForEach(x => x.Status = CompanyStatusValue);
+                DB_Service.Commit();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                result = false;
+            }
+            return result;
+
         }
     }
 }

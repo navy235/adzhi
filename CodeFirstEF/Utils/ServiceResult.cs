@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using CoreHelper.Enum;
+using System.ComponentModel.DataAnnotations;
 
-namespace CodeFirstEF.Serivces
+namespace CodeFirstEF.Utils
 {
     public class ServiceError
     {
@@ -25,10 +27,23 @@ namespace CodeFirstEF.Serivces
 
     public class ServiceResult
     {
+        public ServiceResult() { }
+
+        public ServiceResult(AlertType type, string message)
+        {
+            this.AlertType = type;
+            this.Message = message;
+        }
+
+        public AlertType AlertType { get; set; }
+
         public bool Success
         {
             get { return serviceErrors.Count <= 0; }
         }
+
+        [DisplayFormat(NullDisplayText = "")]
+        public string Message { get; set; }
 
         protected List<ServiceError> serviceErrors = new List<ServiceError>();
 

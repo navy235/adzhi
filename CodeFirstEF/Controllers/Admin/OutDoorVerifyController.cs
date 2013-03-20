@@ -78,7 +78,7 @@ namespace CodeFirstEF.Controllers.Admin
 
         public ActionResult Details(int id)
         {
-            var model = outDoorService.GetOutDoorViewModel(id);
+            var model = outDoorService.GetOutDoorDetailsViewModel(id);
             return View(model);
         }
 

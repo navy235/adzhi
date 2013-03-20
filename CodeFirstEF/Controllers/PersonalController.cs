@@ -130,6 +130,7 @@ namespace CodeFirstEF.Controllers
                 {
                     var memberID = Convert.ToInt32(CookieHelper.UID);
                     memberService.SaveMemberAvtar(memberID, model);
+
                 }
                 catch (Exception ex)
                 {
@@ -204,11 +205,7 @@ namespace CodeFirstEF.Controllers
                 try
                 {
                     var memberID = Convert.ToInt32(CookieHelper.UID);
-                    if (memberService.ChangePassword(memberID, model.OldPassword, model.NewPassword))
-                    {
-
-                    }
-                    else
+                    if (!memberService.ChangePassword(memberID, model.OldPassword, model.NewPassword))
                     {
                         ViewBag.Error = "旧密码错误";
                     }
@@ -327,7 +324,7 @@ namespace CodeFirstEF.Controllers
         }
 
 
-       
+
 
 
     }

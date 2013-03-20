@@ -15,9 +15,15 @@ namespace CodeFirstEF.Serivces
 
         OutDoor IncludeFind(int MediaID);
 
+        OutDoor IncludeAuctionFind(int MediaID);
+
         bool HasOutDoorByMember(int MediaID);
 
         OutDoorViewModel GetOutDoorViewModel(int MediaID);
+
+        OutDoorDetailsViewModel GetOutDoorDetailsViewModel(int MediaID);
+
+        OutDoorSetAuctionCalendarViewModel GetOutDoorSetAuctionCalendarViewModel(int MediaID);
 
         IQueryable<OutDoor> GetOutDoorByMember(int MemberID);
 

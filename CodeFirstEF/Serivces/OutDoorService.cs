@@ -3,6 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using CoreHelper.Checking;
 using CoreHelper.Http;
@@ -120,7 +121,7 @@ namespace CodeFirstEF.Serivces
         {
 
             int MemberID = Convert.ToInt32(CookieHelper.UID);
-            OutDoor od = IncludeNoOwnerFind(model.MediaID);
+            OutDoor od = IncludeFind(model.MediaID);
             DB_Service.Attach<OutDoor>(od);
             od.CityCode = model.CityCode;
             od.PeriodCode = model.PeriodCode;
@@ -213,18 +214,18 @@ namespace CodeFirstEF.Serivces
         {
             return DB_Service.Set<OutDoor>()
                 .Include(x => x.MediaImg)
-                .Include(x => x.MapImg)
                 .Include(x => x.CredentialsImg)
                 .Include(x => x.AreaAtt)
                 .FirstOrDefault(x => x.MediaID == MediaID);
         }
 
-        public OutDoor IncludeNoOwnerFind(int MediaID)
+        public OutDoor IncludeAuctionFind(int MediaID)
         {
             return DB_Service.Set<OutDoor>()
                 .Include(x => x.MediaImg)
                 .Include(x => x.MapImg)
                 .Include(x => x.AreaAtt)
+                .Include(x => x.AuctionCalendar)
                 .FirstOrDefault(x => x.MediaID == MediaID);
         }
 
@@ -237,9 +238,14 @@ namespace CodeFirstEF.Serivces
 
         public OutDoorViewModel GetOutDoorViewModel(int MediaID)
         {
-            OutDoorViewModel odv = new OutDoorViewModel();
-            int MemberID = Convert.ToInt32(CookieHelper.UID);
+            return GetOutDoorDetailsViewModel(MediaID);
+        }
 
+
+        public OutDoorDetailsViewModel GetOutDoorDetailsViewModel(int MediaID)
+        {
+            OutDoorDetailsViewModel odv = new OutDoorDetailsViewModel();
+            int MemberID = Convert.ToInt32(CookieHelper.UID);
             OutDoor od = new OutDoor();
             od = IncludeFind(MediaID);
             odv.MediaID = od.MediaID;
@@ -268,7 +274,7 @@ namespace CodeFirstEF.Serivces
             {
                 odv.LightTime = od.LightStrat + "|" + od.LightEnd;
             }
-
+            odv.AuctionCalendar = od.MediaID;
             return odv;
         }
 
@@ -302,9 +308,19 @@ namespace CodeFirstEF.Serivces
 
         public bool ChangeStatus(string Ids, OutDoorStatus OutDoorStatus)
         {
-            return DB_Service.ExecuteSqlCommand("Update OutDoor set Status=@Status where MediaID in (@Ids)",
-               new SqlParameter("Status", (int)OutDoorStatus),
-               new SqlParameter("Ids", Ids)) > 0;
+            var result = true;
+            try
+            {
+                var IdsArray = Ids.Split(',').Select(x => Convert.ToInt32(x));
+                var OutDoorStatusValue = (int)OutDoorStatus;
+                DB_Service.Set<OutDoor>().Where(x => IdsArray.Contains(x.MediaID)).ToList().ForEach(x => x.Status = OutDoorStatusValue);
+                DB_Service.Commit();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                result = false;
+            }
+            return result;
         }
 
 
@@ -329,5 +345,18 @@ namespace CodeFirstEF.Serivces
                 Name = x.Name
             });
         }
+
+
+        public OutDoorSetAuctionCalendarViewModel GetOutDoorSetAuctionCalendarViewModel(int MediaID)
+        {
+            return DB_Service.Set<OutDoor>().Where(x => x.MediaID == MediaID).Select(x => new OutDoorSetAuctionCalendarViewModel()
+            {
+                AuctionCalendar = x.MediaID,
+                MediaID = x.MediaID,
+                Name = x.Name
+
+            }).First();
+        }
+
     }
 }

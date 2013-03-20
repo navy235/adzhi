@@ -46,5 +46,13 @@ namespace CodeFirstEF.Serivces
                 .Set<AuctionCalendar>()
                 .Where(x => x.MediaID == MediaID && x.EndTime > CurrenYearFirstDay);
         }
+
+
+        public void Delete(int ID)
+        {
+            var model = DB_Service.Set<AuctionCalendar>().Single(x => x.ID == ID);
+            DB_Service.Remove<AuctionCalendar>(model);
+            DB_Service.Commit();
+        }
     }
 }

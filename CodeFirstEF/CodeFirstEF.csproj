@@ -352,7 +352,7 @@
     <Compile Include="Serivces\PeriodCateService.cs" />
     <Compile Include="Serivces\PermissionService.cs" />
     <Compile Include="Serivces\RolesService.cs" />
-    <Compile Include="Serivces\ServiceResult.cs" />
+    <Compile Include="Utils\ServiceResult.cs" />
     <Compile Include="Serivces\CompanyBussinessService.cs" />
     <Compile Include="Serivces\CompanyFundService.cs" />
     <Compile Include="Serivces\CompanyScaleService.cs" />
@@ -1954,12 +1954,14 @@
     <Content Include="Views\CompanyVerify\Authed.cshtml" />
     <Content Include="Views\OutDoor\Preverify.cshtml" />
     <Content Include="Views\OutDoor\Delete.cshtml" />
-    <Content Include="Views\OutDoor\NoShow.cshtml" />
+    <Content Include="Views\OutDoor\NotShow.cshtml" />
     <Content Include="Views\OutDoor\VerifyFailed.cshtml" />
     <Content Include="Views\OutDoorVerify\Index.cshtml" />
     <Content Include="Views\OutDoorVerify\Authed.cshtml" />
     <Content Include="Views\OutDoorVerify\Details.cshtml" />
     <Content Include="Views\OutDoor\SetAuctionCalendar.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\AuctionCalendar.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <None Include="Views\Shared\EditorTemplates\String.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />
@@ -1994,6 +1996,7 @@
     <Content Include="Views\Shared\_LayoutPersonal.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Shared\_LayoutKendo.cshtml" />
+    <Content Include="Views\Shared\_DisplayMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Lucene\" />

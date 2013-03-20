@@ -1,15 +1,17 @@
 @using CodeFirstEF.ViewModels
-@model string
+@model int
 @{
     string name = ViewData.TemplateInfo.GetFullHtmlFieldId(null);
-    List<AuctionCalendarViewModel> renderList = new List<AuctionCalendarViewModel>();
-    renderList = (List<AuctionCalendarViewModel>)ViewData["Data_" + name];
     var CurrenYear = DateTime.Now.Year;
     var NexYear = DateTime.Now.Year + 1;
+    var MaxData = new DateTime(NexYear, 12, 30);
 }
 
 
 <div class="form-auctioncalendar clearfix">
+    <div class="form-auctioncalendar-tips">
+        <span><em></em>可售</span><span><em class="nosale"></em>不可售</span>
+    </div>
     <div class="form-auctioncalendar-year">
         <p>@CurrenYear</p>
         <p>@NexYear</p>
@@ -50,7 +52,7 @@
             .Name(name + "_startpicker")
             .Min(DateTime.Today)
             .Value(DateTime.Today)
-            .Max(DateTime.Today.AddYears(2))
+            .Max(MaxData)
             .Events(e =>
             {
                 e.Change(name + ".startChange");
@@ -60,8 +62,8 @@
         @(Html.Kendo().DatePicker()
             .Name(name + "_endpicker")
             .Min(DateTime.Today)
-            .Value(DateTime.Today)
-            .Max(DateTime.Today.AddYears(2))
+            .Value(DateTime.Today.AddDays(1))
+            .Max(MaxData)
             .Events(e =>
             {
                 e.Change(name + ".endChange");
@@ -134,10 +136,25 @@
         },
         removeAuction:function(e){
             var $target=$(e.target);
+            if(!$target.is('span')){
+                $target=$target.parent();
+            }
             var id=$target.data('id');
             var mediaId=$target.data('mediaid');
-            console.log(id);
-            console.log(mediaId);
+            $.ajax({
+                type:'POST',
+                url:'@Url.Action("DeleteAuctionCalendar", "outdoor")',
+                data:{
+                    mediaid:mediaId,
+                    id:id
+                },
+                success:function(res){
+                    if(res){
+                        $('[data-id="'+id+'"]').remove();
+                    }
+                }
+            
+            })
         },
         addAuction:function(){
             var self=@name;

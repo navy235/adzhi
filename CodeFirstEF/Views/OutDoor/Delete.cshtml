@@ -22,27 +22,23 @@
             <div class="personal-form mt20">
 
                 @(Html.Kendo().Grid<CodeFirstEF.ViewModels.OutDoorListItem>()
-                    .Name("OutDoorList")
+                    .Name("Grid")
                     .Columns(columns =>
                     {
                         columns.Bound(c => c.MediaID).Title("媒体ID")
                             .Sortable(false)
                             .ClientTemplate("<input type='checkbox' name='ID_check' id='#=MediaID#_check'  class='chkbx' value='#=MediaID#' />")
-                            .HeaderTemplate("<div style='text-align:center'><input type='checkbox' id='checkAll' onclick='GridList.checkAll(this)' title='全选'/></div>")
+                            .HeaderTemplate("<div style='text-align:center'><input type='checkbox' id='checkAll' onclick='Grid.checkAll(this)' title='全选'/></div>")
                             .Width(40).HtmlAttributes(new { style = "text-align:center" });
-                        columns.Bound(c => c.FocusImg).ClientTemplate("<img class='table-list-img' src='#=FocusImg#' alt='#=Name#' />").Width(76);
+                        columns.Bound(c => c.FocusImg).ClientTemplate("<img class='table-list-img' src='#=FocusImg#' alt='#=Name#' />").Width(76).Sortable(false);
                         columns.Bound(c => c.Name);
                         columns.Bound(c => c.AddTime).Format("{0:yyyy-MM-dd}").Width(100).Title("添加时间");
                         columns.Template(@<text></text>)
                 .ClientTemplate(@"<a class='k-button k-button-icontext ' href='"
-                + Url.Action("edit", "outdoor") + "/#=MediaID#'><span class='k-icon k-edit'></span>编辑</a>").Title("编辑").Width(100);
+                + Url.Action("edit", "outdoor") + "/#=MediaID#'><span class='k-icon k-edit'></span>编辑并重审</a>").Title("编辑").Width(120);
 
                     })
-                    .ToolBar(toolbar =>
-                    {
-                        toolbar.Custom().Text("添加户外").Action("add", "outdoor");
 
-                    })
                     .Pageable()
                     .Sortable()
                     .Scrollable()
@@ -56,10 +52,10 @@
                     )
 
                 <script type="text/javascript">
-                    var GridList = {
-                        id: 'OutDoorList',
+                    var Grid = {
+                        id: 'Grid',
                         checkAll: function(ele) {
-                            var self = GridList;
+                            var self = Grid;
                             var state = $(ele).is(':checked');
                             $('[name="ID_check"]').attr('checked', state);
                         }

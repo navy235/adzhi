@@ -107,6 +107,8 @@ namespace CodeFirstEF.Controllers
             return View();
         }
 
+
+
         public ActionResult OutDoor_Delete([DataSourceRequest] DataSourceRequest request)
         {
             var memberID = Convert.ToInt32(CookieHelper.UID);
@@ -114,11 +116,40 @@ namespace CodeFirstEF.Controllers
             return Json(model.ToDataSourceResult(request));
         }
 
-        public ActionResult NoShow()
+        public ActionResult NotShow()
         {
-            ViewBag.MenuItem = "outdoor-noshow";
+            ViewBag.MenuItem = "outdoor-notshow";
             return View();
         }
+
+        #region Set OutDoorStatus
+
+        [HttpPost]
+        public ActionResult SetNotShow(string ids)
+        {
+            var success = outDoorService.ChangeStatus(ids,
+                OutDoorStatus.NoShow);
+            return Json(success);
+        }
+
+        [HttpPost]
+        public ActionResult SetDelete(string ids)
+        {
+            var success = outDoorService.ChangeStatus(ids,
+             OutDoorStatus.Deleted);
+            return Json(success);
+        }
+
+        [HttpPost]
+        public ActionResult SetShow(string ids)
+        {
+            
+            var success = outDoorService.ChangeStatus(ids,
+             OutDoorStatus.ShowOnline);
+            return Json(success);
+        }
+
+        #endregion
 
         public ActionResult OutDoor_NoShow([DataSourceRequest] DataSourceRequest request)
         {
@@ -208,16 +239,16 @@ namespace CodeFirstEF.Controllers
         }
 
 
+
+
+
         public ActionResult SetAuctionCalendar(int id)
         {
             ViewBag.MenuItem = "outdoor-list";
             if (outDoorService.HasOutDoorByMember(id))
             {
-                return View(new OutDoorSetAuctionCalendarViewModel()
-                {
-                    MediaID = id,
-                    AuctionCalendar = id.ToString()
-                });
+                OutDoorSetAuctionCalendarViewModel model = outDoorService.GetOutDoorSetAuctionCalendarViewModel(id);
+                return View(model);
             }
             else
             {
@@ -255,6 +286,24 @@ namespace CodeFirstEF.Controllers
             }
             data.AddRange(GetAuctionCalendarViewModel(model));
             return Json(data);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteAuctionCalendar(int mediaid, int id)
+        {
+            bool result = true;
+            try
+            {
+                if (outDoorService.HasOutDoorByMember(mediaid))
+                {
+                    auctionCalendarService.Delete(id);
+                }
+            }
+            catch (DbEntityValidationException ex)
+            {
+                result = false;
+            }
+            return Json(result);
         }
 
         public List<AuctionCalendarViewModel> GetAuctionCalendarViewModel(AuctionCalendar model)

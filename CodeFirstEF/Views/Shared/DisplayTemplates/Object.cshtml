@@ -36,7 +36,7 @@ else
             }
             if (prop.AdditionalValues.ContainsKey("HintClass"))
             {
-                HintClass = "form-field-" + prop.AdditionalValues["HintClass"].ToString();
+                HintClass = "display-item-" + prop.AdditionalValues["HintClass"].ToString();
             }
             if (prop.AdditionalValues.ContainsKey("HintSeparateTitle"))
             {
@@ -51,7 +51,8 @@ else
             }
             
     <div class="display-item @if (prop.IsRequired)
-                             {<text> display-required </text>}  ">
+                             {<text> display-required </text>} @if (!string.IsNullOrEmpty(HintClass))
+                                                               {<text> @HintClass </text>}  ">
         @if (!string.IsNullOrEmpty(prop.GetDisplayName()))
         { 
             <div class="display-label">@prop.GetDisplayName()</div>

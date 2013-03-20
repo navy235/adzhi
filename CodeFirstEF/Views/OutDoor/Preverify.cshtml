@@ -22,32 +22,32 @@
             <div class="personal-form mt20">
 
                 @(Html.Kendo().Grid<CodeFirstEF.ViewModels.OutDoorListItem>()
-                    .Name("OutDoorList")
+                    .Name("Grid")
                     .Columns(columns =>
                     {
                         columns.Bound(c => c.MediaID).Title("媒体ID")
                             .Sortable(false)
                             .ClientTemplate("<input type='checkbox' name='ID_check' id='#=MediaID#_check'  class='chkbx' value='#=MediaID#' />")
-                            .HeaderTemplate("<div style='text-align:center'><input type='checkbox' id='checkAll' onclick='GridList.checkAll(this)' title='全选'/></div>")
+                            .HeaderTemplate("<div style='text-align:center'><input type='checkbox' id='checkAll' onclick='Grid.checkAll(this)' title='全选'/></div>")
                             .Width(40).HtmlAttributes(new { style = "text-align:center" });
-
-                        columns.Bound(c => c.FocusImg).ClientTemplate("<img class='table-list-img' src='#=FocusImg#' alt='#=Name#' />").Width(76);
+                        columns.Bound(c => c.FocusImg).ClientTemplate("<img class='table-list-img' src='#=FocusImg#' alt='#=Name#' />").Width(76).Sortable(false);
                         columns.Bound(c => c.Name);
                         columns.Bound(c => c.AddTime).Format("{0:yyyy-MM-dd}").Width(100).Title("添加时间");
                         columns.Template(@<text></text>)
-                .ClientTemplate(@"<a class='k-button k-button-icontext ' href='"
-                + Url.Action("edit", "outdoor") + "/#=MediaID#'><span class='k-icon k-edit'></span>编辑</a>").Title("编辑").Width(100);
-
+                            .ClientTemplate(@"<a class='k-button k-button-icontext ' href='"
+                            + Url.Action("edit", "outdoor") + "/#=MediaID#'><span class='k-icon k-edit'></span>编辑</a>"
+                            + "<a class='k-button k-button-icontext ' href='" + Url.Action("setauctioncalendar", "outdoor") + "/#=MediaID#' ><span class='k-icon k-i-calendar'></span>排期</a>"
+                            + "<a class='k-button k-button-icontext ' href='javascript:void(0);' onclick='Grid.deleteSingle(this,\"#=MediaID#\");' ><span class='k-icon k-i-close'></span>删除</a>"
+                            ).Title("编辑").Width(240);
                     })
-                    .ToolBar(toolbar =>
+                  .ToolBar(toolbar =>
                     {
-                        toolbar.Custom().Text("添加户外").Action("add", "outdoor");
-
+                        toolbar.Custom().Text("批量删除").HtmlAttributes(new { onclick = "Grid.deleteAll(this);", href = "javascript:void(0);" });
                     })
                     .Pageable()
                     .Sortable()
                     .Scrollable()
-                   .DataSource(dataSource => dataSource
+                    .DataSource(dataSource => dataSource
                         .Ajax()
                         .PageSize(20)
                         .Model(model => model.Id(c => c.MediaID))
@@ -57,12 +57,62 @@
                     )
 
                 <script type="text/javascript">
-                    var GridList = {
-                        id: 'OutDoorList',
-                        checkAll: function(ele) {
-                            var self = GridList;
-                            var state = $(ele).is(':checked');
+                    var Grid = {
+                        id: 'Grid',
+                        checkAll: function(element) {
+                            var self = Grid;
+                            var state = $(element).is(':checked');
                             $('[name="ID_check"]').attr('checked', state);
+                        },
+                        getCheckIds: function() {
+                            return $.map($('[name="ID_check"]:checked'), function(item) { return $(item).val() }).join(',');
+                        },
+                        addSpinner: function(element) {
+                            var $spinner = $('<img class="ajax-working" src="@Url.Content("~/Content/images/min-loading.gif")" title="work...." />').appendTo($(element));
+                            $(element).addClass('disabled');
+                        },
+                        removeSpinner: function(element) {
+                            $(element).find('.ajax-working').remove();
+                            $(element).removeClass('disabled');
+                        },
+                        excute: function(element, url, Ids) {
+                            if ($(element).hasClass('disabled'))
+                                return false;
+                            var self = Grid;
+                            if (Ids) {
+                                self.addSpinner(element);
+                                $.ajax({
+                                    type: 'POST',
+                                    url: url,
+                                    data: { ids: Ids },
+                                    success: function(res) {
+                                        if (res) {
+                                            var grid = $("#Grid").data("kendoGrid");
+                                            grid.dataSource.read();
+                                            grid.refresh();
+                                        }
+                                    },
+                                    complete: function() {
+                                        self.removeSpinner(element);
+                                    }
+                                })
+                            } else {
+                                alert('请选择要处理的信息');
+                                return false;
+                            }
+                        },
+                      
+                        deleteAll: function(element) {
+                            var self = Grid;
+                            var url = '@Url.Action("setdelete", "outdoor")';
+                            var Ids = self.getCheckIds();
+                            self.excute(element, url, Ids);
+                        },
+                        deleteSingle: function(element, id) {
+                            var self = Grid;
+                            var url = '@Url.Action("setdelete", "outdoor")';
+                            var Ids = id;
+                            self.excute(element, url, Ids);
                         }
                     }
 
