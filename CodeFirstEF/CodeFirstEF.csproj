@@ -384,6 +384,10 @@
     <Content Include="Binaries\Lucene.Net.China.dll" />
     <Content Include="Binaries\Ninject.dll" />
     <Content Include="Content\163.core.css" />
+    <Content Include="Content\images\icon\error.png" />
+    <Content Include="Content\images\icon\info.png" />
+    <Content Include="Content\images\icon\success.png" />
+    <Content Include="Content\images\icon\warning.png" />
     <Content Include="Content\images\formloading.gif" />
     <Content Include="Content\images\index-footer.gif" />
     <Content Include="Content\images\index-header.gif" />

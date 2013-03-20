@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using CoreHelper.Enum;
 using System.ComponentModel.DataAnnotations;
 
@@ -29,14 +30,10 @@ namespace CodeFirstEF.Utils
     {
         public ServiceResult() { }
 
-        public ServiceResult(AlertType type, string message)
+        public ServiceResult(string message)
         {
-            this.AlertType = type;
             this.Message = message;
         }
-
-        public AlertType AlertType { get; set; }
-
         public bool Success
         {
             get { return serviceErrors.Count <= 0; }
@@ -56,6 +53,16 @@ namespace CodeFirstEF.Utils
         {
             serviceErrors.Add(new ServiceError(errorMessage));
         }
+
+        //public void AddServiceError(ModelStateDictionary ModelState)
+        //{
+        //    foreach (var item in ModelState)
+        //    {
+        //        serviceErrors.Add(new ServiceError(item.Key, item.Value));
+        //    }
+
+        //}
+
 
         public List<ServiceError> GetServiceErrors()
         {

@@ -1,33 +1,14 @@
 ﻿@using CodeFirstEF.Utils;
 @{
-    var message = (ServiceResult)TempData["Service_Result"] ?? null;
+    var serviceResult = (ServiceResult)TempData["Service_Result"] ?? null;
 }
 
-@if (message != null)
+@if (serviceResult != null)
 {
-    if (message.Message.ToLower().IndexOf("updated your event wave") != -1)
-    {
-        //Do this for Change Wave message
-    <h2>@message.Message</h2>
-    <style>
-        .profileCustomMessage {
-            display: none;
-        }
-
-        .changeWaveMsg {
-            display: block;
-        }
-
-            .changeWaveMsg h2 {
-                margin-left: 20px;
-                padding: 20px 0 0;
-                font-size: 18px;
-            }
-    </style>
-    }
-    else
-    {
-        // Do this for other message
-    <div>@message.Message</div>
-    }
+    @ViewHelpers.Alert(serviceResult.Message, serviceResult.Success)
 }
+<script type="text/javascript">
+    $(function () {
+        $('.displaymessage').fadeOut(3000);
+    })
+</script>

@@ -17,12 +17,7 @@
 
             @ViewHelpers.Alert("友情提醒：",
                 CoreHelper.Cookie.CookieHelper.NickName + ",填写真实的资料更方便大家了解你。", false, CoreHelper.Enum.AlertType.info.ToString())
-           
-             @if (ViewBag.Error != null)
-            { 
-                 @ViewHelpers.Alert("错误信息：",
-                ViewBag.Error, false, CoreHelper.Enum.AlertType.error.ToString())
-            }
+
             <div class="personal-form mt40">
                 @using (Html.BeginForm())
                 {

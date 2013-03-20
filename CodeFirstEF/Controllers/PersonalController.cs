@@ -19,6 +19,7 @@ using CodeFirstEF.ViewModels;
 using CodeFirstEF.Filters;
 using CodeFirstEF.Serivces;
 using CodeFirstEF.Config;
+using CodeFirstEF.Utils;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 
@@ -90,17 +91,26 @@ namespace CodeFirstEF.Controllers
         public ActionResult BaseInfo(ProfileModel model)
         {
             ViewBag.MenuItem = "baseinfo";
+            ServiceResult result = new ServiceResult();
             if (ModelState.IsValid)
             {
                 try
                 {
                     var memberID = Convert.ToInt32(CookieHelper.UID);
                     memberService.SaveMemberBaseInfo(memberID, model);
+                    result.Message = "基本信息保存成功！";
+                    TempData["Service_Result"] = result;
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Error = ex.Message;
+                    result.Message = Utilities.GetInnerMostException(ex);
+                    result.AddServiceError(result.Message);
                 }
+            }
+            else
+            {
+                result.Message = "表单输入有误！";
+                result.AddServiceError("表单输入有误！");
             }
             return View(model);
         }
@@ -124,18 +134,26 @@ namespace CodeFirstEF.Controllers
         public ActionResult Avtar(AvtarModel model)
         {
             ViewBag.MenuItem = "avtar";
+            ServiceResult result = new ServiceResult();
             if (ModelState.IsValid)
             {
                 try
                 {
                     var memberID = Convert.ToInt32(CookieHelper.UID);
                     memberService.SaveMemberAvtar(memberID, model);
-
+                    result.Message = "头像保存成功！";
+                    TempData["Service_Result"] = result;
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Error = ex.Message;
+                    result.Message = Utilities.GetInnerMostException(ex);
+                    result.AddServiceError(result.Message);
                 }
+            }
+            else
+            {
+                result.Message = "表单输入有误！";
+                result.AddServiceError("表单输入有误！");
             }
             return View(model);
         }
@@ -170,17 +188,26 @@ namespace CodeFirstEF.Controllers
         public ActionResult Contact(ContactModel model)
         {
             ViewBag.MenuItem = "contact";
+            ServiceResult result = new ServiceResult();
             if (ModelState.IsValid)
             {
                 try
                 {
                     var memberID = Convert.ToInt32(CookieHelper.UID);
                     memberService.SaveMemberContact(memberID, model);
+                    result.Message = "联系信息保存成功！";
+                    TempData["Service_Result"] = result;
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Error = ex.Message;
+                    result.Message = Utilities.GetInnerMostException(ex);
+                    result.AddServiceError(result.Message);
                 }
+            }
+            else
+            {
+                result.Message = "表单输入有误！";
+                result.AddServiceError("表单输入有误！");
             }
             return View(model);
         }
