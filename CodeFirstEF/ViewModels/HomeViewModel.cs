@@ -8,17 +8,12 @@ namespace CodeFirstEF.ViewModels
 {
     public class HomeViewModel
     {
-        //public TopMenuViewModel TopMenu { get; set; }
-
-        //public TopListMenuViewModel TopListMenu { get; set; }
 
         public TopHotViewModel TopHot { get; set; }
 
-
-
         public MainHotViewModel MainHot { get; set; }
 
-        public MainGalleryViewModel MainGallery { get; set; }
+  
 
     }
 
@@ -118,47 +113,68 @@ namespace CodeFirstEF.ViewModels
 
     public class MainHotViewModel
     {
-        public MainHotLeftViewModel MainHotLeft { get; set; }
+      
         public MainHotLeftLinksViewModel MainHotLeftLinks { get; set; }
         public MainHotLeftBoxViewModel MainHotLeftBox { get; set; }
         public MainHotRightLinksViewModel MainHotRightLinks { get; set; }
         public MainHotLinksViewModel MainHotLinks { get; set; }
-    }
-
-    public class MainHotLeftViewModel
-    {
-        public MainHotLeftLinksViewModel LeftLinks { get; set; }
+        public MainGalleryViewModel MainGallery { get; set; }
     }
 
     public class MainHotLeftLinksViewModel
     {
+        public MainHotLeftLinksViewModel()
+        {
+            this.Items = new List<CategoryViewModel>();
+        }
         public List<CategoryViewModel> Items { get; set; }
     }
 
 
     public class MainHotLeftBoxViewModel
     {
+        public MainHotLeftBoxViewModel()
+        {
+            this.Items = new List<CategoryViewModel>();
+        }
         public List<CategoryViewModel> Items { get; set; }
     }
 
     public class MainHotRightLinksViewModel
     {
+        public MainHotRightLinksViewModel()
+        {
+            this.Items = new List<CategoryViewModel>();
+        }
         public List<CategoryViewModel> Items { get; set; }
     }
 
 
     public class MainHotLinksViewModel
     {
+        public MainHotLinksViewModel()
+        {
+            this.Items = new List<CategoryListViewModel>();
+        }
         public List<CategoryListViewModel> Items { get; set; }
     }
 
     public class MainGalleryViewModel
     {
+        public MainGalleryViewModel()
+        {
+            this.Items = new List<MainGalleryContainerViewModel>();
+        }
         public List<MainGalleryContainerViewModel> Items { get; set; }
     }
 
     public class MainGalleryContainerViewModel
     {
+
+        public MainGalleryContainerViewModel()
+        {
+            this.Items = new List<MainGalleryItemViewModel>();
+        }
         public CategoryViewModel Category { get; set; }
 
         public ProductViewModel SuggestItem { get; set; }
@@ -169,6 +185,13 @@ namespace CodeFirstEF.ViewModels
 
     public class MainGalleryItemViewModel
     {
+
+        public MainGalleryItemViewModel()
+        {
+            this.Items = new List<ProductViewModel>();
+            this.TopItems = new List<ProductViewModel>();
+        }
+
         public string Name { get; set; }
 
         public List<ProductViewModel> Items { get; set; }

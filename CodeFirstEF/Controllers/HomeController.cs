@@ -81,6 +81,12 @@ namespace CodeFirstEF.Controllers
             model.TopHot.SliderBox = GetSliderBox();
             model.TopHot.SliderTabBox = GetSliderTabBox();
 
+            model.MainHot = new MainHotViewModel();
+            model.MainHot.MainHotLeftLinks = GetMainHotLeftLinks();
+            model.MainHot.MainHotLeftBox = GetMainHotLeftBox();
+            model.MainHot.MainHotRightLinks = GetHotRightLinks();
+            model.MainHot.MainHotLinks = GetHotLinks();
+            model.MainHot.MainGallery = GetMainGallery();
 
             return View(model);
         }
@@ -211,6 +217,200 @@ namespace CodeFirstEF.Controllers
             return model;
         }
 
+        private MainHotLeftLinksViewModel GetMainHotLeftLinks()
+        {
+            MainHotLeftLinksViewModel model = new MainHotLeftLinksViewModel();
+            model.Items.Add(new CategoryViewModel()
+            {
+                CID = "1",
+                Name = "奈氏力斯年底回馈",
+                Url = Url.Action("index", "category", new { id = "1" })
+            });
+            model.Items.Add(new CategoryViewModel()
+            {
+                CID = "2",
+                Name = "十一坊买一赠一",
+                Url = Url.Action("index", "category", new { id = "2" })
+            });
+            return model;
+        }
+
+        private MainHotLeftBoxViewModel GetMainHotLeftBox()
+        {
+            MainHotLeftBoxViewModel model = new MainHotLeftBoxViewModel();
+            var product = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).Take(5).ToList();
+            model.Items = product.Select(x => new CategoryViewModel()
+            {
+                CID = x.MediaID.ToString(),
+                ImgUrl = x.FocusImg,
+                Name = x.Name,
+                Url = Url.Action("index", "category", new { id = "2" })
+            }).ToList();
+            return model;
+        }
+
+        private MainHotRightLinksViewModel GetHotRightLinks()
+        {
+            MainHotRightLinksViewModel model = new MainHotRightLinksViewModel();
+            var product = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).Take(5).ToList();
+            model.Items = product.Select(x => new CategoryViewModel()
+            {
+                CID = x.MediaID.ToString(),
+                ImgUrl = x.FocusImg,
+                Name = x.Name,
+                Url = Url.Action("index", "category", new { id = "2" })
+            }).ToList();
+            return model;
+        }
+
+        private MainHotLinksViewModel GetHotLinks()
+        {
+            MainHotLinksViewModel model = new MainHotLinksViewModel();
+
+            var category = outDoorMediaCateService.IncludeGetALL().Take(3).ToList();
+
+            foreach (var item in category)
+            {
+                CategoryListViewModel clvm = new CategoryListViewModel();
+
+                CategoryViewModel cvm = new CategoryViewModel()
+                {
+                    CID = item.CateCode,
+                    Name = item.CateName,
+                    Url = Url.Action("index", "category", new { id = item.CateCode })
+                };
+
+                clvm.Category = cvm;
+
+                List<CategoryViewModel> ChildCategories = item.ChildCategoies.Take(8).Select(x => new CategoryViewModel
+                {
+                    CID = x.CateCode,
+                    Name = x.CateName,
+                    Url = Url.Action("index", "category", new { id = x.CateCode })
+
+                }).ToList();
+
+                clvm.ChildCategories = ChildCategories;
+
+                model.Items.Add(clvm);
+            }
+            return model;
+
+        }
+
+        private MainGalleryViewModel GetMainGallery()
+        {
+            MainGalleryViewModel model = new MainGalleryViewModel();
+
+            MainGalleryContainerViewModel mgcvm = new MainGalleryContainerViewModel();
+
+            var category = outDoorMediaCateService.GetALL().First(x => x.PCateCode.Equals(null));
+
+            mgcvm.Category = new CategoryViewModel()
+            {
+                CID = category.CateCode,
+                Name = category.CateName,
+                CssClass = category.CateCode,
+                Url = Url.Action("index", "category", new { id = category.CateCode })
+            };
+
+            var suggestItem = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).OrderByDescending(x => x.Status).First();
+            mgcvm.SuggestItem = new ProductViewModel()
+            {
+                ID = suggestItem.MediaID,
+                ImgUrl = suggestItem.FocusImg,
+                Name = suggestItem.Name,
+                Price = suggestItem.Price
+            };
+
+            MainGalleryItemViewModel mgivm = new MainGalleryItemViewModel();
+
+            mgivm.Name = "增强免疫";
+
+            mgivm.Items = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).Take(3).ToList().Select(x => new ProductViewModel()
+            {
+                ID = x.MediaID,
+                ImgUrl = x.FocusImg,
+                Name = x.Name,
+                Price = x.Price
+            }).ToList();
+            mgivm.TopItems = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).Take(5).ToList().Select(x => new ProductViewModel()
+            {
+                ID = x.MediaID,
+                ImgUrl = x.FocusImg,
+                Name = x.Name,
+                Price = x.Price
+            }).ToList();
+
+            mgcvm.Items.Add(mgivm);
+
+            mgivm = new MainGalleryItemViewModel();
+
+            mgivm.Name = "维生素类";
+
+            mgivm.Items = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).Take(3).ToList().Select(x => new ProductViewModel()
+            {
+                ID = x.MediaID,
+                ImgUrl = x.FocusImg,
+                Name = x.Name,
+                Price = x.Price
+            }).ToList();
+            mgivm.TopItems = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).Take(5).ToList().Select(x => new ProductViewModel()
+            {
+                ID = x.MediaID,
+                ImgUrl = x.FocusImg,
+                Name = x.Name,
+                Price = x.Price
+            }).ToList();
+
+            mgcvm.Items.Add(mgivm);
+
+            mgivm = new MainGalleryItemViewModel();
+
+            mgivm.Name = "改善睡眠";
+
+            mgivm.Items = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).Take(3).ToList().Select(x => new ProductViewModel()
+            {
+                ID = x.MediaID,
+                ImgUrl = x.FocusImg,
+                Name = x.Name,
+                Price = x.Price
+            }).ToList();
+            mgivm.TopItems = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).Take(5).ToList().Select(x => new ProductViewModel()
+            {
+                ID = x.MediaID,
+                ImgUrl = x.FocusImg,
+                Name = x.Name,
+                Price = x.Price
+            }).ToList();
+
+            mgcvm.Items.Add(mgivm);
+
+            mgivm = new MainGalleryItemViewModel();
+
+            mgivm.Name = "调节肠胃";
+
+            mgivm.Items = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).Take(3).ToList().Select(x => new ProductViewModel()
+            {
+                ID = x.MediaID,
+                ImgUrl = x.FocusImg,
+                Name = x.Name,
+                Price = x.Price
+            }).ToList();
+            mgivm.TopItems = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).Take(5).ToList().Select(x => new ProductViewModel()
+            {
+                ID = x.MediaID,
+                ImgUrl = x.FocusImg,
+                Name = x.Name,
+                Price = x.Price
+            }).ToList();
+
+            mgcvm.Items.Add(mgivm);
+
+            model.Items.Add(mgcvm);
+
+            return model;
+        }
     }
 
 }
