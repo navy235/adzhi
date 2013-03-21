@@ -59,4 +59,12 @@ namespace CoreHelper.Enum
         info = 4,
         block = 5
     }
+
+    public enum SliderTabBoxType
+    {
+        Specialprice = 1,
+        TodaySuggest = 2,
+        WeekHot = 3,
+        NewProduct = 4
+    }
 }

@@ -238,7 +238,37 @@ namespace CodeFirstEF.Serivces
 
         public OutDoorViewModel GetOutDoorViewModel(int MediaID)
         {
-            return GetOutDoorDetailsViewModel(MediaID);
+            OutDoorViewModel odv = new OutDoorViewModel();
+            int MemberID = Convert.ToInt32(CookieHelper.UID);
+            OutDoor od = new OutDoor();
+            od = IncludeFind(MediaID);
+            odv.MediaID = od.MediaID;
+            odv.AreaAtt = String.Join(",", od.AreaAtt.Select(x => x.ID));
+            odv.CityCode = od.CityCode;
+            odv.CredentialsImg = od.CredentialsImg.ImgUrls;
+            odv.Deadline = od.Deadline;
+            odv.Description = od.Description;
+            odv.EndTime = DateTime.Now;
+            odv.StartTime = DateTime.Now;
+            odv.TrafficAuto = od.TrafficAuto;
+            odv.TrafficPerson = od.TrafficPerson;
+            odv.FormatCode = od.FormatCode;
+            odv.Location = od.Location;
+            odv.MediaImg = od.MediaImg.ImgUrls;
+            odv.MeidaCode = od.MeidaCode;
+            odv.Name = od.Name;
+            odv.OwnerCode = od.OwnerCode;
+            odv.PeriodCode = od.PeriodCode;
+            odv.Position = od.Lat + "|" + od.Lng;
+            odv.Price = od.Price;
+            odv.PriceExten = od.PriceExten;
+            odv.Area = od.Wdith + "|" + od.Height + "|" + od.TotalFaces;
+            odv.HasLight = od.HasLight;
+            if (od.HasLight)
+            {
+                odv.LightTime = od.LightStrat + "|" + od.LightEnd;
+            }
+            return odv;
         }
 
 
@@ -327,7 +357,7 @@ namespace CodeFirstEF.Serivces
         public IQueryable<OutDoorListItem> GetVerifyList(OutDoorStatus OutDoorStatus, bool includeUpLevel = false)
         {
             int OutDoorStatusValue = (int)OutDoorStatus;
-            var query = DB_Service.Set<OutDoor>();
+            var query = DB_Service.Set<OutDoor>().Include(x => x.MediaImg);
             if (includeUpLevel)
             {
                 query = query.Where(x => x.Status >= OutDoorStatusValue);
@@ -341,6 +371,8 @@ namespace CodeFirstEF.Serivces
                 MediaID = x.MediaID,
                 AddTime = x.AddTime,
                 Status = x.Status,
+                FocusImg = x.MediaImg.FocusImgUrl,
+                Price = x.Price,
                 Unapprovedlog = x.Unapprovedlog,
                 Name = x.Name
             });

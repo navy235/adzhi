@@ -19,6 +19,7 @@ using CodeFirstEF.ViewModels;
 using CodeFirstEF.Filters;
 using CodeFirstEF.Serivces;
 using CodeFirstEF.Config;
+using CodeFirstEF.Utils;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
 
@@ -33,15 +34,15 @@ namespace CodeFirstEF.Controllers
 
         //
         // GET: /Register/
-        private IUnitOfWork DB_Service;
+
         private IMemberService memberService;
         private IEmailService emailService;
         private IMember_ActionService member_ActionService;
         private IAreaAttService areaAttService;
         private IOutDoorService outDoorService;
         private IAuctionCalendarService auctionCalendarService;
-        public OutDoorController(IUnitOfWork _DB_Service
-            , IMemberService _memberService
+        public OutDoorController(
+            IMemberService _memberService
             , IEmailService _emailService
             , IMember_ActionService _member_ActionService
             , IAreaAttService _areaAttService
@@ -49,7 +50,7 @@ namespace CodeFirstEF.Controllers
             , IAuctionCalendarService _auctionCalendarService
             )
         {
-            DB_Service = _DB_Service;
+
             memberService = _memberService;
             emailService = _emailService;
             member_ActionService = _member_ActionService;
@@ -143,7 +144,7 @@ namespace CodeFirstEF.Controllers
         [HttpPost]
         public ActionResult SetShow(string ids)
         {
-            
+
             var success = outDoorService.ChangeStatus(ids,
              OutDoorStatus.ShowOnline);
             return Json(success);
@@ -171,10 +172,12 @@ namespace CodeFirstEF.Controllers
         public ActionResult Add(OutDoorViewModel model)
         {
             ViewBag.MenuItem = "outdoor-publish";
+            ServiceResult result = new ServiceResult();
             var AreaAttArray = new List<int>();
             if (!ModelState.IsValid)
             {
-                ViewBag.Error = "请检查表单是否填写完整";
+                result.Message = "请检查表单是否填写完整！";
+                result.AddServiceError("请检查表单是否填写完整！");
             }
             else
             {
@@ -182,11 +185,15 @@ namespace CodeFirstEF.Controllers
                 {
                     AreaAttArray = model.AreaAtt.Split(',').Select(x => Convert.ToInt32(x)).ToList();
                     outDoorService.Create(model);
+                    result.Message = "添加户外成功！";
+                    TempData["Service_Result"] = result;
                     return RedirectToAction("preverify");
+
                 }
-                catch (DbEntityValidationException ex)
+                catch (Exception ex)
                 {
-                    ViewBag.Error = ex.Message;
+                    result.Message = Utilities.GetInnerMostException(ex);
+                    result.AddServiceError(result.Message);
                 }
 
             }
@@ -216,9 +223,11 @@ namespace CodeFirstEF.Controllers
         {
             ViewBag.MenuItem = "outdoor-list";
             var AreaAttArray = new List<int>();
+            ServiceResult result = new ServiceResult();
             if (!ModelState.IsValid)
             {
-                ViewBag.Error = "请检查表单是否填写完整";
+                result.Message = "请检查表单是否填写完整！";
+                result.AddServiceError("请检查表单是否填写完整！");
             }
             else
             {
@@ -226,11 +235,14 @@ namespace CodeFirstEF.Controllers
                 {
                     AreaAttArray = model.AreaAtt.Split(',').Select(x => Convert.ToInt32(x)).ToList();
                     outDoorService.Update(model);
+                    result.Message = "编辑户外成功！";
+                    TempData["Service_Result"] = result;
                     return RedirectToAction("preverify");
                 }
-                catch (DbEntityValidationException ex)
+                catch (Exception ex)
                 {
-                    ViewBag.Error = ex.Message;
+                    result.Message = Utilities.GetInnerMostException(ex);
+                    result.AddServiceError(result.Message);
                 }
 
             }

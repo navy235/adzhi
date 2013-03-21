@@ -5,254 +5,212 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Collections.Specialized;
 using CoreHelper.Checking;
 using CoreHelper.Cookie;
 using CoreHelper.Http;
 using CoreHelper.Data.Interface;
-using CodeFirstEF.Models;
+using CoreHelper.Enum;
 using CodeFirstEF.Concrete;
+using CodeFirstEF.Models;
 using CodeFirstEF.ViewModels;
+using CodeFirstEF.Filters;
+using CodeFirstEF.Serivces;
+using CodeFirstEF.Config;
+using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
+
+
 namespace CodeFirstEF.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: /Area/
-        private IUnitOfWork DB_Service;
 
-        public HomeController(IUnitOfWork _DB_Service)
+
+
+        private IMemberService memberService;
+        private IAreaAttService areaAttService;
+        private IAreaService areaService;
+        private IOutDoorMediaCateService outDoorMediaCateService;
+        private IOutDoorService outDoorService;
+        private IFormatCateService formatCateService;
+        private ICompanyBussinessService companyBussinessService;
+        private ICompanyFundService companyFundService;
+        private ICompanyScaleService companyScaleService;
+        private IPeriodCateService periodCateService;
+        private IOwnerCateService ownerCateService;
+        private IAuctionCalendarService auctionCalendarService;
+        public HomeController(
+            IMemberService _memberService
+            , IAreaAttService _areaAttService
+            , IAreaService _areaService
+            , IOutDoorMediaCateService _outDoorMediaCateService
+            , IOutDoorService _outDoorService
+            , IFormatCateService _formatCateService
+            , ICompanyBussinessService _companyBussinessService
+            , ICompanyFundService _companyFundService
+            , ICompanyScaleService _companyScaleService
+            , IPeriodCateService _periodCateService
+            , IOwnerCateService _ownerCateService
+            , IAuctionCalendarService _auctionCalendarService
+            )
         {
-            DB_Service = _DB_Service;
+
+            areaAttService = _areaAttService;
+            areaService = _areaService;
+            memberService = _memberService;
+            outDoorMediaCateService = _outDoorMediaCateService;
+            outDoorService = _outDoorService;
+            formatCateService = _formatCateService;
+            companyBussinessService = _companyBussinessService;
+            companyFundService = _companyFundService;
+            companyScaleService = _companyScaleService;
+            periodCateService = _periodCateService;
+            ownerCateService = _ownerCateService;
+            auctionCalendarService = _auctionCalendarService;
         }
 
         public ActionResult Index()
         {
+            HomeViewModel model = new HomeViewModel();
 
-            ViewBag.Data_AreaAtt = DB_Service.Set<AreaAtt>().ToList().Select(x => new SelectListItem()
-            {
-                Value = x.ID.ToString(),
-                Text = x.AttName
-            }).ToList();
-            return View(new OutDoorViewModel());
+            model.TopHot = new TopHotViewModel();
+            model.TopHot.TopHotListMenu = GetTopHotListMenu();
+            model.TopHot.SliderBox = GetSliderBox();
+            model.TopHot.SliderTabBox = GetSliderTabBox();
+
+
+            return View(model);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Index(OutDoorViewModel um)
+        private TopHotListMenuViewModel GetTopHotListMenu()
         {
-            OutDoor od = new OutDoor();
-            var AreaAttArray = new List<int>();
-            if (!TryUpdateModel(um))
+            TopHotListMenuViewModel model = new TopHotListMenuViewModel();
+
+            var category = outDoorMediaCateService.IncludeGetALL().ToList();
+
+            foreach (var item in category)
             {
-                ViewBag.Error = "Update Failure";
-            }
-            else
-            {
-                try
+                CategoryListViewModel clvm = new CategoryListViewModel();
+
+                CategoryViewModel cvm = new CategoryViewModel()
                 {
-                    od.AddIP = HttpHelper.IP;
-                    od.AddTime = DateTime.Now;
-                    od.AdminUser = 200001;
-                    od.CityCode = um.CityCode;
-                    od.Description = um.Description;
-                    od.FormatCode = um.FormatCode;
-                    od.HasLight = um.HasLight;
+                    CID = item.CateCode,
+                    Name = item.CateName,
+                    Url = Url.Action("index", "category", new { id = item.CateCode })
+                };
 
+                clvm.Category = cvm;
 
-
-                    od.Integrity = 80;
-                    od.LastIP = HttpHelper.IP;
-                    od.LastTime = DateTime.Now;
-                    od.Lat = Convert.ToDecimal(um.Position.Split('|')[0]);
-
-                    od.Lng = Convert.ToDecimal(um.Position.Split('|')[1]);
-
-                    od.Location = um.Location;
-                    od.MemberID = 200013;
-                    od.MeidaCode = um.MeidaCode;
-
-                    od.Name = um.Name;
-                    od.PeriodCode = um.PeriodCode;
-                    od.Price = um.Price;
-                    od.PriceExten = um.PriceExten;
-                    od.SeoDes = um.Description;
-                    od.SeoTitle = um.Name;
-                    od.Seokeywords = um.Name;
-
-
-                    od.TrafficAuto = um.TrafficAuto;
-                    od.TrafficPerson = um.TrafficPerson;
-                    od.Unapprovedlog = string.Empty;
-
-
-
-                    MediaImg media = new MediaImg()
-                    {
-                        FocusImgUrl = um.MediaImg.Split(',')[0],
-                        ImgUrls = um.MediaImg,
-                        MemberID = 200013
-                    };
-                    od.MediaImg = media;
-
-                    AreaAttArray = um.AreaAtt.Split(',').Select(x => Convert.ToInt32(x)).ToList();
-                    var AreaAttList = DB_Service.Set<AreaAtt>().Where(x => AreaAttArray.Contains(x.ID));
-                    od.AreaAtt.AddRange(AreaAttList);
-
-                    CredentialsImg credent = new CredentialsImg()
-                    {
-                        FocusImgUrl = um.CredentialsImg.Split(',')[0],
-                        ImgUrls = um.CredentialsImg,
-                        MemberID = 200013
-                    };
-
-                    od.CredentialsImg = credent;
-                    od.OwnerCode = um.OwnerCode;
-                    od.Deadline = um.Deadline;
-
-                    //Owner or = new Owner();
-                    //or.CredentialsImg = credent;
-                    //or.Deadline = um.Deadline;
-                    //or.OwnerCate = DB_Service.Set<OwnerCate>().Single(x => x.CateCode.Equals(um.OwnerCode, StringComparison.CurrentCultureIgnoreCase));
-                    //od.Owner = or;
-
-                    DB_Service.Add<OutDoor>(od);
-                    DB_Service.Commit();
-                }
-                catch (DbEntityValidationException ex)
+                List<CategoryViewModel> ChildCategories = item.ChildCategoies.Select(x => new CategoryViewModel
                 {
-                    ViewBag.Error = ex.Message;
-                }
+                    CID = x.CateCode,
+                    Name = x.CateName,
+                    Url = Url.Action("index", "category", new { id = x.CateCode })
 
+                }).ToList();
+
+                clvm.ChildCategories = ChildCategories;
+
+                model.Items.Add(clvm);
             }
-
-            ViewBag.Data_AreaAtt = DB_Service.Set<AreaAtt>().ToList().Select(x => new SelectListItem()
-            {
-                Value = x.ID.ToString(),
-                Text = x.AttName,
-                Selected = AreaAttArray.Contains(x.ID)
-            }).ToList();
-            return View(um);
+            return model;
         }
 
-
-        public ActionResult Edit(int id)
+        private SliderBoxViewModel GetSliderBox()
         {
-            OutDoorViewModel odv = new OutDoorViewModel();
-            OutDoor od = new OutDoor();
-            od = DB_Service.Set<OutDoor>()
-                .Include(x => x.MediaImg)
-                .Include(x => x.MapImg)
-                .Include(x => x.AreaAtt)
-                .Single(x => x.MediaID == id);
+            SliderBoxViewModel model = new SliderBoxViewModel();
 
-            odv.MediaID = od.MediaID;
-            odv.AreaAtt = String.Join(",", od.AreaAtt.Select(x => x.ID));
-            odv.CityCode = od.CityCode;
-            odv.CredentialsImg = od.CredentialsImg.ImgUrls;
-            odv.Deadline = od.Deadline;
-            odv.Description = od.Description;
-            odv.EndTime = DateTime.Now;
-            odv.StartTime = DateTime.Now;
-
-            odv.TrafficAuto = od.TrafficAuto;
-            odv.TrafficPerson = od.TrafficPerson;
-
-            odv.FormatCode = od.FormatCode;
-            odv.HasLight = od.HasLight;
-
-
-            odv.Location = od.Location;
-
-            odv.MediaImg = od.MediaImg.ImgUrls;
-            odv.MeidaCode = od.MeidaCode;
-            odv.Name = od.Name;
-            odv.OwnerCode = od.OwnerCode;
-            odv.PeriodCode = od.PeriodCode;
-            odv.Position = od.Lat + "|" + od.Lng;
-            odv.Price = od.Price;
-            odv.PriceExten = od.PriceExten;
-
-            ViewBag.Data_AreaAtt = DB_Service.Set<AreaAtt>().ToList().Select(x => new SelectListItem()
+            model.Items.Add(new CategoryViewModel()
             {
-                Value = x.ID.ToString(),
-                Text = x.AttName,
-                Selected = od.AreaAtt.Select(a => a.ID).Contains(x.ID)
+                CID = "1",
+                ImgUrl = Url.Content("~/Content/images/slider/1.jpg"),
+                Url = Url.Action("index", "category", new { id = "1" })
+            });
+            model.Items.Add(new CategoryViewModel()
+            {
+                CID = "2",
+                ImgUrl = Url.Content("~/Content/images/slider/2.jpg"),
+                Url = Url.Action("index", "category", new { id = "2" })
+            });
+            model.Items.Add(new CategoryViewModel()
+            {
+                CID = "3",
+                ImgUrl = Url.Content("~/Content/images/slider/3.jpg"),
+                Url = Url.Action("index", "category", new { id = "3" })
+            });
+            model.Items.Add(new CategoryViewModel()
+            {
+                CID = "4",
+                ImgUrl = Url.Content("~/Content/images/slider/4.jpg"),
+                Url = Url.Action("index", "category", new { id = "4" })
+            });
+            model.Items.Add(new CategoryViewModel()
+            {
+                CID = "5",
+                ImgUrl = Url.Content("~/Content/images/slider/5.jpg"),
+                Url = Url.Action("index", "category", new { id = "5" })
+            });
 
-            }).ToList();
-            return View(odv);
+            return model;
         }
 
-
-        public ActionResult Map()
+        private SliderTabBoxViewModel GetSliderTabBox()
         {
-            return View();
-        }
+            SliderTabBoxViewModel model = new SliderTabBoxViewModel();
 
-
-        public ActionResult Test()
-        {
-            //Owner Owner = DB_Service.Set<Owner>().Include(x => x.OwnerCate).Include(x => x.CredentialsImg).Single(x => x.MediaID == 7);
-
-            //ViewBag.Name = Owner.OwnerCate.CateName;
-
-            //EmailModel model = new EmailModel()
-            //{
-            //    Title = "您在招聘网订阅的最新职位信息",
-            //    Content = "符合该条件的职位共8个，以下为最新的8个职位。",
-            //    Email = "shenhaijunmail@163.com"
-            //};
-
-            OutDoorViewModel odv = new OutDoorViewModel();
-            OutDoor od = new OutDoor();
-            od = DB_Service.Set<OutDoor>()
-                .Include(x => x.MediaImg)
-                .Include(x => x.MapImg)
-                .Include(x => x.AreaAtt)
-                .Single(x => x.MediaID == 1);
-
-            odv.MediaID = od.MediaID;
-            odv.AreaAtt = String.Join(",", od.AreaAtt.Select(x => x.ID));
-            odv.CityCode = od.CityCode;
-            odv.CredentialsImg = od.CredentialsImg.ImgUrls;
-            odv.Deadline = od.Deadline;
-            odv.Description = od.Description;
-            odv.EndTime = DateTime.Now;
-            odv.StartTime = DateTime.Now;
-
-            odv.TrafficAuto = od.TrafficAuto;
-            odv.TrafficPerson = od.TrafficPerson;
-
-            odv.FormatCode = od.FormatCode;
-            odv.HasLight = od.HasLight;
-            if (od.HasLight)
+            SliderTabContainerViewModel tab = new SliderTabContainerViewModel();
+            tab.Name = "惊爆特价";
+            var product = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).Take(8).ToList();
+            tab.Items = product.Select(x => new ProductViewModel()
             {
-                odv.LightTime = od.LightStrat + "|" + od.LightEnd;
-            }
-
-            odv.Location = od.Location;
-
-            odv.MediaImg = od.MediaImg.ImgUrls;
-            odv.MeidaCode = od.MeidaCode;
-            odv.Name = od.Name;
-            odv.OwnerCode = od.OwnerCode;
-            odv.PeriodCode = od.PeriodCode;
-            odv.Position = od.Lat + "|" + od.Lng;
-            odv.Price = od.Price;
-            odv.PriceExten = od.PriceExten;
-            odv.Area = od.Wdith + "|" + od.Height + "|" + od.TotalFaces;
-
-            ViewBag.Data_AreaAtt = DB_Service.Set<AreaAtt>().ToList().Select(x => new SelectListItem()
-            {
-                Value = x.ID.ToString(),
-                Text = x.AttName,
-                Selected = od.AreaAtt.Select(a => a.ID).Contains(x.ID)
-
+                ID = x.MediaID,
+                ImgUrl = x.FocusImg,
+                Name = x.Name,
+                Price = x.Price
             }).ToList();
-            return View(odv);
-        }
 
+            model.Tabs.Add(tab);
+
+            tab = new SliderTabContainerViewModel();
+            tab.Name = "每日优选";
+            tab.Items = product.Select(x => new ProductViewModel()
+            {
+                ID = x.MediaID,
+                ImgUrl = x.FocusImg,
+                Name = x.Name,
+                Price = x.Price
+            }).ToList();
+            model.Tabs.Add(tab);
+
+            tab = new SliderTabContainerViewModel();
+            tab.Name = "本周热卖";
+            tab.Items = product.Select(x => new ProductViewModel()
+            {
+                ID = x.MediaID,
+                ImgUrl = x.FocusImg,
+                Name = x.Name,
+                Price = x.Price
+            }).ToList();
+            model.Tabs.Add(tab);
+
+            tab = new SliderTabContainerViewModel();
+            tab.Name = "新品上架";
+            tab.Items = product.Select(x => new ProductViewModel()
+            {
+                ID = x.MediaID,
+                ImgUrl = x.FocusImg,
+                Name = x.Name,
+                Price = x.Price
+            }).ToList();
+            model.Tabs.Add(tab);
+
+
+            return model;
+        }
 
     }
-
 
 }

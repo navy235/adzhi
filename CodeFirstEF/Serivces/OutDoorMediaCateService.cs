@@ -8,6 +8,7 @@ using CoreHelper.Enum;
 using CoreHelper.Cookie;
 using CoreHelper.Data.Interface;
 using CodeFirstEF.Models;
+using CodeFirstEF.Utils;
 using CodeFirstEF.ViewModels;
 
 namespace CodeFirstEF.Serivces
@@ -40,14 +41,23 @@ namespace CodeFirstEF.Serivces
         }
 
 
-        public void Update(OutDoorMediaCate model)
+        public ServiceResult Update(OutDoorMediaCate model)
         {
-            var target = Find(model.ID);
-            DB_Service.Attach<OutDoorMediaCate>(target);
-            target.CateName = model.CateName;
-            target.CateCode = model.CateCode;
-            target.PCateCode = model.PCateCode;
-            DB_Service.Commit();
+            ServiceResult result = new ServiceResult();
+            try
+            {
+                var target = Find(model.ID);
+                DB_Service.Attach<OutDoorMediaCate>(target);
+                target.CateName = model.CateName;
+                target.CateCode = model.CateCode;
+                target.PCateCode = model.PCateCode;
+                DB_Service.Commit();
+            }
+            catch (Exception ex)
+            {
+                result.AddServiceError(Utilities.GetInnerMostException(ex));
+            }
+            return result;
         }
 
 
@@ -66,6 +76,12 @@ namespace CodeFirstEF.Serivces
             var target = Find(model.ID);
             DB_Service.Remove<OutDoorMediaCate>(target);
             DB_Service.Commit();
+        }
+
+
+        public IQueryable<OutDoorMediaCate> IncludeGetALL()
+        {
+            return DB_Service.Set<OutDoorMediaCate>().Include(x => x.ChildCategoies).Where(x => x.PCateCode.Equals(null));
         }
     }
 }

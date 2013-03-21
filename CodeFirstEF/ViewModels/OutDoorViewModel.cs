@@ -187,6 +187,21 @@ namespace CodeFirstEF.ViewModels
         public int AuctionCalendar { get; set; }
     }
 
+    public class OutDoorIndexItem
+    {
+        public int MediaID { get; set; }
+
+        public string Name { get; set; }
+
+        public string FocusImg { get; set; }
+
+        public string PeriodCate { get; set; }
+
+        public int Status { get; set; }
+
+        public DateTime AddTime { get; set; }
+    }
+
     public class OutDoorListItem
     {
         public int MediaID { get; set; }
@@ -202,6 +217,9 @@ namespace CodeFirstEF.ViewModels
 
         [Display(Name = "审核状态")]
         public int Status { get; set; }
+
+        [Display(Name = "价格")]
+        public decimal Price { get; set; }
 
         [Display(Name = "添加时间")]
         public DateTime AddTime { get; set; }

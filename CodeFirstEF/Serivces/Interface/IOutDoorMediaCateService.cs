@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using CodeFirstEF.ViewModels;
 using CodeFirstEF.Models;
+using CodeFirstEF.Utils;
 
 namespace CodeFirstEF.Serivces
 {
@@ -10,11 +11,13 @@ namespace CodeFirstEF.Serivces
     {
         IQueryable<OutDoorMediaCate> GetALL();
 
+        IQueryable<OutDoorMediaCate> IncludeGetALL();
+
         IQueryable<OutDoorMediaCate> GetKendoALL();
 
         void Create(OutDoorMediaCate model);
 
-        void Update(OutDoorMediaCate model);
+        ServiceResult Update(OutDoorMediaCate model);
 
         void Delete(OutDoorMediaCate model);
 
