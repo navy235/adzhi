@@ -18,6 +18,12 @@ namespace CodeFirstEF
                         "~/Scripts/jquery.validate*"
                         ));
 
+            bundles.Add(new ScriptBundle("~/bundles/jqueryplug").Include(
+                       "~/Scripts/jquery.slider-2.0.js",
+                       "~/Scripts/jquery.tab-1.0.js",
+                       "~/Scripts/jquery.sliderbox-1.0.js",
+                       "~/Scripts/jquery.hoverlist-1.0.js"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/smooth").Include(
                         "~/Scripts/smooth/jquery-ui-1.8.custom.min.js",

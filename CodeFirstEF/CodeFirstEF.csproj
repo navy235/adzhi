@@ -866,6 +866,7 @@
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
     <Content Include="Scripts\jquery.Jcrop.min.js" />
+    <Content Include="Scripts\jquery.slider-1.0.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -1313,6 +1314,10 @@
     <Content Include="Scripts\smooth\smooth.menu.js" />
     <Content Include="Scripts\smooth\smooth.table.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Scripts\jquery.slider-2.0.js" />
+    <Content Include="Scripts\jquery.tab-1.0.js" />
+    <Content Include="Scripts\jquery.sliderbox-1.0.js" />
+    <Content Include="Scripts\jquery.hoverlist-1.0.js" />
     <Content Include="smooth-admin-template\documentation\assets\blueprint-css\ie.css" />
     <Content Include="smooth-admin-template\documentation\assets\blueprint-css\plugins\buttons\icons\cross.png" />
     <Content Include="smooth-admin-template\documentation\assets\blueprint-css\plugins\buttons\icons\key.png" />
@@ -1989,6 +1994,7 @@
     <Content Include="Views\Shared\EditorTemplates\TimeQuantum.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Area.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AuctionCalendar.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\IntegerExtension.cshtml" />
     <None Include="Views\Shared\_LayoutList.cshtml" />
     <Content Include="Views\Shared\_TopListMenu.cshtml" />
     <Content Include="Views\Shared\_ListMain.cshtml" />
@@ -2007,6 +2013,7 @@
     <Content Include="Views\Shared\_DisplayMessage.cshtml" />
     <Content Include="Views\Shared\_LayoutHome.cshtml" />
     <Content Include="Views\Shared\_TopHotHome.cshtml" />
+    <Content Include="Views\Shared\_MainHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Lucene\" />

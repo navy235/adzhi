@@ -248,8 +248,8 @@ namespace CodeFirstEF.Serivces
             odv.CredentialsImg = od.CredentialsImg.ImgUrls;
             odv.Deadline = od.Deadline;
             odv.Description = od.Description;
-            odv.EndTime = DateTime.Now;
-            odv.StartTime = DateTime.Now;
+            //odv.EndTime = DateTime.Now;
+            //odv.StartTime = DateTime.Now;
             odv.TrafficAuto = od.TrafficAuto;
             odv.TrafficPerson = od.TrafficPerson;
             odv.FormatCode = od.FormatCode;
@@ -284,8 +284,8 @@ namespace CodeFirstEF.Serivces
             odv.CredentialsImg = od.CredentialsImg.ImgUrls;
             odv.Deadline = od.Deadline;
             odv.Description = od.Description;
-            odv.EndTime = DateTime.Now;
-            odv.StartTime = DateTime.Now;
+            //odv.EndTime = DateTime.Now;
+            //odv.StartTime = DateTime.Now;
             odv.TrafficAuto = od.TrafficAuto;
             odv.TrafficPerson = od.TrafficPerson;
             odv.FormatCode = od.FormatCode;
@@ -316,7 +316,9 @@ namespace CodeFirstEF.Serivces
         public IQueryable<OutDoorListItem> GetMemberOutDoor(int MemberID, OutDoorStatus OutDoorStatus, bool includeUpLevel = false)
         {
             int OutDoorStatusValue = (int)OutDoorStatus;
-            var query = DB_Service.Set<OutDoor>().Include(x => x.MediaImg).Where(x => x.MemberID == MemberID);
+            var query = DB_Service.Set<OutDoor>()
+                .Include(x => x.MediaImg)
+                .Where(x => x.MemberID == MemberID);
             if (includeUpLevel)
             {
                 query = query.Where(x => x.Status >= OutDoorStatusValue);
@@ -357,7 +359,10 @@ namespace CodeFirstEF.Serivces
         public IQueryable<OutDoorListItem> GetVerifyList(OutDoorStatus OutDoorStatus, bool includeUpLevel = false)
         {
             int OutDoorStatusValue = (int)OutDoorStatus;
-            var query = DB_Service.Set<OutDoor>().Include(x => x.MediaImg);
+            var query = DB_Service.Set<OutDoor>()
+                .Include(x => x.MediaImg)
+                .Include(x => x.Area)
+                .Include(x => x.Area.PCategory);
             if (includeUpLevel)
             {
                 query = query.Where(x => x.Status >= OutDoorStatusValue);
@@ -374,7 +379,9 @@ namespace CodeFirstEF.Serivces
                 FocusImg = x.MediaImg.FocusImgUrl,
                 Price = x.Price,
                 Unapprovedlog = x.Unapprovedlog,
-                Name = x.Name
+                Name = x.Name,
+                Province = x.Area.PCategory.CateName,
+                City = x.Area.CateName
             });
         }
 

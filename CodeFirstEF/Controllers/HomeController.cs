@@ -175,7 +175,9 @@ namespace CodeFirstEF.Controllers
                 ID = x.MediaID,
                 ImgUrl = x.FocusImg,
                 Name = x.Name,
-                Price = x.Price
+                Price = x.Price,
+                City = x.City,
+                Province = x.Province
             }).ToList();
 
             model.Tabs.Add(tab);
@@ -187,7 +189,9 @@ namespace CodeFirstEF.Controllers
                 ID = x.MediaID,
                 ImgUrl = x.FocusImg,
                 Name = x.Name,
-                Price = x.Price
+                Price = x.Price,
+                City = x.City,
+                Province = x.Province
             }).ToList();
             model.Tabs.Add(tab);
 
@@ -198,7 +202,9 @@ namespace CodeFirstEF.Controllers
                 ID = x.MediaID,
                 ImgUrl = x.FocusImg,
                 Name = x.Name,
-                Price = x.Price
+                Price = x.Price,
+                City = x.City,
+                Province = x.Province
             }).ToList();
             model.Tabs.Add(tab);
 
@@ -209,7 +215,9 @@ namespace CodeFirstEF.Controllers
                 ID = x.MediaID,
                 ImgUrl = x.FocusImg,
                 Name = x.Name,
-                Price = x.Price
+                Price = x.Price,
+                City = x.City,
+                Province = x.Province
             }).ToList();
             model.Tabs.Add(tab);
 
@@ -320,7 +328,9 @@ namespace CodeFirstEF.Controllers
                 ID = suggestItem.MediaID,
                 ImgUrl = suggestItem.FocusImg,
                 Name = suggestItem.Name,
-                Price = suggestItem.Price
+                Price = suggestItem.Price,
+                City = suggestItem.City,
+                Province = suggestItem.Province
             };
 
             MainGalleryItemViewModel mgivm = new MainGalleryItemViewModel();
@@ -332,14 +342,18 @@ namespace CodeFirstEF.Controllers
                 ID = x.MediaID,
                 ImgUrl = x.FocusImg,
                 Name = x.Name,
-                Price = x.Price
+                Price = x.Price,
+                City = x.City,
+                Province = x.Province
             }).ToList();
             mgivm.TopItems = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).Take(5).ToList().Select(x => new ProductViewModel()
             {
                 ID = x.MediaID,
                 ImgUrl = x.FocusImg,
                 Name = x.Name,
-                Price = x.Price
+                Price = x.Price,
+                City = x.City,
+                Province = x.Province
             }).ToList();
 
             mgcvm.Items.Add(mgivm);
@@ -353,14 +367,18 @@ namespace CodeFirstEF.Controllers
                 ID = x.MediaID,
                 ImgUrl = x.FocusImg,
                 Name = x.Name,
-                Price = x.Price
+                Price = x.Price,
+                City = x.City,
+                Province = x.Province
             }).ToList();
             mgivm.TopItems = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).Take(5).ToList().Select(x => new ProductViewModel()
             {
                 ID = x.MediaID,
                 ImgUrl = x.FocusImg,
                 Name = x.Name,
-                Price = x.Price
+                Price = x.Price,
+                City = x.City,
+                Province = x.Province
             }).ToList();
 
             mgcvm.Items.Add(mgivm);
@@ -374,14 +392,18 @@ namespace CodeFirstEF.Controllers
                 ID = x.MediaID,
                 ImgUrl = x.FocusImg,
                 Name = x.Name,
-                Price = x.Price
+                Price = x.Price,
+                City = x.City,
+                Province = x.Province
             }).ToList();
             mgivm.TopItems = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).Take(5).ToList().Select(x => new ProductViewModel()
             {
                 ID = x.MediaID,
                 ImgUrl = x.FocusImg,
                 Name = x.Name,
-                Price = x.Price
+                Price = x.Price,
+                City = x.City,
+                Province = x.Province
             }).ToList();
 
             mgcvm.Items.Add(mgivm);
@@ -395,14 +417,18 @@ namespace CodeFirstEF.Controllers
                 ID = x.MediaID,
                 ImgUrl = x.FocusImg,
                 Name = x.Name,
-                Price = x.Price
+                Price = x.Price,
+                City = x.City,
+                Province = x.Province
             }).ToList();
             mgivm.TopItems = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).Take(5).ToList().Select(x => new ProductViewModel()
             {
                 ID = x.MediaID,
                 ImgUrl = x.FocusImg,
                 Name = x.Name,
-                Price = x.Price
+                Price = x.Price,
+                City = x.City,
+                Province = x.Province
             }).ToList();
 
             mgcvm.Items.Add(mgivm);

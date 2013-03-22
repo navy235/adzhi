@@ -13,7 +13,7 @@ namespace CodeFirstEF.ViewModels
 
         public MainHotViewModel MainHot { get; set; }
 
-  
+
 
     }
 
@@ -64,6 +64,10 @@ namespace CodeFirstEF.ViewModels
         public string Name { get; set; }
 
         public decimal Price { get; set; }
+
+        public string Province { get; set; }
+
+        public string City { get; set; }
     }
 
     public class CategoryViewModel
@@ -113,7 +117,7 @@ namespace CodeFirstEF.ViewModels
 
     public class MainHotViewModel
     {
-      
+
         public MainHotLeftLinksViewModel MainHotLeftLinks { get; set; }
         public MainHotLeftBoxViewModel MainHotLeftBox { get; set; }
         public MainHotRightLinksViewModel MainHotRightLinks { get; set; }

@@ -26,23 +26,30 @@
         <section class="slider-box">
             <ul class="slider-list">
 
-                @foreach (var slider in Model.SliderBox.Items)
+                @for (var i = 0; i < Model.SliderBox.Items.Count; i++)
                 {
-                    <li><a target="_blank" href="@slider.Url">
+                    var slider = Model.SliderBox.Items[i];
+                    <li style="@((i == 0) ? "opacity:1; z-index:10" : "opacity: 0; z-index: 9")" style="opacity: 0; z-index: 9"><a target="_blank" href="@slider.Url">
                         <img title="" alt="" src="@slider.ImgUrl" width="710" height="280" border="0"></a></li>
                 }
             </ul>
-            <div class="slider-page">
+            <div class="slider-page" style="z-index: 11">
                 <div class="slider-page-box">
                     <div class="slider-page-list">
                         @for (int i = 1; i <= Model.SliderBox.Items.Count; i++)
                         {
-                            <a href="#" class="">@(i)</a>
+                            <a href="#" @((i == 1) ? "class=active" : "")>@(i)</a>
                         }
                     </div>
                 </div>
             </div>
+
         </section>
+        <script type="text/javascript">
+            $(function() {
+                $('slider-box').slider();
+            });
+        </script>
         <section class="slider-tab-box clearfix">
             <ul class="slider-tab-top clearfix">
 
@@ -51,7 +58,6 @@
                     var item = Model.SliderTabBox.Tabs[i];
                     <li class="slider-tab-child@(i) @(i == 0 ? "active" : "") " rel="#slidGoods@(i)">@item.Name</li>
                 }
-
 
             </ul>
             @for (int i = 0; i < Model.SliderTabBox.Tabs.Count; i++)
@@ -70,11 +76,17 @@
                                             <img width="150" height="150" border="0" src="@product.ImgUrl" alt="@product.Name">
                                             <span class="slider-tab-item-img-icon icon0"></span>
                                         </a>
-                                        <p class="slider-tab-item-title"><a target="_blank" title="@product.Name" href="/product/@(product.ID).html">@product.Name  &nbsp;<span class="c_ba2636">赠红色经典礼盒一个</span></a></p>
-                                        <p class="slider-tab-item-delete-price"><del>¥@product.Price 元/年</del></p>
+                                        <p class="slider-tab-item-title">
+                                            <a target="_blank" title="@product.Name" href="/product/@(product.ID).html">@product.Name
+                                                @*&nbsp;<span class="c_ba2636">赠红色经典礼盒一个</span>*@
+                                            </a>
+                                        </p>
+                                        <p class="slider-tab-item-delete-price">
+                                            @product.Province - @product.City
+                                        </p>
                                         <p class="slider-tab-item-price">
-                                            <strong>¥@product.Price 元/年</strong>
-                                            <span title="红色经典礼盒一个">赠</span>
+                                            <strong>¥@product.Price 万元/年</strong>
+                                            @*  <span title="红色经典礼盒一个">赠</span>*@
                                         </p>
                                     </div>
                                 }
@@ -83,9 +95,13 @@
                         </div>
                     </div>
                 </div>
-
             }
-
         </section>
+        <script type="text/javascript">
+            $(function() {
+                $('.slider-tab-box').tab();
+                $('.slider-tab-box').sliderbox();
+            })
+        </script>
     </div>
 </article>

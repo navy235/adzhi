@@ -18,8 +18,8 @@ namespace CodeFirstEF.ViewModels
 
         public OutDoorViewModel()
         {
-            this.StartTime = DateTime.Now;
-            this.EndTime = DateTime.Now;
+            //this.StartTime = DateTime.Now;
+            //this.EndTime = DateTime.Now;
             this.Deadline = DateTime.Now;
         }
 
@@ -59,8 +59,10 @@ namespace CodeFirstEF.ViewModels
 
         [Required(ErrorMessage = "请输入价格")]
         [Display(Name = "价格", Order = 5)]
-        [Range(0F, 1000000F, ErrorMessage = "{0}必须位于{1}-{2}之间")]
+        [Range(0F, 500F, ErrorMessage = "{0}必须位于{1}-{2}之间")]
         [UIHint("Price")]
+        [AdditionalMetadata("Price", "0,500")]
+        [AdditionalMetadata("PriceUnit", "万元/年")]
         [HintClass("price")]
         public decimal Price { get; set; }
 
@@ -118,24 +120,28 @@ namespace CodeFirstEF.ViewModels
 
         [Required(ErrorMessage = "请输入日交通车流量")]
         [Display(Name = "日交通车流量", Order = 14)]
-        [UIHint("Integer")]
+        [UIHint("IntegerExtension")]
+        [AdditionalMetadata("IntegerExtension", "0,200")]
+        [AdditionalMetadata("IntegerExtensionUnit", "万辆/天")]
         public int TrafficAuto { get; set; }
 
         [Required(ErrorMessage = "请输入日交通人流量")]
         [Display(Name = "日交通人流量", Order = 15)]
-        [UIHint("Integer")]
+        [UIHint("IntegerExtension")]
+        [AdditionalMetadata("IntegerExtension", "0,200")]
+        [AdditionalMetadata("IntegerExtensionUnit", "万人/天")]
         public int TrafficPerson { get; set; }
 
-        [Required(ErrorMessage = "请输入开始时间")]
-        [Display(Name = "开始时间", Order = 16)]
-        [DataType(DataType.DateTime)]
-        public DateTime StartTime { get; set; }
+        //[Required(ErrorMessage = "请输入开始时间")]
+        //[Display(Name = "开始时间", Order = 16)]
+        //[DataType(DataType.DateTime)]
+        //public DateTime StartTime { get; set; }
 
-        [Required(ErrorMessage = "请输入结束时间")]
-        [Display(Name = "结束时间", Order = 17)]
-        [DataType(DataType.DateTime)]
-        [DateGreaterThan("StartTime", "开始时间")]
-        public DateTime EndTime { get; set; }
+        //[Required(ErrorMessage = "请输入结束时间")]
+        //[Display(Name = "结束时间", Order = 17)]
+        //[DataType(DataType.DateTime)]
+        //[DateGreaterThan("StartTime", "开始时间")]
+        //public DateTime EndTime { get; set; }
 
 
         [Required(ErrorMessage = "请输入媒体补充说明.")]
@@ -214,6 +220,12 @@ namespace CodeFirstEF.ViewModels
 
         [Display(Name = "审核信息")]
         public string Unapprovedlog { get; set; }
+
+        [Display(Name = "省份")]
+        public string Province { get; set; }
+
+        [Display(Name = "城市")]
+        public string City { get; set; }
 
         [Display(Name = "审核状态")]
         public int Status { get; set; }

@@ -44,6 +44,7 @@
     .Filterable()
     .DataSource(dataSource => dataSource
         .Ajax()
+        .PageSize(50)
         .Read(read => read.Action("outdoor_read", "outdoorverify"))
     ).HtmlAttributes(new { style = "height:500px" })
 )
