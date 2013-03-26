@@ -27,9 +27,6 @@ namespace CodeFirstEF.Controllers
 {
     public class HomeController : Controller
     {
-
-
-
         private IMemberService memberService;
         private IAreaAttService areaAttService;
         private IAreaService areaService;
@@ -105,7 +102,7 @@ namespace CodeFirstEF.Controllers
                 {
                     CID = item.CateCode,
                     Name = item.CateName,
-                    Url = Url.Action("index", "category", new { id = item.CateCode })
+                    Url = Url.Action("index", "list", new { category = item.CateCode })
                 };
 
                 clvm.Category = cvm;
@@ -114,7 +111,7 @@ namespace CodeFirstEF.Controllers
                 {
                     CID = x.CateCode,
                     Name = x.CateName,
-                    Url = Url.Action("index", "category", new { id = x.CateCode })
+                    Url = Url.Action("index", "list", new { category = x.CateCode })
 
                 }).ToList();
 
@@ -133,31 +130,31 @@ namespace CodeFirstEF.Controllers
             {
                 CID = "1",
                 ImgUrl = Url.Content("~/Content/images/slider/1.jpg"),
-                Url = Url.Action("index", "category", new { id = "1" })
+                Url = Url.Action("index", "list", new { category = "1" })
             });
             model.Items.Add(new CategoryViewModel()
             {
                 CID = "2",
                 ImgUrl = Url.Content("~/Content/images/slider/2.jpg"),
-                Url = Url.Action("index", "category", new { id = "2" })
+                Url = Url.Action("index", "list", new { category = "2" })
             });
             model.Items.Add(new CategoryViewModel()
             {
                 CID = "3",
                 ImgUrl = Url.Content("~/Content/images/slider/3.jpg"),
-                Url = Url.Action("index", "category", new { id = "3" })
+                Url = Url.Action("index", "list", new { category = "3" })
             });
             model.Items.Add(new CategoryViewModel()
             {
                 CID = "4",
                 ImgUrl = Url.Content("~/Content/images/slider/4.jpg"),
-                Url = Url.Action("index", "category", new { id = "4" })
+                Url = Url.Action("index", "list", new { category = "4" })
             });
             model.Items.Add(new CategoryViewModel()
             {
                 CID = "5",
                 ImgUrl = Url.Content("~/Content/images/slider/5.jpg"),
-                Url = Url.Action("index", "category", new { id = "5" })
+                Url = Url.Action("index", "list", new { category = "5" })
             });
 
             return model;
@@ -232,13 +229,13 @@ namespace CodeFirstEF.Controllers
             {
                 CID = "1",
                 Name = "奈氏力斯年底回馈",
-                Url = Url.Action("index", "category", new { id = "1" })
+                Url = Url.Action("index", "list", new { category = "1" })
             });
             model.Items.Add(new CategoryViewModel()
             {
                 CID = "2",
                 Name = "十一坊买一赠一",
-                Url = Url.Action("index", "category", new { id = "2" })
+                Url = Url.Action("index", "list", new { category = "2" })
             });
             return model;
         }
@@ -252,7 +249,7 @@ namespace CodeFirstEF.Controllers
                 CID = x.MediaID.ToString(),
                 ImgUrl = x.FocusImg,
                 Name = x.Name,
-                Url = Url.Action("index", "category", new { id = "2" })
+                Url = Url.Action("index", "list", new { category = "2" })
             }).ToList();
             return model;
         }
@@ -266,7 +263,7 @@ namespace CodeFirstEF.Controllers
                 CID = x.MediaID.ToString(),
                 ImgUrl = x.FocusImg,
                 Name = x.Name,
-                Url = Url.Action("index", "category", new { id = "2" })
+                Url = Url.Action("index", "list", new { category = "2" })
             }).ToList();
             return model;
         }
@@ -285,7 +282,7 @@ namespace CodeFirstEF.Controllers
                 {
                     CID = item.CateCode,
                     Name = item.CateName,
-                    Url = Url.Action("index", "category", new { id = item.CateCode })
+                    Url = Url.Action("index", "list", new { category = item.CateCode })
                 };
 
                 clvm.Category = cvm;
@@ -294,7 +291,7 @@ namespace CodeFirstEF.Controllers
                 {
                     CID = x.CateCode,
                     Name = x.CateName,
-                    Url = Url.Action("index", "category", new { id = x.CateCode })
+                    Url = Url.Action("index", "list", new { category = x.CateCode })
 
                 }).ToList();
 
@@ -319,7 +316,7 @@ namespace CodeFirstEF.Controllers
                 CID = category.CateCode,
                 Name = category.CateName,
                 CssClass = category.CateCode,
-                Url = Url.Action("index", "category", new { id = category.CateCode })
+                Url = Url.Action("index", "list", new { category = category.CateCode })
             };
 
             var suggestItem = outDoorService.GetVerifyList(OutDoorStatus.ShowOnline, true).OrderByDescending(x => x.Status).First();

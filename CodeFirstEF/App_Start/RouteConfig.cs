@@ -14,10 +14,18 @@ namespace CodeFirstEF
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
+                name: "list",
+                url: "list-{category}",
+                defaults: new { controller = "List", action = "Index", category = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "home",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+
         }
     }
 }

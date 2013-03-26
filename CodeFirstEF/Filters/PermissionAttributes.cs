@@ -63,17 +63,34 @@ namespace CodeFirstEF.Filters
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext context)
         {
-            context.Result = new RedirectToRouteResult(
-                                   new RouteValueDictionary 
+            if (context.HttpContext.Request.IsAjaxRequest())
+            {
+                var urlHelper = new UrlHelper(context.RequestContext);
+                context.HttpContext.Response.StatusCode = 403;
+                context.Result = new JsonResult
+                {
+                    Data = new
+                    {
+                        Error = "NoPermission",
+                        LogOnUrl = urlHelper.Action("index", "login")
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+            }
+            else
+            {
+                context.Result = new RedirectToRouteResult(
+                                       new RouteValueDictionary 
                                    {
                                        { "action", "index" },
 
-                                       { "controller", "Error" },
+                                       { "controller", "error" },
 
                                        { "id", (int)ErrorType.NoPermission},
 
                                        {"returnurl",context.RequestContext.HttpContext.Request.Url}
                                    });
+            }
 
         }
     }

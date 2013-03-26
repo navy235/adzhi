@@ -15,11 +15,7 @@ namespace CodeFirstEF.Controllers
         public ActionResult Index(int id = 0, string returnurl = null)
         {
             ViewBag.Message = id;
-            if ((int)ErrorType.NoPermission == id)
-            {
-                return Content(string.Format("<script>window.top.location.href='{0}'</script>", Url.Action("Index", "Login", new { ReturnUrl = returnurl })));
-            }
-            return View();
+            return Content(string.Format("<script>window.top.location.href='{0}'</script>", Url.Action("Index", "Login", new { ReturnUrl = returnurl })));
         }
 
     }

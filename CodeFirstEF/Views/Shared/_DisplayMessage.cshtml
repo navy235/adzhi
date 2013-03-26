@@ -8,7 +8,14 @@
     @ViewHelpers.Alert(serviceResult.Message, serviceResult.Success)
 }
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         $('.displaymessage').fadeOut(3000);
-    })
+        $("body").ajaxError(function(e, request) {
+            if (request.status == 403) {
+                var res = $.parseJSON(request.responseText);
+                //alert(res.Error);
+                window.location = res.LogOnUrl;
+            }
+        });
+    });
 </script>

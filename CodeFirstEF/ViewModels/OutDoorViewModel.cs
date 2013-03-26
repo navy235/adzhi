@@ -224,6 +224,10 @@ namespace CodeFirstEF.ViewModels
         [Display(Name = "省份")]
         public string Province { get; set; }
 
+        [Display(Name = "媒体类别")]
+        public string MediaCode { get; set; }
+
+
         [Display(Name = "城市")]
         public string City { get; set; }
 

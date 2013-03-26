@@ -379,6 +379,7 @@ namespace CodeFirstEF.Serivces
                 FocusImg = x.MediaImg.FocusImgUrl,
                 Price = x.Price,
                 Unapprovedlog = x.Unapprovedlog,
+                MediaCode = x.MeidaCode,
                 Name = x.Name,
                 Province = x.Area.PCategory.CateName,
                 City = x.Area.CateName

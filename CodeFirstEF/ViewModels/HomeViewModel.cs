@@ -17,15 +17,61 @@ namespace CodeFirstEF.ViewModels
 
     }
 
+    public class ListViewModel
+    {
+        public TopHotListMenuViewModel ListMenu { get; set; }
+
+        public ListProductViewModel HotList { get; set; }
+
+        public ListProductViewModel SuggestList { get; set; }
+
+        public ListLinksViewModel CompanyList { get; set; }
+
+    }
+
+
+
     public class TopMenuViewModel
     {
 
     }
 
-    public class TopListMenuViewModel
+    public class ListSearchViewModel
     {
+        public string Province { get; set; }
 
+        public string City { get; set; }
+
+        public string MediaCode { get; set; }
+
+        public string OwnerCode { get; set; }
+
+        public string PeriodCode { get; set; }
     }
+
+
+    public class ListProductViewModel
+    {
+        public ListProductViewModel()
+        {
+            this.Items = new List<ProductViewModel>();
+        }
+
+        public string Name { get; set; }
+
+
+        public List<ProductViewModel> Items { get; set; }
+    }
+
+    public class ListLinksViewModel
+    {
+        public ListLinksViewModel()
+        {
+            this.Items = new List<CategoryViewModel>();
+        }
+        public List<CategoryViewModel> Items { get; set; }
+    }
+
 
     public class TopHotViewModel
     {
@@ -75,6 +121,8 @@ namespace CodeFirstEF.ViewModels
         public string ImgUrl { get; set; }
 
         public string CID { get; set; }
+
+        public bool Selected { get; set; }
 
         public string CssClass { get; set; }
 
